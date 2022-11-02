@@ -13,6 +13,7 @@ use App\Models\InternetLinks\Entity\InternetLink;
 use App\Models\Ministries\Entity\Ministry;
 use App\Models\Sources\Entity\Source;
 use App\Models\Subcategories\Entity\Subcategory;
+use App\Models\Users\Entity\User;
 use App\Models\Weights\Entity\Weight;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
@@ -60,6 +61,9 @@ class DefaultController extends Controller
                     break;
                 case 'permissions':
                     $results[$item] = Permission::all()->toArray();
+                    break;
+                case 'users':
+                    $results[$item] = User::all()->toArray();
                     break;
             }
         }

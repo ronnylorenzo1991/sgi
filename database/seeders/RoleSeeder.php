@@ -20,6 +20,7 @@ class RoleSeeder extends Seeder
         $client = Role::create(['name' => 'registrador']);
 
         Permission::create(['name' => 'dashboard.charts.show'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'audits.audits.list'])->syncRoles([$admin]);
 
         Permission::create(['name' => 'settings.categories.list'])->syncRoles([$admin, $client, $analist]);
         Permission::create(['name' => 'settings.categories.create'])->syncRoles([$admin, $client]);

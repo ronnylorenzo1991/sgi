@@ -2,7 +2,6 @@
 
 namespace App\Models\Users\Entity;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,9 +10,11 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use LaravelAndVueJS\Traits\LaravelPermissionToVueJS;
 use Spatie\Permission\Traits\HasRoles;
+use OwenIt\Auditing\Contracts\Auditable;
+
 use function auth;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
     use Notifiable;
     use HasApiTokens;
@@ -23,7 +24,7 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
     use LaravelPermissionToVueJS;
     use HasRoles;
-
+    use \OwenIt\Auditing\Auditable;
     /**
      * The attributes that are mass assignable.
      *

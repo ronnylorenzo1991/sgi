@@ -10,10 +10,11 @@ use App\Models\Ips\Entity\Ip;
 use App\Models\Ministries\Entity\Ministry;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Node extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+class Node extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'ip_id',

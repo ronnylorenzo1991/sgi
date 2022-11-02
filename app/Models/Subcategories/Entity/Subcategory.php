@@ -5,10 +5,11 @@ namespace App\Models\Subcategories\Entity;
 use App\Models\Categories\Entity\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Subcategory extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+class Subcategory extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'name',

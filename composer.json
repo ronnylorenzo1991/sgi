@@ -9,6 +9,7 @@
         "ahmedsaoud31/laravel-permission-to-vuejs": "dev-master",
         "arcanedev/log-viewer": "^8.1",
         "fideloper/proxy": "^4.4",
+        "friendsofphp/php-cs-fixer": "^v2.19.3",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel-frontend-presets/argon": "^1.1",
@@ -18,11 +19,11 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "livewire/livewire": "^2.5",
+        "owen-it/laravel-auditing": "^13.0",
         "spatie/laravel-permission": "^5.4",
         "stancl/tenancy": "^3.4",
         "symfony/process": "^5.3",
-        "tightenco/ziggy": "^1.4",
-        "friendsofphp/php-cs-fixer": "^v2.19.3"
+        "tightenco/ziggy": "^1.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

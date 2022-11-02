@@ -12,11 +12,12 @@ use Spatie\Permission\Guard;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\RefreshesPermissionCache;
-
-class Role extends Model implements RoleContract
+use OwenIt\Auditing\Contracts\Auditable;
+class Role extends Model implements RoleContract, Auditable
 {
     use HasPermissions;
     use RefreshesPermissionCache;
+    use \OwenIt\Auditing\Auditable;
 
     protected $guarded = [];
 
@@ -72,7 +73,7 @@ class Role extends Model implements RoleContract
     public function users(): BelongsToMany
     {
         return $this->morphedByMany(
-            getModelForGuard($this->attributes['guard_name']),
+            getModelForGuard($this->attributes['guard_name'] ?? config('auth.defaults.guard')),
             'model',
             config('permission.table_names.model_has_roles'),
             PermissionRegistrar::$pivotRole,

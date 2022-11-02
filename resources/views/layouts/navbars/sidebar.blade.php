@@ -85,7 +85,8 @@
             <ul class="navbar-nav">
                 @if(auth()->user()->hasPermissionGroup('dashboard'))
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::url() == route('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                        <a class="nav-link {{ Request::url() == route('dashboard') ? 'active' : '' }}"
+                           href="{{ route('dashboard') }}">
                             <i class="ni ni ni-tv-2 {{ Request::url() == route('dashboard') ? 'text-secondary' : 'text-primary' }}"></i>
                             <span class="nav-link-text">{{ __('Dashboard') }}</span>
                         </a>
@@ -120,9 +121,19 @@
                 @endif
                 @if(auth()->user()->hasPermissionGroup('roles'))
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::url() == route('roles') ? 'active' : '' }}" href="{{ route('roles') }}">
+                        <a class="nav-link {{ Request::url() == route('roles') ? 'active' : '' }}"
+                           href="{{ route('roles') }}">
                             <i class="far fa-user-circle {{ Request::url() == route('roles') ? 'text-secondary' : 'text-primary' }}"></i>
                             <span class="nav-link-text">{{ __('Roles y Permisos') }}</span>
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()->hasPermissionGroup('audits'))
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::url() == route('audits') ? 'active' : '' }}"
+                           href="{{ route('audits') }}">
+                            <i class="fa fa-history {{ Request::url() == route('audits') ? 'text-secondary' : 'text-primary' }}"></i>
+                            <span class="nav-link-text">{{ __('Trazas') }}</span>
                         </a>
                     </li>
                 @endif

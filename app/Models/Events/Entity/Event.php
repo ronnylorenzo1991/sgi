@@ -9,10 +9,12 @@ use App\Models\Sources\Entity\Source;
 use App\Models\Subcategories\Entity\Subcategory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Event extends Model
+class Event extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'number',

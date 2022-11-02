@@ -8,6 +8,7 @@ use \App\Http\Controllers\SubcategoryController;
 use \App\Http\Controllers\UserController;
 use \App\Http\Controllers\DefaultController;
 use \App\Http\Controllers\RoleController;
+use \App\Http\Controllers\AuditController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/settings', SpaController::class)->name('settings');
     Route::get('/users', SpaController::class)->name('users');
     Route::get('/roles', SpaController::class)->name('roles');
+    Route::get('/audits', SpaController::class)->name('audits');
 });
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -126,5 +128,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'subcategories'], function () 
         ->name('subcategories.edit');
     Route::delete('{id}/remove', [SubcategoryController::class, 'delete'])
         ->name('subcategories.remove');
+});
+
+Route::group(['middleware' => 'auth', 'prefix' => 'logs'], function () {
+    Route::get('/all', [AuditController::class, 'getAll'])
+        ->name('audits.all');
 });
 //Auth::routes();

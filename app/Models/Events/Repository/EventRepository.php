@@ -70,6 +70,7 @@ class EventRepository extends SharedRepositoryEloquent
     public function update($data, $id)
     {
         $event = $this->entity->findOrFail($id);
+        $event->update($data);
 
         $foreignNodes = $data['foreign_nodes'];
         $nationalNodes = $data['national_nodes'];

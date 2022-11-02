@@ -4,6 +4,7 @@ import Settings from '../../js/pages/settings/index';
 import Roles from '../../js/pages/roles/index';
 import Users from '../../js/pages/users/index';
 import Events from '../../js/pages/event/index';
+import Audits from '../../js/pages/audits/index';
 
 export default [
     {
@@ -29,5 +30,9 @@ export default [
     {
         path: '/events',
         component: Events
+    },
+    {
+        path: '/audits',
+        component: Audits
     },
 ];
