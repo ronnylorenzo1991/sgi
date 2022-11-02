@@ -147,8 +147,8 @@ export default {
     methods: {
         applyFilters() {
             this.getEventsByMonth()
-            this.getPercentageStats(90, 90, 60, 60)
-            this.getLabelsTrendingStats()
+            this.getTrendByEntity()
+            this.getCategoriesByEvents()
         },
 
         getFormatDate(stringDate) {
@@ -226,12 +226,11 @@ export default {
             })
         },
 
-        getCategoriesByMonth() {
+        getCategoriesByEvents() {
             this.isLoading = true
             axios.get(route('events.totals_by_categories') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {
-                        this.eventsByEntities = response.data.totals
                         barChart.createChart(
                             this.categoriesChartId,
                             response.data.labels,
@@ -302,7 +301,7 @@ export default {
     mounted() {
         this.getEventsByMonth()
         this.getTrendByEntity()
-        this.getCategoriesByMonth()
+        this.getCategoriesByEvents()
         this.getLists(['subcategories'])
     },
 }
