@@ -78,22 +78,22 @@ export const lineChart = {
 };
 
 export const barChart = {
-    createChart(chartId) {
+    createChart(chartId, labels, data, tagLabel, barColor = "#fb6340") {
         const ctx = document.getElementById(chartId).getContext("2d");
 
         new Chart(ctx, {
             type: "bar",
             data: {
-                labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                labels: labels,
                 datasets: [
                     {
-                        label: "Sales",
+                        label: tagLabel,
                         tension: 0.4,
                         borderWidth: 0,
                         pointRadius: 0,
-                        backgroundColor: "#fb6340",
-                        data: [25, 20, 30, 22, 17, 29],
-                        maxBarThickness: 10,
+                        backgroundColor: barColor,
+                        data: data,
+                        maxBarThickness: 30,
                     },
                 ],
             },

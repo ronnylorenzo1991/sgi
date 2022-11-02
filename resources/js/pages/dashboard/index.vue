@@ -10,7 +10,7 @@
                                 <div class="row align-items-center">
                                     <div class="col ml--2 mb-2">
                                         <h4 class="mb-0">
-                                           Filtros
+                                            Filtros
                                         </h4>
                                     </div>
                                 </div>
@@ -20,7 +20,8 @@
                                         </date-range-picker>
                                     </div>
                                     <div class="col-auto ml-auto mb-2 mt-2">
-                                        <button class="btn btn-sm btn-outline-primary" @click="clearFilters">Limpiar</button>
+                                        <button class="btn btn-sm btn-outline-primary" @click="clearFilters">Limpiar
+                                        </button>
                                     </div>
                                 </div>
                             </card>
@@ -67,19 +68,38 @@
                     </div>
                 </div>
             </div>
+            <div class="row mt-5 mb-5">
+                <div class="col-xl-6 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="text-uppercase ls-1 mb-1">Total de incidencias por Categorias</h6>
+                                    <h2 class="mb-0">Categorias</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas :height="350" :id="categoriesChartId"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import VueLoadImage from 'vue-load-image'
-import simpleTable from "../../components/utils/simpleTable/simpleTable";
-import stat from "../../components/utils/stat";
-import modal from "../../components/utils/modal";
-import dialog from "../../libs/custom/dialog";
-import {lineChart, doughnutChart, barChartStacked} from "../../components/Charts/Chart";
-import Multi_select from "../../components/utils/multiselect";
-import Card from "../../components/Cards/Card";
+import simpleTable from '../../components/utils/simpleTable/simpleTable'
+import stat from '../../components/utils/stat'
+import modal from '../../components/utils/modal'
+import dialog from '../../libs/custom/dialog'
+import {lineChart, doughnutChart, barChartStacked, barChart} from '../../components/Charts/Chart'
+import Multi_select from '../../components/utils/multiselect'
+import Card from '../../components/Cards/Card'
 import DateRangePicker from 'vue2-daterange-picker'
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 
@@ -97,7 +117,7 @@ export default {
 
     filters: {
         date(date) {
-            return new Intl.DateTimeFormat("en-US").format(date);
+            return new Intl.DateTimeFormat('en-US').format(date)
         }
     },
 
@@ -111,8 +131,9 @@ export default {
                     endDate: new Date(new Date().getFullYear(), 11, 31),
                 },
             },
-            percentStatsId: "percentStatsChart",
-            entitiesChartId: "barChartStackedId",
+            percentStatsId: 'percentStatsChart',
+            entitiesChartId: 'barChartStackedId',
+            categoriesChartId: 'barCategoryTotalsId',
             salesChartID: 'lineChart',
             eventsByMonthData: [],
             lists: {},
@@ -131,7 +152,7 @@ export default {
         },
 
         getFormatDate(stringDate) {
-            return new Intl.DateTimeFormat("en-US").format(stringDate);
+            return new Intl.DateTimeFormat('en-US').format(stringDate)
         },
 
         clearFilters() {
@@ -147,7 +168,7 @@ export default {
         getEventsByMonth() {
             this.isLoading = true
             this.eventsChartKey++
-            axios.get(route('events.total_by_month') + `?startDate=${ this.getFormatDate(this.generalFilters.pickerDates.startDate) }&endDate=${ this.getFormatDate(this.generalFilters.pickerDates.endDate) }`)
+            axios.get(route('events.total_by_month') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {
                         this.eventsByMonthData = response.data.totals
@@ -155,7 +176,7 @@ export default {
                             this.salesChartID,
                             this.eventsByMonthData,
                             response.data.labels
-                        );
+                        )
                         this.isLoading = false
                     } else {
                         this.isLoading = false
@@ -166,10 +187,10 @@ export default {
                 this.isLoading = false
                 if (!error.response) {
                     // network error
-                    this.errorStatus = 'Error: Network Error';
+                    this.errorStatus = 'Error: Network Error'
                     dialog.error(this.errorStatus)
                 } else {
-                    this.errorStatus = error.response.data.message;
+                    this.errorStatus = error.response.data.message
                     dialog.error(this.errorStatus)
                 }
             })
@@ -185,7 +206,7 @@ export default {
                             this.entitiesChartId,
                             this.generateDatasets(this.eventsByEntities),
                             response.data.labels
-                        );
+                        )
                         this.isLoading = false
                     } else {
                         this.isLoading = false
@@ -196,10 +217,42 @@ export default {
                 this.isLoading = false
                 if (!error.response) {
                     // network error
-                    this.errorStatus = 'Error: Network Error';
+                    this.errorStatus = 'Error: Network Error'
                     dialog.error(this.errorStatus)
                 } else {
-                    this.errorStatus = error.response.data.message;
+                    this.errorStatus = error.response.data.message
+                    dialog.error(this.errorStatus)
+                }
+            })
+        },
+
+        getCategoriesByMonth() {
+            this.isLoading = true
+            axios.get(route('events.totals_by_categories') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        this.eventsByEntities = response.data.totals
+                        barChart.createChart(
+                            this.categoriesChartId,
+                            response.data.labels,
+                            response.data.totals,
+                            'eventos',
+                            "#3291ef"
+                        )
+                        this.isLoading = false
+                    } else {
+                        this.isLoading = false
+                        dialog.error()
+                    }
+                }).catch(error => {
+                console.log(error)
+                this.isLoading = false
+                if (!error.response) {
+                    // network error
+                    this.errorStatus = 'Error: Network Error'
+                    dialog.error(this.errorStatus)
+                } else {
+                    this.errorStatus = error.response.data.message
                     dialog.error(this.errorStatus)
                 }
             })
@@ -220,7 +273,7 @@ export default {
         },
 
         randomColorGenerator() {
-            return '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
+            return '#' + (Math.random() * 0xFFFFFF << 0).toString(16)
         },
 
         getLists(list) {
@@ -236,10 +289,10 @@ export default {
                 this.isLoading = false
                 if (!error.response) {
                     // network error
-                    this.errorStatus = 'Error: Network Error';
+                    this.errorStatus = 'Error: Network Error'
                     dialog.error(this.errorStatus)
                 } else {
-                    this.errorStatus = error.response.data.message;
+                    this.errorStatus = error.response.data.message
                     dialog.error(this.errorStatus)
                 }
             })
@@ -249,6 +302,7 @@ export default {
     mounted() {
         this.getEventsByMonth()
         this.getTrendByEntity()
+        this.getCategoriesByMonth()
         this.getLists(['subcategories'])
     },
 }
@@ -258,6 +312,7 @@ export default {
 .vue-daterange-picker {
     display: block !important;
 }
+
 .vue-daterange-picker .reportrange-text {
     height: 42px !important;
     padding-top: 10px;

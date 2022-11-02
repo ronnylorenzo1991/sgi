@@ -23,9 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(CountrySeeder::class);
+        $this->call(CategorySeeder::class);
 
-        Category::factory(10)->create();
-        Subcategory::factory(20)->create();
         Node::factory(10)->create();
         Source::factory(10)->create();
         Contribute::factory(10)->create();

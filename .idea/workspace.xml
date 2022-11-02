@@ -4,26 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ffc65933-99f9-47ac-bd34-a0d6524da9e3" name="Changes" comment="added audits components">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="355d7e11-b7a4-4736-af9d-99a2e49d11c3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EventController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EventController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Events/Repository/EventRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Events/Repository/EventRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Charts/Chart.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Charts/Chart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/dashboard/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/dashboard/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution>
-      <executable path="composer" />
-    </execution>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Vue Single File Component" />
-      </list>
-    </option>
+    <execution />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -178,111 +178,35 @@
       <path value="$PROJECT_DIR$/vendor/owen-it/laravel-auditing" />
     </include_path>
   </component>
-  <component name="ProjectId" id="2Fp7c9rmMb2AaqPSImZvpznmawV" />
+  <component name="ProjectId" id="2GzjAh4GYuVXkTWuVcOkQR8vRLe" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
-    <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Project.color&quot;: &quot;4d3f31&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/var/www/sistema-incidentes/app/Models/Audits/Repository&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/snap/phpstorm/295/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/Models/Audits/Repository" />
-      <recent name="$PROJECT_DIR$/resources/js/pages/logs" />
-      <recent name="$PROJECT_DIR$/app/Models/Contributes/Repository" />
-      <recent name="$PROJECT_DIR$/app/Models/Subcategories/Repository" />
-      <recent name="$PROJECT_DIR$/resources/js/pages/settings/partials" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/resources/js/pages/dashboard" />
-      <recent name="$PROJECT_DIR$/public" />
-      <recent name="$PROJECT_DIR$/database/migrations" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner scope="XML" />
-      <method v="2" />
-    </configuration>
-  </component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ffc65933-99f9-47ac-bd34-a0d6524da9e3" name="Changes" comment="" />
-      <created>1665177248264</created>
+      <changelist id="355d7e11-b7a4-4736-af9d-99a2e49d11c3" name="Changes" comment="" />
+      <created>1667398167235</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1665177248264</updated>
-      <workItem from="1665177251051" duration="26216000" />
-      <workItem from="1665402879266" duration="19000" />
-      <workItem from="1665429567548" duration="461000" />
-      <workItem from="1665430030737" duration="2456000" />
-      <workItem from="1665840684199" duration="615000" />
-      <workItem from="1665868523283" duration="15000" />
-      <workItem from="1665980677356" duration="418000" />
-      <workItem from="1665981367084" duration="610000" />
-      <workItem from="1666007156529" duration="10944000" />
-      <workItem from="1666094988684" duration="2302000" />
-      <workItem from="1666119968424" duration="4876000" />
-      <workItem from="1666179980517" duration="1084000" />
-      <workItem from="1666183612044" duration="13000" />
-      <workItem from="1666194478664" duration="2629000" />
-      <workItem from="1666217447115" duration="1075000" />
-      <workItem from="1666293449652" duration="697000" />
-      <workItem from="1666299917851" duration="4281000" />
-      <workItem from="1666319129402" duration="732000" />
-      <workItem from="1666353185839" duration="606000" />
-      <workItem from="1666393703677" duration="14000" />
-      <workItem from="1666403999608" duration="1391000" />
-      <workItem from="1666473820863" duration="1574000" />
-      <workItem from="1666484127069" duration="82000" />
-      <workItem from="1666484227032" duration="599000" />
-      <workItem from="1666556846547" duration="599000" />
-      <workItem from="1666560758684" duration="15330000" />
-      <workItem from="1666645915556" duration="2543000" />
-      <workItem from="1666723697407" duration="20866000" />
-      <workItem from="1666748746128" duration="1971000" />
-      <workItem from="1666799749350" duration="6210000" />
-      <workItem from="1666832345168" duration="5000" />
-      <workItem from="1666895854664" duration="1863000" />
-      <workItem from="1666907442108" duration="15926000" />
-      <workItem from="1667142407834" duration="4771000" />
-      <workItem from="1667232053761" duration="23813000" />
-      <workItem from="1667319863042" duration="12225000" />
-      <workItem from="1667341618960" duration="13299000" />
+      <updated>1667398167235</updated>
+      <workItem from="1667398169870" duration="11601000" />
     </task>
-    <task id="LOCAL-00001" summary="added audits components">
-      <created>1667356691672</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1667356691672</updated>
-    </task>
-    <task id="LOCAL-00002" summary="added audits components">
-      <created>1667356705966</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1667356705966</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,24 +222,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="added audits components" />
-    <option name="LAST_COMMIT_MESSAGE" value="added audits components" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/routes/web.php</url>
-          <line>2</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
   </component>
 </project>

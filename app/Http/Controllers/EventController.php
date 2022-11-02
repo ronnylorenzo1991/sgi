@@ -117,6 +117,18 @@ class EventController extends Controller
         return json_encode(['totals' => $totals, 'labels' => $labels]);
     }
 
+    public function totalByCategories(Request $request)
+    {
+        $filterParams = [
+            'startDate' => $request->get('startDate'),
+            'endDate' => $request->get('endDate'),
+        ];
+
+        [$totals, $labels] = $this->eventRepository->getTotalsByCategories($filterParams);
+
+        return json_encode(['totals' => $totals, 'labels' => $labels]);
+    }
+
     public function delete($id)
     {
         try {

@@ -228,4 +228,25 @@ class EventRepository extends SharedRepositoryEloquent
 
         return [$totals, $labels];
     }
+
+    public function getTotalsByCategories($params)
+    {
+        $startYear = date('Y', strtotime($params['startDate']));
+        $endYear = date('Y', strtotime($params['endDate']));
+
+        $labels = [];
+        $totals = [];
+
+        $results = $this->entity->query()->join('categories', function ($join) {
+            $join->on('events.category_id', '=', 'categories.id');
+        })->selectRaw('COUNT(categories.id) as count')->selectRaw('categories.name')
+            ->groupBy('categories.name')->orderBy('count', 'desc')->get();
+
+        foreach ($results as $data) {
+            $totals[] = $data->count;
+            $labels[] = $data->name;
+        }
+
+        return [$totals, $labels];
+    }
 }

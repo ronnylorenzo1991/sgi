@@ -101,6 +101,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'events'], function () {
         ->name('events.total_by_month');
     Route::get('/total-by-entity', [EventController::class, 'totalsByEntities'])
         ->name('events.totals_by_entities');
+    Route::get('/total-by-categories', [EventController::class, 'totalByCategories'])
+        ->name('events.totals_by_categories');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'defaults'], function () {
