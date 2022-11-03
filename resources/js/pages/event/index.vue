@@ -19,6 +19,12 @@
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
                                         <li class="nav-item mr-2 mr-md-0">
+                                            <a @click.prevent="exportExcel" href="#"
+                                               class="nav-link py-2 px-3">
+                                                <span class="d-none d-md-block"><i class="fa fa-file-excel pr-2"></i>exportar excel</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item mr-2 mr-md-0">
                                             <a @click.prevent="openCreateEditEventModal" href="#"
                                                class="nav-link py-2 px-3 active">
                                                 <span class="d-none d-md-block">+ Nuevo Evento</span>
@@ -549,6 +555,10 @@ export default {
         closeCreateEventModal() {
             this.showNewEventModal = false
             this.resetEventData()
+        },
+
+        exportExcel() {
+            window.open(route('events.export'), '_blank')
         },
 
         openCreateEditEventModal(eventData) {

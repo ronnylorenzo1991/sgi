@@ -19,6 +19,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "livewire/livewire": "^2.5",
+        "maatwebsite/excel": "^3.1",
         "owen-it/laravel-auditing": "^13.0",
         "spatie/laravel-permission": "^5.4",
         "stancl/tenancy": "^3.4",
@@ -39,7 +40,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Http/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EventsExport;
 use App\Http\Requests\EventRequest;
 use App\Models\Events\Entity\Event;
 use App\Models\Events\Repository\EventRepository;
 use App\Models\Subcategories\Entity\Subcategory;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EventController extends Controller
 {
@@ -143,5 +145,10 @@ class EventController extends Controller
                 'message' => 'Hubo un problema al eliminar los datos'
             ]);
         }
+    }
+
+    public function export()
+    {
+        return Excel::download(new EventsExport($this->eventRepository), 'events.xlsx');
     }
 }

@@ -239,7 +239,8 @@ class EventRepository extends SharedRepositoryEloquent
 
         $results = $this->entity->query()->join('categories', function ($join) {
             $join->on('events.category_id', '=', 'categories.id');
-        })->whereBetween('date', [$starDate, $endDate])->selectRaw('COUNT(categories.id) as count')->selectRaw('categories.name')
+        })->whereBetween('date',
+            [$starDate, $endDate])->selectRaw('COUNT(categories.id) as count')->selectRaw('categories.name')
             ->groupBy('categories.name')->orderBy('count', 'desc')->get();
 
         foreach ($results as $data) {
@@ -248,5 +249,45 @@ class EventRepository extends SharedRepositoryEloquent
         }
 
         return [$totals, $labels];
+    }
+
+    public function getExportQuery($sortBy = 'id', $sortDir = 'desc')
+    {
+        $query = $this->entity->with('nodes', 'nodes.ip');
+
+        // if column categories
+        $query->join('categories', function ($join) {
+            $join->on('events.category_id', '=', 'categories.id');
+        });
+
+        // if column subcategories
+        $query->join('subcategories', function ($join) {
+            $join->on('events.subcategory_id', '=', 'subcategories.id');
+        });
+
+        // if column detectedBy
+        $query->join('entities as detectedBy', function ($join) {
+            $join->on('events.detected_by_id', '=', 'detectedBy.id');
+        });
+
+        // if column contributes
+        $query->join('contributes', function ($join) {
+            $join->on('events.contribute_id', '=', 'contributes.id');
+        });
+
+
+        return $query->select(
+            'events.id',
+            'date',
+            'number',
+            'categories.name as category_name',
+            'subcategories.name as subcategory_name',
+            'observations',
+            DB::raw('CASE events.national_as_source = 1 WHEN true THEN "Origen" ELSE "Destino" END as `is_national_source`'),
+            'detectedBy.name as detected_by_name',
+            'contributes.name as contribute_name',
+        )
+            ->orderBy($sortBy, $sortDir)
+            ->get();
     }
 }

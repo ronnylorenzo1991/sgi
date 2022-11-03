@@ -103,6 +103,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'events'], function () {
         ->name('events.totals_by_entities');
     Route::get('/total-by-categories', [EventController::class, 'totalByCategories'])
         ->name('events.totals_by_categories');
+    Route::get('events/export/', [EventController::class, 'export'])->name('events.export');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'defaults'], function () {

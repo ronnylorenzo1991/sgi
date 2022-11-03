@@ -116,7 +116,7 @@ export const barChart = {
                                 borderDashOffset: [2],
                                 zeroLineColor: "#dee2e6",
                                 drawBorder: false,
-                                drawTicks: false,
+                                drawTicks: true,
                                 lineWidth: 1,
                                 zeroLineWidth: 1,
                                 zeroLineBorderDash: [2],
@@ -129,9 +129,7 @@ export const barChart = {
                                 fontColor: "#8898aa",
                                 fontFamily: "Open Sans",
                                 callback: function (value) {
-                                    if (!(value % 10)) {
                                         return value;
-                                    }
                                 },
                             },
                         },
