@@ -104,6 +104,22 @@ Route::group(['middleware' => 'auth', 'prefix' => 'events'], function () {
     Route::get('/total-by-categories', [EventController::class, 'totalByCategories'])
         ->name('events.totals_by_categories');
     Route::get('events/export/', [EventController::class, 'export'])->name('events.export');
+    Route::get('/total-by-subcategories', [EventController::class, 'totalBySubcategories'])
+        ->name('events.totals_by_subcategories');
+    Route::get('/total-by-detected-by', [EventController::class, 'totalByDetectedBy'])
+        ->name('events.totals_by_detected_by');
+    Route::get('/total-by-ministries', [EventController::class, 'totalByMinistries'])
+        ->name('events.totals_by_ministries');
+    Route::get('/total-by-entities-nationals', [EventController::class, 'totalByEntitiesNationals'])
+        ->name('events.totals_by_entities_nationals');
+    Route::get('/total-by-countries-involved', [EventController::class, 'totalByCountriesInvolved'])
+        ->name('events.totals_by_countries_involved');
+    Route::get('/total-by-foreign-entities-involved', [EventController::class, 'totalByForeignEntitiesInvolved'])
+        ->name('events.totals_by_foreign_entities_involved');
+    Route::get('/total-by-foreign-contribute', [EventController::class, 'totalByContribute'])
+        ->name('events.totals_by_contribute');
+    Route::get('/total-by-source-target', [EventController::class, 'totalsBySourceTarget'])
+        ->name('events.totals_by_source_target');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'defaults'], function () {

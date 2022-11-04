@@ -74,14 +74,188 @@
                         <div class="card-header bg-transparent">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h6 class="text-uppercase ls-1 mb-1">Total de incidencias por Categorias</h6>
-                                    <h2 class="mb-0">Categorias</h2>
+                                    <h6 class="text-uppercase ls-1 mb-1">Total de incidencias por Categorías</h6>
+                                    <h2 class="mb-0">Categorías</h2>
+                                </div>
+                                <div class="col">
+                                    <a class="mb-0 btn btn-secondary float-right" href="#" @click="exportChartToImage(categoriesChartId)"><i class="fa fa-arrow-down pr-1"></i>Exportar</a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
                                 <canvas :height="350" :id="categoriesChartId"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="text-uppercase ls-1 mb-1">Total de incidencias por Subcategorías</h6>
+                                    <h2 class="mb-0">Subcategorías</h2>
+                                </div>
+                                <div class="col">
+                                    <a class="mb-0 btn btn-secondary float-right" href="#" @click="exportChartToImage(subcategoriesChartId)"><i class="fa fa-arrow-down pr-1"></i>Exportar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas :height="350" :id="subcategoriesChartId"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5 mb-5">
+                <div class="col-xl-6 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="text-uppercase ls-1 mb-1">Total de incidencias por Fuente</h6>
+                                    <h2 class="mb-0">Fuentes de Informacion</h2>
+                                </div>
+                                <div class="col">
+                                    <a class="mb-0 btn btn-secondary float-right" href="#" @click="exportChartToImage(detectedByChartId)"><i class="fa fa-arrow-down pr-1"></i>Exportar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas :height="350" :id="detectedByChartId"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="text-uppercase ls-1 mb-1">Total de incidencias por Ministerios</h6>
+                                    <h2 class="mb-0">Ministerios</h2>
+                                </div>
+                                <div class="col">
+                                    <a class="mb-0 btn btn-secondary float-right" href="#" @click="exportChartToImage(ministriesChartId)"><i class="fa fa-arrow-down pr-1"></i>Exportar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas :height="350" :id="ministriesChartId"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5 mb-5">
+                <div class="col-xl-6 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="text-uppercase ls-1 mb-1">Total de incidencias por Entidades
+                                        Nacionales</h6>
+                                    <h2 class="mb-0">Entidades Nacionales</h2>
+                                </div>
+                                <div class="col">
+                                    <a class="mb-0 btn btn-secondary float-right" href="#" @click="exportChartToImage(entitiesNationalsChartId)"><i class="fa fa-arrow-down pr-1"></i>Exportar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas :height="350" :id="entitiesNationalsChartId"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="text-uppercase ls-1 mb-1">Total de incidencias por Entidades Extranjeras
+                                        Involucradas</h6>
+                                    <h2 class="mb-0">Entidades Extranjeras Involucradas</h2>
+                                </div>
+                                <div class="col">
+                                    <a class="mb-0 btn btn-secondary float-right" href="#" @click="exportChartToImage(foreignEntitiesInvolvedChartId)"><i class="fa fa-arrow-down pr-1"></i>Exportar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas :height="350" :id="foreignEntitiesInvolvedChartId"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5 mb-5">
+                <div class="col-xl-6 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="text-uppercase ls-1 mb-1">Total de incidencias por Países
+                                        Involucrados</h6>
+                                    <h2 class="mb-0">Países Involucrados</h2>
+                                </div>
+                                <div class="col">
+                                    <a class="mb-0 btn btn-secondary float-right" href="#" @click="exportChartToImage(countriesInvolvedChartId)"><i class="fa fa-arrow-down pr-1"></i>Exportar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas :height="350" :id="countriesInvolvedChartId"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="text-uppercase ls-1 mb-1">Total de incidencias por Origen y Destino</h6>
+                                    <h2 class="mb-0">Origen y Destino</h2>
+                                </div>
+                                <div class="col">
+                                    <a class="mb-0 btn btn-secondary float-right" href="#" @click="exportChartToImage(sourceTargetChartId)"><i class="fa fa-arrow-down pr-1"></i>Exportar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas :height="350" :id="sourceTargetChartId"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5 mb-5">
+                <div class="col-xl-6 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="text-uppercase ls-1 mb-1">Total de incidencias por Tributa</h6>
+                                    <h2 class="mb-0">Tributa</h2>
+                                </div>
+                                <div class="col">
+                                    <a class="mb-0 btn btn-secondary float-right" href="#" @click="exportChartToImage(contributeChartId)"><i class="fa fa-arrow-down pr-1"></i>Exportar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas :height="350" :id="contributeChartId"></canvas>
                             </div>
                         </div>
                     </div>
@@ -134,6 +308,14 @@ export default {
             percentStatsId: 'percentStatsChart',
             entitiesChartId: 'barChartStackedId',
             categoriesChartId: 'barCategoryTotalsId',
+            subcategoriesChartId: 'barSubCategoryTotalsId',
+            detectedByChartId: 'barDetectedByTotalsId',
+            ministriesChartId: 'barMinistriesTotalsId',
+            sourceTargetChartId: 'barSourceTargetTotalsId',
+            entitiesNationalsChartId: 'barEntitiesNationalsTotalsId',
+            countriesInvolvedChartId: 'barCountriesInvolvedTotalsId',
+            foreignEntitiesInvolvedChartId: 'barForeignEntitiesInvolvedTotalsId',
+            contributeChartId: 'barContributeTotalsId',
             salesChartID: 'lineChart',
             eventsByMonthData: [],
             lists: {},
@@ -149,6 +331,14 @@ export default {
             this.getEventsByMonth()
             this.getTrendByEntity()
             this.getCategoriesByEvents()
+            this.getSubCategoriesByEvents()
+            this.getDetectedByEvents()
+            this.getMinistriesEvents()
+            this.getEntitiesNationalsEvents()
+            this.getCountriesInvolvedEvents()
+            this.getForeignEntitiesInvolvedEvents()
+            this.getContributeEvents()
+            this.getSourceTargetByEvents()
         },
 
         getFormatDate(stringDate) {
@@ -236,7 +426,256 @@ export default {
                             response.data.labels,
                             response.data.totals,
                             'eventos',
-                            "#3291ef"
+                            '#3291ef'
+                        )
+                        this.isLoading = false
+                    } else {
+                        this.isLoading = false
+                        dialog.error()
+                    }
+                }).catch(error => {
+                console.log(error)
+                this.isLoading = false
+                if (!error.response) {
+                    // network error
+                    this.errorStatus = 'Error: Network Error'
+                    dialog.error(this.errorStatus)
+                } else {
+                    this.errorStatus = error.response.data.message
+                    dialog.error(this.errorStatus)
+                }
+            })
+        },
+
+        getDetectedByEvents() {
+            this.isLoading = true
+            axios.get(route('events.totals_by_detected_by') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        barChart.createChart(
+                            this.detectedByChartId,
+                            response.data.labels,
+                            response.data.totals,
+                            'eventos',
+                            '#3291ef'
+                        )
+                        this.isLoading = false
+                    } else {
+                        this.isLoading = false
+                        dialog.error()
+                    }
+                }).catch(error => {
+                console.log(error)
+                this.isLoading = false
+                if (!error.response) {
+                    // network error
+                    this.errorStatus = 'Error: Network Error'
+                    dialog.error(this.errorStatus)
+                } else {
+                    this.errorStatus = error.response.data.message
+                    dialog.error(this.errorStatus)
+                }
+            })
+        },
+
+        getMinistriesEvents() {
+            this.isLoading = true
+            axios.get(route('events.totals_by_ministries') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        barChart.createChart(
+                            this.ministriesChartId,
+                            response.data.labels,
+                            response.data.totals,
+                            'eventos',
+                            '#3291ef'
+                        )
+                        this.isLoading = false
+                    } else {
+                        this.isLoading = false
+                        dialog.error()
+                    }
+                }).catch(error => {
+                console.log(error)
+                this.isLoading = false
+                if (!error.response) {
+                    // network error
+                    this.errorStatus = 'Error: Network Error'
+                    dialog.error(this.errorStatus)
+                } else {
+                    this.errorStatus = error.response.data.message
+                    dialog.error(this.errorStatus)
+                }
+            })
+        },
+
+        getSubCategoriesByEvents() {
+            this.isLoading = true
+            axios.get(route('events.totals_by_subcategories') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        barChart.createChart(
+                            this.subcategoriesChartId,
+                            response.data.labels,
+                            response.data.totals,
+                            'eventos',
+                            '#3291ef'
+                        )
+                        this.isLoading = false
+                    } else {
+                        this.isLoading = false
+                        dialog.error()
+                    }
+                }).catch(error => {
+                console.log(error)
+                this.isLoading = false
+                if (!error.response) {
+                    // network error
+                    this.errorStatus = 'Error: Network Error'
+                    dialog.error(this.errorStatus)
+                } else {
+                    this.errorStatus = error.response.data.message
+                    dialog.error(this.errorStatus)
+                }
+            })
+        },
+
+        getSourceTargetByEvents() {
+            this.isLoading = true
+            axios.get(route('events.totals_by_source_target') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        barChart.createChart(
+                            this.sourceTargetChartId,
+                            response.data.labels,
+                            response.data.totals,
+                            'eventos',
+                            '#3291ef'
+                        )
+
+                        this.isLoading = false
+                    } else {
+                        this.isLoading = false
+                        dialog.error()
+                    }
+                }).catch(error => {
+                console.log(error)
+                this.isLoading = false
+                if (!error.response) {
+                    // network error
+                    this.errorStatus = 'Error: Network Error'
+                    dialog.error(this.errorStatus)
+                } else {
+                    this.errorStatus = error.response.data.message
+                    dialog.error(this.errorStatus)
+                }
+            })
+        },
+
+        getEntitiesNationalsEvents() {
+            this.isLoading = true
+            axios.get(route('events.totals_by_entities_nationals') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        barChart.createChart(
+                            this.entitiesNationalsChartId,
+                            response.data.labels,
+                            response.data.totals,
+                            'eventos',
+                            '#3291ef'
+                        )
+                        this.isLoading = false
+                    } else {
+                        this.isLoading = false
+                        dialog.error()
+                    }
+                }).catch(error => {
+                console.log(error)
+                this.isLoading = false
+                if (!error.response) {
+                    // network error
+                    this.errorStatus = 'Error: Network Error'
+                    dialog.error(this.errorStatus)
+                } else {
+                    this.errorStatus = error.response.data.message
+                    dialog.error(this.errorStatus)
+                }
+            })
+        },
+
+        getCountriesInvolvedEvents() {
+            this.isLoading = true
+            axios.get(route('events.totals_by_countries_involved') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        barChart.createChart(
+                            this.countriesInvolvedChartId,
+                            response.data.labels,
+                            response.data.totals,
+                            'eventos',
+                            '#3291ef'
+                        )
+                        this.isLoading = false
+                    } else {
+                        this.isLoading = false
+                        dialog.error()
+                    }
+                }).catch(error => {
+                console.log(error)
+                this.isLoading = false
+                if (!error.response) {
+                    // network error
+                    this.errorStatus = 'Error: Network Error'
+                    dialog.error(this.errorStatus)
+                } else {
+                    this.errorStatus = error.response.data.message
+                    dialog.error(this.errorStatus)
+                }
+            })
+        },
+
+        getForeignEntitiesInvolvedEvents() {
+            this.isLoading = true
+            axios.get(route('events.totals_by_foreign_entities_involved') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        barChart.createChart(
+                            this.foreignEntitiesInvolvedChartId,
+                            response.data.labels,
+                            response.data.totals,
+                            'eventos',
+                            '#3291ef'
+                        )
+                        this.isLoading = false
+                    } else {
+                        this.isLoading = false
+                        dialog.error()
+                    }
+                }).catch(error => {
+                console.log(error)
+                this.isLoading = false
+                if (!error.response) {
+                    // network error
+                    this.errorStatus = 'Error: Network Error'
+                    dialog.error(this.errorStatus)
+                } else {
+                    this.errorStatus = error.response.data.message
+                    dialog.error(this.errorStatus)
+                }
+            })
+        },
+
+        getContributeEvents() {
+            this.isLoading = true
+            axios.get(route('events.totals_by_contribute') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        barChart.createChart(
+                            this.contributeChartId,
+                            response.data.labels,
+                            response.data.totals,
+                            'eventos',
+                            '#3291ef'
                         )
                         this.isLoading = false
                     } else {
@@ -296,12 +735,30 @@ export default {
                 }
             })
         },
+
+        exportChartToImage(id) {
+                let downloadLink = document.createElement('a');
+                downloadLink.setAttribute('download', 'image.png');
+                let canvas = document.getElementById(id);
+                let dataURL = canvas.toDataURL('image/png');
+                let url = dataURL.replace(/^data:image\/png/,'data:application/octet-stream');
+                downloadLink.setAttribute('href',url);
+                downloadLink.click();
+        }
     },
 
     mounted() {
         this.getEventsByMonth()
         this.getTrendByEntity()
         this.getCategoriesByEvents()
+        this.getSubCategoriesByEvents()
+        this.getDetectedByEvents()
+        this.getMinistriesEvents()
+        this.getEntitiesNationalsEvents()
+        this.getCountriesInvolvedEvents()
+        this.getForeignEntitiesInvolvedEvents()
+        this.getContributeEvents()
+        this.getSourceTargetByEvents()
         this.getLists(['subcategories'])
     },
 }
@@ -316,4 +773,5 @@ export default {
     height: 42px !important;
     padding-top: 10px;
 }
+
 </style>

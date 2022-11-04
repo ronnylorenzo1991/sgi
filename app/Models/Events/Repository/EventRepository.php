@@ -290,4 +290,223 @@ class EventRepository extends SharedRepositoryEloquent
             ->orderBy($sortBy, $sortDir)
             ->get();
     }
+
+    public function getTotalsBySubcategories($params)
+    {
+        $starDate = date('Y-m-d', strtotime($params['startDate']));
+        $endDate = date('Y-m-d', strtotime($params['endDate']));
+
+        $labels = [];
+        $totals = [];
+
+        $results = $this->entity->query()->join('subcategories', function ($join) {
+            $join->on('events.subcategory_id', '=', 'subcategories.id');
+        })->whereBetween('date',
+            [$starDate, $endDate])->selectRaw('COUNT(subcategories.id) as count')->selectRaw('subcategories.name')
+            ->groupBy('subcategories.name')->orderBy('count', 'desc')->get();
+
+        foreach ($results as $data) {
+            $totals[] = $data->count;
+            $labels[] = $data->name;
+        }
+
+        return [$totals, $labels];
+    }
+
+    public function getTotalsBySource($params)
+    {
+        $starDate = date('Y-m-d', strtotime($params['startDate']));
+        $endDate = date('Y-m-d', strtotime($params['endDate']));
+
+        $labels = [];
+        $totals = [];
+
+        $results = $this->entity->query()->join('sources', function ($join) {
+            $join->on('events.detected_by_id', '=', 'sources.id');
+        })->whereBetween('date',
+            [$starDate, $endDate])->selectRaw('COUNT(sources.id) as count')->selectRaw('sources.name')
+            ->groupBy('sources.name')->orderBy('count', 'desc')->get();
+
+        foreach ($results as $data) {
+            $totals[] = $data->count;
+            $labels[] = $data->name;
+        }
+
+        return [$totals, $labels];
+    }
+
+    public function getTotalsByMinistries($params)
+    {
+        $starDate = date('Y-m-d', strtotime($params['startDate']));
+        $endDate = date('Y-m-d', strtotime($params['endDate']));
+
+        $labels = [];
+        $totals = [];
+
+        $results = $this->entity->query()->join('event_node', function ($join) {
+            $join->on('event_node.event_id', '=', 'events.id');
+        })->join('nodes', function ($join) {
+            $join->on('event_node.node_id', '=', 'nodes.id');
+        })->join('ministries', function ($join) {
+            $join->on('nodes.ministry_id', '=', 'ministries.id');
+        })->whereBetween('date',
+            [$starDate, $endDate])->selectRaw('COUNT(ministries.id) as count')->selectRaw('ministries.name')
+            ->groupBy('ministries.name')->orderBy('count', 'desc')->get();
+
+        foreach ($results as $data) {
+            $totals[] = $data->count;
+            $labels[] = $data->name;
+        }
+
+        return [$totals, $labels];
+    }
+
+    public function getTotalsBySourceDestiny($params)
+    {
+        $starDate = date('Y-m-d', strtotime($params['startDate']));
+        $endDate = date('Y-m-d', strtotime($params['endDate']));
+
+        $labels = [];
+        $totals = [];
+
+        $results = $this->entity->query()->join('event_node', function ($join) {
+            $join->on('event_node.event_id', '=', 'events.id');
+            $join->on('events.national_as_source', '=', true);
+        })->join('nodes', function ($join) {
+            $join->on('event_node.node_id', '=', 'nodes.id');
+        })->join('ips', function ($join) {
+            $join->on('nodes.ip_id', '=', 'ips.id');
+        })->whereBetween('date', [$starDate, $endDate])->selectRaw('COUNT(ips.id) as count')->selectRaw('ips.address')
+            ->groupBy('ips.address')->orderBy('count', 'desc')->get();
+
+        foreach ($results as $data) {
+            $totals[] = $data->count;
+            $labels[] = $data->name;
+        }
+
+        return [$totals, $labels];
+    }
+
+    public function getTotalsByNationalEntities($params)
+    {
+        $starDate = date('Y-m-d', strtotime($params['startDate']));
+        $endDate = date('Y-m-d', strtotime($params['endDate']));
+
+        $labels = [];
+        $totals = [];
+
+        $results = $this->entity->query()->join('event_node', function ($join) {
+            $join->on('event_node.event_id', '=', 'events.id');
+        })->join('nodes', function ($join) {
+            $join->on('event_node.node_id', '=', 'nodes.id');
+        })->join('entities', function ($join) {
+            $join->on('nodes.entity_id', '=', 'entities.id');
+        })->join('countries', function ($join) {
+            $join->on('nodes.country_id', '=', 'countries.id');
+        })->where('countries.id', get_national_id())->whereBetween('date',
+            [$starDate, $endDate])->selectRaw('COUNT(entities.id) as count')->selectRaw('entities.name')
+            ->groupBy('entities.name')->orderBy('count', 'desc')->get();
+
+        foreach ($results as $data) {
+            $totals[] = $data->count;
+            $labels[] = $data->name;
+        }
+
+        return [$totals, $labels];
+    }
+
+    public function getTotalsByForeignEntities($params)
+    {
+        $starDate = date('Y-m-d', strtotime($params['startDate']));
+        $endDate = date('Y-m-d', strtotime($params['endDate']));
+
+        $labels = [];
+        $totals = [];
+
+        $results = $this->entity->query()->join('event_node', function ($join) {
+            $join->on('event_node.event_id', '=', 'events.id');
+        })->join('nodes', function ($join) {
+            $join->on('event_node.node_id', '=', 'nodes.id');
+        })->join('entities', function ($join) {
+            $join->on('nodes.entity_id', '=', 'entities.id');
+        })->join('countries', function ($join) {
+            $join->on('nodes.country_id', '=', 'countries.id');
+        })->where('countries.id', '!=', get_national_id())->whereBetween('date',
+            [$starDate, $endDate])->selectRaw('COUNT(entities.id) as count')->selectRaw('entities.name')
+            ->groupBy('entities.name')->orderBy('count', 'desc')->get();
+
+        foreach ($results as $data) {
+            $totals[] = $data->count;
+            $labels[] = $data->name;
+        }
+
+        return [$totals, $labels];
+    }
+
+    public function getTotalsByContributes($params)
+    {
+        $starDate = date('Y-m-d', strtotime($params['startDate']));
+        $endDate = date('Y-m-d', strtotime($params['endDate']));
+
+        $labels = [];
+        $totals = [];
+
+        $results = $this->entity->query()->join('contributes', function ($join) {
+            $join->on('events.contribute_id', 'contributes.id');
+        })->whereBetween('date',
+            [$starDate, $endDate])->selectRaw('COUNT(contributes.id) as count')->selectRaw('contributes.name')
+            ->groupBy('contributes.name')->orderBy('count', 'desc')->get();
+
+        foreach ($results as $data) {
+            $totals[] = $data->count;
+            $labels[] = $data->name;
+        }
+
+        return [$totals, $labels];
+    }
+
+    public function getTotalsByCountry($params)
+    {
+        $starDate = date('Y-m-d', strtotime($params['startDate']));
+        $endDate = date('Y-m-d', strtotime($params['endDate']));
+
+        $labels = [];
+        $totals = [];
+
+        $results = $this->entity->query()->join('event_node', function ($join) {
+            $join->on('event_node.event_id', '=', 'events.id');
+        })->join('nodes', function ($join) {
+            $join->on('event_node.node_id', '=', 'nodes.id');
+        })->join('countries', function ($join) {
+            $join->on('nodes.country_id', '=', 'countries.id');
+        })->whereBetween('date',
+            [$starDate, $endDate])->selectRaw('COUNT(countries.id) as count')->selectRaw('countries.name')
+            ->groupBy('countries.name')->orderBy('count', 'desc')->get();
+
+        foreach ($results as $data) {
+            $totals[] = $data->count;
+            $labels[] = $data->name;
+        }
+
+        return [$totals, $labels];
+    }
+
+    public function getTotalsSourceTarget($params)
+    {
+        $starDate = date('Y-m-d', strtotime($params['startDate']));
+        $endDate = date('Y-m-d', strtotime($params['endDate']));
+
+        $labels = [];
+        $totals = [];
+
+        $results = $this->entity->query()->whereBetween('date',
+            [$starDate, $endDate])->selectRaw('COUNT(CASE WHEN events.national_as_source = 1 THEN 1 end) as source')->selectRaw('COUNT(CASE WHEN events.national_as_source = 0 THEN 1 end) as target')->get();
+
+        foreach ($results as $data) {
+            $totals = [$data->source, $data->target];
+            $labels = ['Origen', 'Destino'];
+        }
+
+        return [$totals, $labels];
+    }
 }
