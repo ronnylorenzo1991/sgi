@@ -44,13 +44,6 @@ class EventController extends Controller
         return json_encode($events);
     }
 
-    public function create()
-    {
-        $subcategories = Subcategory::all()->pluck('name', 'id');
-
-        return view('event.create', compact('subcategories'));
-    }
-
     public function store(EventRequest $request)
     {
         try {
