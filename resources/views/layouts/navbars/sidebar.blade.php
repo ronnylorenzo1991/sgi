@@ -110,6 +110,15 @@
                         </a>
                     </li>
                 @endif
+                @if(auth()->user()->hasPermissionGroup('news'))
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::url() == route('news') ? 'active' : '' }}"
+                           href="{{ route('news') }}">
+                            <i class="ni ni-world {{ Request::url() == route('news') ? 'text-secondary' : 'text-primary' }}"></i>
+                            <span class="nav-link-text">{{ __('Noticias') }}</span>
+                        </a>
+                    </li>
+                @endif
                 @if(auth()->user()->hasPermissionGroup('settings'))
                     <li class="nav-item">
                         <a class="nav-link {{ Request::url() == route('settings') ? 'active' : '' }}"

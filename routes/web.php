@@ -11,6 +11,7 @@ use \App\Http\Controllers\RoleController;
 use \App\Http\Controllers\AuditController;
 use \App\Http\Controllers\AvailabilityController;
 use \App\Http\Controllers\SiteController;
+use \App\Http\Controllers\NewsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/roles', SpaController::class)->name('roles');
     Route::get('/audits', SpaController::class)->name('audits');
     Route::get('/availabilities', SpaController::class)->name('availabilities');
+    Route::get('/news', SpaController::class)->name('news');
 });
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -172,6 +174,17 @@ Route::group(['middleware' => 'auth', 'prefix' => 'sites'], function () {
         ->name('sites.edit');
     Route::delete('{id}/remove', [SiteController::class, 'delete'])
         ->name('sites.remove');
+});
+
+Route::group(['middleware' => 'auth', 'prefix' => 'news'], function () {
+    Route::get('/all', [NewsController::class, 'getAll'])
+        ->name('news.all');
+    Route::post('/create', [NewsController::class, 'store'])
+        ->name('news.create');
+    Route::post('{id}/edit', [NewsController::class, 'update'])
+        ->name('news.edit');
+    Route::delete('{id}/remove', [NewsController::class, 'delete'])
+        ->name('news.remove');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'logs'], function () {

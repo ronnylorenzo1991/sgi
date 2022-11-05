@@ -32,7 +32,6 @@
                             <simple-table reference="availabilityVueTable"
                                           :key="availabilityTableKey"
                                           ref="availabilityTable"
-                                          :action-default-options="['edit', 'delete']"
                                           :api-url="availabilitiesUrl"
                                           :has-settings="false"
                                           :has-header="false"
@@ -40,6 +39,7 @@
                                           :per-page="5"
                                           paginationFontSize="small"
                                           :hasCustomActions="false"
+                                          :action-default-options="['edit', 'delete']"
                                           @edit="openCreateEditAvailabilityModal(...arguments)"
                                           @delete="deleteAvailability(...arguments)">
                             </simple-table>

@@ -58,6 +58,13 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'availabilities.availabilities.show'])->syncRoles([$admin, $client, $analist]);
         Permission::create(['name' => 'availabilities.availabilities.delete'])->syncRoles([$admin]);
 
+        Permission::create(['name' => 'news.news.list'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'news.news.create'])->syncRoles([$admin, $client]);
+        Permission::create(['name' => 'news.news.edit'])->syncRoles([$admin, $client]);
+        Permission::create(['name' => 'news.news.show'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'news.news.delete'])->syncRoles([$admin]);
+
+
         Permission::create(['name' => 'settings.entities.list'])->syncRoles([$admin, $client, $analist]);
         Permission::create(['name' => 'settings.entities.create'])->syncRoles([$admin, $client]);
         Permission::create(['name' => 'settings.entities.edit'])->syncRoles([$admin, $client]);
