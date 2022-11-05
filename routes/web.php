@@ -9,6 +9,8 @@ use \App\Http\Controllers\UserController;
 use \App\Http\Controllers\DefaultController;
 use \App\Http\Controllers\RoleController;
 use \App\Http\Controllers\AuditController;
+use \App\Http\Controllers\AvailabilityController;
+use \App\Http\Controllers\SiteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users', SpaController::class)->name('users');
     Route::get('/roles', SpaController::class)->name('roles');
     Route::get('/audits', SpaController::class)->name('audits');
+    Route::get('/availabilities', SpaController::class)->name('availabilities');
 });
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -147,6 +150,28 @@ Route::group(['middleware' => 'auth', 'prefix' => 'subcategories'], function () 
         ->name('subcategories.edit');
     Route::delete('{id}/remove', [SubcategoryController::class, 'delete'])
         ->name('subcategories.remove');
+});
+
+Route::group(['middleware' => 'auth', 'prefix' => 'availabilities'], function () {
+    Route::get('/all', [AvailabilityController::class, 'getAll'])
+        ->name('availabilities.all');
+    Route::post('/create', [AvailabilityController::class, 'store'])
+        ->name('availabilities.create');
+    Route::post('{id}/edit', [AvailabilityController::class, 'update'])
+        ->name('availabilities.edit');
+    Route::delete('{id}/remove', [AvailabilityController::class, 'delete'])
+        ->name('availabilities.remove');
+});
+
+Route::group(['middleware' => 'auth', 'prefix' => 'sites'], function () {
+    Route::get('/all', [SiteController::class, 'getAll'])
+        ->name('sites.all');
+    Route::post('/create', [SiteController::class, 'store'])
+        ->name('sites.create');
+    Route::post('{id}/edit', [SiteController::class, 'update'])
+        ->name('sites.edit');
+    Route::delete('{id}/remove', [SiteController::class, 'delete'])
+        ->name('sites.remove');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'logs'], function () {

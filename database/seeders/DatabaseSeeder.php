@@ -7,6 +7,7 @@ use App\Models\Contributes\Entity\Contribute;
 use App\Models\Events\Entity\Event;
 use App\Models\Ips\Entity\Ip;
 use App\Models\Nodes\Entity\Node;
+use App\Models\Sites\Entity\Site;
 use App\Models\Sources\Entity\Source;
 use App\Models\Subcategories\Entity\Subcategory;
 use Illuminate\Database\Seeder;
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
         Node::factory(10)->create();
         Source::factory(10)->create();
         Contribute::factory(10)->create();
+        Site::factory(10)->create();
 
         $this->call(EventSeeder::class);
     }
