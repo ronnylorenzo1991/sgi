@@ -30,7 +30,91 @@
                                                 <span class="d-none d-md-block">+ Nuevo Evento</span>
                                             </a>
                                         </li>
+                                        <li class="nav-item mr-2 mr-md-0">
+                                            <button class="btn small btn-primary" type="button" data-toggle="collapse"
+                                                    data-target="#filtersRow" aria-expanded="false"
+                                                    aria-controls="filtersRow">
+                                                <i class="fa fa-filter"></i>
+                                            </button>
+                                        </li>
                                     </ul>
+                                </div>
+                            </div>
+                            <!-- filters -->
+                            <div class="collapse" id="filtersRow">
+                                <div class="row">
+                                    <div class="col-12 pt-5">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group mb-3">
+                                                    <label class="label-form" for="date">Fecha</label>
+                                                    <date-range-picker v-model="filters.dateRange">
+                                                    </date-range-picker>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="number">Número</label>
+                                                    <div class="input-group input-group-merge input-group-alternative">
+                                                        <input v-model="filters.number" class="form-control"
+                                                               placeholder="Buscar Numero"
+                                                               type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label class="label-form" for="date">Categoria</label>
+                                                    <div class="input-group input-group-merge input-group-alternative">
+                                                        <multi_select v-model="filters.category_id"
+                                                                      :options="lists.categories"
+                                                                      label="name" track-by="id"
+                                                                      placeholder="Buscar la Categoria"></multi_select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label class="label-form" for="date">Subcategoria</label>
+                                                    <div class="input-group input-group-merge input-group-alternative">
+                                                        <multi_select v-model="filters.subcategory_id"
+                                                                      :options="lists.subcategories"
+                                                                      label="name" track-by="id"
+                                                                      placeholder="Buscar la subcategoria"></multi_select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label class="label-form" for="date">Detectado Por</label>
+                                                    <div class="input-group input-group-merge input-group-alternative">
+                                                        <multi_select v-model="filters.detected_by_id"
+                                                                      :options="lists.sources"
+                                                                      label="name" track-by="id"
+                                                                      placeholder="Buscar fuente de deteccion"></multi_select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label class="label-form" for="date">Tributa</label>
+                                                    <div class="input-group input-group-merge input-group-alternative">
+                                                        <multi_select v-model="filters.contribute_id"
+                                                                      :options="lists.contributes"
+                                                                      label="name" track-by="id"
+                                                                      placeholder="Buscar fuente de deteccion"></multi_select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-center pt-3 pb-2">
+                                        <button class="btn btn-primary" @click="applyFiltersAndFetchData">Aplicar
+                                        </button>
+                                        <button class="btn btn-secondary" @click="clearFilters">Limpiar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -365,6 +449,8 @@ import Multi_select from '../../components/utils/multiselect'
 import Vue from 'vue'
 import VueMoment from 'vue-moment'
 import moment from 'moment-timezone'
+import DateRangePicker from 'vue2-daterange-picker'
+import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 
 Vue.use(VueMoment, {
     moment,
@@ -377,10 +463,23 @@ export default {
         simpleTable,
         simpleTableSwitchField,
         Multi_select,
+        DateRangePicker,
     },
 
     data() {
         return {
+            filters: {
+                dateRange: {
+                    startDate: new Date(new Date().getFullYear(), 0, 1),
+                    endDate: new Date(new Date().getFullYear(), 11, 31),
+                }
+            },
+            defaultFilters: {
+                dateRange: {
+                    startDate: new Date(new Date().getFullYear(), 0, 1),
+                    endDate: new Date(new Date().getFullYear(), 11, 31),
+                }
+            },
             isLoading: false,
             eventTableKey: 0,
             newEvent: {
@@ -410,6 +509,7 @@ export default {
                 entity_id: null,
                 ips: null,
             },
+            eventsUrl: route('events.all'),
             lists: {
                 entities: [],
                 ministeries: [],
@@ -505,13 +605,25 @@ export default {
     },
 
     computed: {
-        eventsUrl() {
+        defaultEventsUrl() {
             return route('events.all')
         },
     },
 
 
     methods: {
+        getTableSortData() {
+            return this.$refs['eventTable'].$refs['eventVueTable'].sortOrder[0]
+        },
+
+        getTableCurrentPage() {
+            return this.$refs['eventTable'].$refs['eventVueTable'].currentPage
+        },
+
+        getTableperPage() {
+            return this.$refs['eventTable'].$refs['eventVueTable'].perPage
+        },
+
         reloadTable(tableReference, vuetableReference) {
             this.$refs[tableReference].$refs[vuetableReference].reload()
         },
@@ -558,7 +670,7 @@ export default {
         },
 
         exportExcel() {
-            window.open(route('events.export'), '_blank')
+            window.open(this.getRouteFilters(route('events.export')), '_blank')
         },
 
         openCreateEditEventModal(eventData) {
@@ -731,7 +843,7 @@ export default {
 
         getAddedIpLabel(item, showAll = false) {
             if (showAll) {
-             return item.id
+                return item.id
                     ? item.ip.address
                     : item.ips
             }
@@ -768,7 +880,73 @@ export default {
 
         getListsValueById(id, element) {
             return this.lists[element]?.filter(item => item.id === id)[0]
-        }
+        },
+
+        clearFilters() {
+            this.filters = this.cloneDeep(this.defaultFilters)
+            this.$refs['eventTable'].sortOrder = []
+            this.eventsUrl = this.defaultEventsUrl
+            this.$nextTick(() => {
+                this.$refs['eventTable'].$refs['eventVueTable'].reload()
+            })
+        },
+
+        applyFiltersAndFetchData() {
+            this.eventsUrl = this.defaultEventsUrl
+            this.eventsUrl = this.getRouteFilters(this.eventsUrl)
+        },
+
+        cloneDeep(value) {
+            return JSON.parse(JSON.stringify(value))
+        },
+
+        getRouteFilters(route) {
+            const queryString = null
+            let sortData = this.getTableSortData()
+            let currentPage = this.getTableCurrentPage()
+            let perPage = this.getTableperPage()
+
+            let url
+            let separation = '?'
+
+            const orderByQuery = `&order_by=${sortData?.field}&sort_by=${sortData?.direction}`
+            url = `${route}${separation}page=${currentPage}&per_page=${perPage}${orderByQuery}${queryString ? '&' + queryString : ''}`
+
+            separation = '&'
+
+            let extraQueryString = ''
+            if (Object.keys(this.filters).length > 0) {
+                extraQueryString = separation + this.stringify(this.filters)
+            }
+
+            return url + extraQueryString
+        },
+
+        stringify(allParams) {
+            const params = JSON.parse(JSON.stringify(allParams))
+            const stringify = Object.keys(params)
+                .filter(key => params[key] !== null && params[key] !== '' && params[key] !== undefined)
+                .map((key) => {
+                    if (typeof params[key] === 'object' && params[key]) {
+                        return this.objectToArray(key, params[key])
+                    }
+
+                    return encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+                })
+                .filter(item => item !== null && item !== '' && item !== undefined)
+
+            return (
+                stringify.length > 1 ? stringify.join('&') : stringify.join('')
+            ).replace(/^\&/, '').trim()
+        },
+
+        objectToArray(param, object) {
+            return Object.keys(object)
+                .filter(key => object[key] !== null & object[key] !== '')
+                .map(key => {
+                    return encodeURIComponent(`${param}[${key}]`) + '=' + encodeURIComponent(object[key])
+                }).join('&')
+        },
     },
 
     created() {
