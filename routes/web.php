@@ -12,6 +12,8 @@ use \App\Http\Controllers\AuditController;
 use \App\Http\Controllers\AvailabilityController;
 use \App\Http\Controllers\SiteController;
 use \App\Http\Controllers\NewsController;
+use \App\Http\Controllers\ReportController;
+use \App\Http\Controllers\ReportTypeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/audits', SpaController::class)->name('audits');
     Route::get('/availabilities', SpaController::class)->name('availabilities');
     Route::get('/news', SpaController::class)->name('news');
+    Route::get('/reports', SpaController::class)->name('reports');
 });
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -102,6 +105,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'events'], function () {
         ->name('events.remove');
     Route::post('{id}/addPermission', [EventController::class, 'addPermission'])
         ->name('events.add_permission');
+    Route::get('/today-events', [EventController::class, 'getTodayEvents'])
+        ->name('events.today_data');
+
+    // Chart routes TODO: Pasar al controller del dashboard
     Route::get('/total-by-month', [EventController::class, 'totalByMonth'])
         ->name('events.total_by_month');
     Route::get('/total-by-entity', [EventController::class, 'totalsByEntities'])
@@ -163,6 +170,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'availabilities'], function ()
         ->name('availabilities.edit');
     Route::delete('{id}/remove', [AvailabilityController::class, 'delete'])
         ->name('availabilities.remove');
+    Route::get('/today-availabilities', [AvailabilityController::class, 'getTodayAvailabilities'])
+        ->name('availabilities.today_data');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'sites'], function () {
@@ -185,6 +194,30 @@ Route::group(['middleware' => 'auth', 'prefix' => 'news'], function () {
         ->name('news.edit');
     Route::delete('{id}/remove', [NewsController::class, 'delete'])
         ->name('news.remove');
+    Route::get('/today-news', [NewsController::class, 'getTodayNews'])
+        ->name('news.today_data');
+});
+
+Route::group(['middleware' => 'auth', 'prefix' => 'reports'], function () {
+    Route::get('/all', [ReportController::class, 'getAll'])
+        ->name('reports.all');
+    Route::post('/create', [ReportController::class, 'store'])
+        ->name('reports.create');
+    Route::post('{id}/edit', [ReportController::class, 'update'])
+        ->name('reports.edit');
+    Route::delete('{id}/remove', [ReportController::class, 'delete'])
+        ->name('reports.remove');
+});
+
+Route::group(['middleware' => 'auth', 'prefix' => 'report_types'], function () {
+    Route::get('/all', [ReportTypeController::class, 'getAll'])
+        ->name('report_types.all');
+    Route::post('/create', [ReportTypeController::class, 'store'])
+        ->name('report_types.create');
+    Route::post('{id}/edit', [ReportTypeController::class, 'update'])
+        ->name('report_types.edit');
+    Route::delete('{id}/remove', [ReportTypeController::class, 'delete'])
+        ->name('report_types.remove');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'logs'], function () {

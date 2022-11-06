@@ -6,13 +6,13 @@ use App\Models\Reports\Entity\Report;
 use App\Models\Reports\Repository\ReportRepository;
 use Illuminate\Http\Request;
 
-class ReportController extends Controller
+class ReportTypeController extends Controller
 {
-    private $reportsRepository;
+    private $reportRepository;
 
-    public function __construct(ReportRepository $reportsRepository)
+    public function __construct(ReportRepository $reportRepository)
     {
-        $this->reportsRepository = $reportsRepository;
+        $this->reportRepository = $reportRepository;
     }
 
     /**
@@ -24,7 +24,7 @@ class ReportController extends Controller
     {
         $reports = Report::latest('id')->paginate(10);
 
-        return view('reports.index', compact('reports'));
+        return view('report.index', compact('reports'));
     }
 
     /**
@@ -47,7 +47,7 @@ class ReportController extends Controller
         $perPage = (int)$request->get('per_page');
         $page = (int)$request->get('page');
 
-        $reports = $this->reportsRepository->getAll($sortBy, $sortDir, $perPage, $page, ['events', 'availabilities', 'news']);
+        $reports = $this->reportRepository->getAll($sortBy, $sortDir, $perPage, $page);
 
         return json_encode($reports);
     }
@@ -55,14 +55,13 @@ class ReportController extends Controller
     public function store(Request $request)
     {
         try {
-            $this->reportsRepository->store($request->all());
+            $this->reportRepository->store($request->all());
 
             return json_encode([
                 'message' => 'Elemento guardado satisfactoriamente',
             ]);
 
         } catch (\Exception $e) {
-            dd($e);
             return response()->json([
                 'message' => 'Hubo un problema al guardar los datos',
             ], 400);
@@ -72,14 +71,13 @@ class ReportController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $this->reportsRepository->update($request->all(), $id);
+            $this->reportRepository->update($request->all(), $id);
 
             return json_encode([
                 'message' => 'Elemento guardado satisfactoriamente',
             ]);
 
         } catch (\Exception $e) {
-            dd($e);
             return response()->json([
                 'message' => 'Hubo un problema al guardar los datos',
             ], 400);
@@ -89,10 +87,10 @@ class ReportController extends Controller
     public function delete($id)
     {
         try {
-            $this->reportsRepository->delete($id);
+            $this->reportRepository->delete($id);
 
             return json_encode([
-                'message' => 'Noticia eliminada satisfactoriamente'
+                'message' => 'Categoria eliminada satisfactoriamente'
             ]);
 
         } catch (\Exception $e) {

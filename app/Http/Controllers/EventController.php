@@ -136,6 +136,10 @@ class EventController extends Controller
         return Excel::download(new EventsExport($this->eventRepository, $request->all()), 'events.xlsx');
     }
 
+    public function getTodayEvents() {
+        return json_encode($this->eventRepository->getTodayEvents());
+    }
+
     public function totalBySubcategories(Request $request)
     {
         $filterParams = [

@@ -685,7 +685,7 @@ export default {
                 this.newEvent.contribute_id = eventData.contribute_id
                 this.newEvent.national_as_source = eventData.national_as_source
                 this.newEvent.deleted_nodes = []
-                eventData.nodes.forEach(item => {
+                eventData?.nodes.forEach(item => {
                     if (item.country_id === 57) { // 57 Cuba
                         this.newEvent.national_nodes.push(item)
                     } else {

@@ -27,7 +27,7 @@ class EventRepository extends SharedRepositoryEloquent
 
     public function getAllFiltered($filters)
     {
-        $query = $this->entity->query();
+        $query = $this->entity->query()->with('nodes');
         [$sortBy, $sortDir] = $this->getOrderByData($filters);
 
         $perPage = in_array('per_page', $filters) ? $filters['per_page'] : 10;
@@ -239,6 +239,10 @@ class EventRepository extends SharedRepositoryEloquent
         );
 
         return $query->orderBy($sortBy, $sortDir)->get();
+    }
+
+    public function getTodayEvents() {
+        return $this->entity->whereDate('date', Carbon::today())->get();
     }
 
     /* Chart Methods TODO: Pasar a un repositorio de Dashboards */

@@ -5,6 +5,7 @@ namespace App\Models\Events\Entity;
 use App\Models\Categories\Entity\Category;
 use App\Models\Contributes\Entity\Contribute;
 use App\Models\Nodes\Entity\Node;
+use App\Models\Reports\Entity\Report;
 use App\Models\Sources\Entity\Source;
 use App\Models\Subcategories\Entity\Subcategory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -55,6 +56,11 @@ class Event extends Model implements Auditable
     public function sourceNodes()
     {
         return $this->nodes()->where('is_source', true);
+    }
+
+    public function reports()
+    {
+        return $this->belongsToMany(Report::class);
     }
 
     public function destinationNodes()

@@ -4,6 +4,7 @@ namespace App\Models\Availability\Repository;
 
 use App\Models\Availability\Entity\Availability;
 use App\Models\Shared\Repository\SharedRepositoryEloquent;
+use Carbon\Carbon;
 
 class AvailabilityRepository extends SharedRepositoryEloquent
 {
@@ -12,5 +13,9 @@ class AvailabilityRepository extends SharedRepositoryEloquent
     )
     {
         parent::__construct($entity);
+    }
+
+    public function getTodayAvailabilities() {
+        return $this->entity->whereDate('created_at', Carbon::today())->get();
     }
 }

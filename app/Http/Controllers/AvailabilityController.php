@@ -86,4 +86,8 @@ class AvailabilityController extends Controller
             ]);
         }
     }
+
+    public function getTodayAvailabilities() {
+        return json_encode($this->availabilityRepository->getTodayAvailabilities());
+    }
 }

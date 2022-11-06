@@ -99,4 +99,8 @@ class NewsController extends Controller
             ]);
         }
     }
+
+    public function getTodayNews() {
+        return json_encode($this->newsRepository->getTodayNews());
+    }
 }

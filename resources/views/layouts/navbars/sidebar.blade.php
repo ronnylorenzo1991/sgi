@@ -92,6 +92,15 @@
                         </a>
                     </li>
                 @endif
+                @if(auth()->user()->hasPermissionGroup('news'))
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::url() == route('reports') ? 'active' : '' }}"
+                           href="{{ route('reports') }}">
+                            <i class="ni ni-single-copy-04 {{ Request::url() == route('reports') ? 'text-secondary' : 'text-primary' }}"></i>
+                            <span class="nav-link-text">{{ __('Salidas Informativas') }}</span>
+                        </a>
+                    </li>
+                @endif
                 @if(auth()->user()->hasPermissionGroup('events'))
                     <li class="nav-item">
                         <a class="nav-link {{ Request::url() == route('events') ? 'active' : '' }}"
