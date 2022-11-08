@@ -26,29 +26,9 @@ class EventController extends Controller
      */
     public function getAll(Request $request)
     {
-        $sortData = $request->get('sort') ? preg_split("/[\s|]+/", $request->get('sort')) : [];
-
-        $sortBy = 'id';
-        $sortDir = 'desc';
-
-        if (!empty($sortData)) {
-            $sortBy = $sortData[0];
-            $sortDir = $sortData[1];
-        }
-
-        $perPage = (int) $request->get('per_page');
-        $page = (int) $request->get('page');
-
-        $events = $this->eventRepository->getAll($sortBy, $sortDir, $perPage, $page, 'nodes', 'nodes.ip');
+        $events = $this->eventRepository->getAllFiltered($request->all());
 
         return json_encode($events);
-    }
-
-    public function create()
-    {
-        $subcategories = Subcategory::all()->pluck('name', 'id');
-
-        return view('event.create', compact('subcategories'));
     }
 
     public function store(EventRequest $request)
@@ -151,9 +131,13 @@ class EventController extends Controller
         }
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new EventsExport($this->eventRepository), 'events.xlsx');
+        return Excel::download(new EventsExport($this->eventRepository, $request->all()), 'events.xlsx');
+    }
+
+    public function getTodayEvents() {
+        return json_encode($this->eventRepository->getTodayEvents());
     }
 
     public function totalBySubcategories(Request $request)
@@ -192,18 +176,6 @@ class EventController extends Controller
         ];
 
         [$totals, $labels] = $this->eventRepository->getTotalsByMinistries($filterParams);
-
-        return json_encode(['totals' => $totals, 'labels' => $labels]);
-    }
-
-    public function totalBySourceDestiny(Request $request)
-    {
-        $filterParams = [
-            'startDate' => $request->get('startDate'),
-            'endDate'   => $request->get('endDate'),
-        ];
-
-        [$totals, $labels] = $this->eventRepository->getTotalsBySourceDestiny($filterParams);
 
         return json_encode(['totals' => $totals, 'labels' => $labels]);
     }

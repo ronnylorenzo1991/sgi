@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReportsTable extends Migration
+class CreateAvailabilitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateReportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('availabilities', function (Blueprint $table) {
             $table->id();
-            $table->string('number');
-            $table->dateTime('date');
-
-            $table->unsignedBigInteger('type_id')->default(1);
-            $table->foreign('type_id')->references('id')->on('report_types')->onDelete('cascade');
+            $table->float('availability');
+            $table->text('description')->nullable();
             $table->timestamps();
+
+            $table->unsignedBigInteger('site_id');
+            $table->foreign('site_id')->references('id')->on('sites')->onDelete('cascade');
         });
     }
 
@@ -31,6 +31,6 @@ class CreateReportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('availabilities');
     }
 }

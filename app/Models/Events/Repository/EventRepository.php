@@ -25,6 +25,57 @@ class EventRepository extends SharedRepositoryEloquent
         $this->ipRepository = $ipRepository;
     }
 
+    public function getAllFiltered($filters)
+    {
+        $query = $this->entity->query()->with('nodes');
+        [$sortBy, $sortDir] = $this->getOrderByData($filters);
+
+        $perPage = in_array('per_page', $filters) ? $filters['per_page'] : 10;
+        $page = in_array('page', $filters) ? $filters['page'] : 1;
+
+        $startDate = date('Y-m-d', strtotime($filters['dateRange']['startDate'] ?? null));
+        $endDate = date('Y-m-d', strtotime($filters['dateRange']['endDate'] ?? null));
+
+        if ($filters['dateRange'] ?? null) {
+            $query->whereBetween('date', [$startDate, $endDate]);
+        }
+
+        if ($filters['number'] ?? null) {
+            $query->where('number', 'like', $filters['number']);
+        }
+
+        if ($filters['category_id'] ?? null) {
+            $query->where('category_id', $filters['category_id']);
+        }
+
+        if ($filters['detected_by_id'] ?? null) {
+            $query->where('detected_by_id', $filters['detected_by_id']);
+        }
+
+        if ($filters['contribute_id'] ?? null) {
+            $query->where('contribute_id', $filters['contribute_id']);
+        }
+
+        return $query->orderBy($sortBy, $sortDir)->paginate($perPage, ['*'], 'page', $page)->toArray();
+    }
+
+    private function getOrderByData($filters)
+    {
+        $sortData = $filters['sort'] ?? null ? preg_split("/[\s|]+/", $filters['sort']) : [];
+
+        if (!empty($sortData)) {
+            $sortBy = $sortData[0];
+            $sortDir = $sortData[1];
+
+            return [$sortBy, $sortDir];
+        }
+
+        $sortBy = array_key_exists('order_by', $filters) && $filters['order_by'] != null && $filters['order_by'] != 'undefined' ? $filters['order_by'] : 'id';
+        $sortDir = array_key_exists('sort_by', $filters) && $filters['sort_by'] != null && $filters['sort_by'] != 'undefined' ? $filters['sort_by'] : 'desc';
+
+        return [$sortBy, $sortDir];
+    }
+
     public function store($data)
     {
         $event = $this->entity->create(array_diff_key($data, array_flip(['national_nodes', 'foreign_nodes'])));
@@ -126,6 +177,75 @@ class EventRepository extends SharedRepositoryEloquent
         }
     }
 
+    public function getExportQuery($filters)
+    {
+        $query = $this->entity->with('nodes', 'nodes.ip');
+
+        [$sortBy, $sortDir] = $this->getOrderByData($filters);
+
+        $startDate = date('Y-m-d', strtotime($filters['dateRange']['startDate'] ?? null));
+        $endDate = date('Y-m-d', strtotime($filters['dateRange']['endDate'] ?? null));
+
+        // if column categories
+        $query->join('categories', function ($join) {
+            $join->on('events.category_id', '=', 'categories.id');
+        });
+
+        // if column subcategories
+        $query->join('subcategories', function ($join) {
+            $join->on('events.subcategory_id', '=', 'subcategories.id');
+        });
+
+        // if column detectedBy
+        $query->join('entities as detectedBy', function ($join) {
+            $join->on('events.detected_by_id', '=', 'detectedBy.id');
+        });
+
+        // if column contributes
+        $query->join('contributes', function ($join) {
+            $join->on('events.contribute_id', '=', 'contributes.id');
+        });
+
+        if ($filters['dateRange'] ?? null) {
+            $query->whereBetween('events.date', [$startDate, $endDate]);
+        }
+
+        if ($filters['number'] ?? null) {
+            $query->where('events.number', 'like', $filters['number']);
+        }
+
+        if ($filters['category_id'] ?? null) {
+            $query->where('events.category_id', $filters['category_id']);
+        }
+
+        if ($filters['detected_by_id'] ?? null) {
+            $query->where('events.detected_by_id', $filters['detected_by_id']);
+        }
+
+        if ($filters['contribute_id'] ?? null) {
+            $query->where('events.contribute_id', $filters['contribute_id']);
+        }
+
+        $query->select(
+            'events.id',
+            'date',
+            'number',
+            'categories.name as category_name',
+            'subcategories.name as subcategory_name',
+            'observations',
+            DB::raw('CASE events.national_as_source = 1 WHEN true THEN "Origen" ELSE "Destino" END as `is_national_source`'),
+            'detectedBy.name as detected_by_name',
+            'contributes.name as contribute_name',
+        );
+
+        return $query->orderBy($sortBy, $sortDir)->get();
+    }
+
+    public function getTodayEvents() {
+        return $this->entity->whereDate('date', Carbon::today())->get();
+    }
+
+    /* Chart Methods TODO: Pasar a un repositorio de Dashboards */
     public function getTotalByMonth($params)
     {
         $monthLabels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
@@ -251,46 +371,6 @@ class EventRepository extends SharedRepositoryEloquent
         return [$totals, $labels];
     }
 
-    public function getExportQuery($sortBy = 'id', $sortDir = 'desc')
-    {
-        $query = $this->entity->with('nodes', 'nodes.ip');
-
-        // if column categories
-        $query->join('categories', function ($join) {
-            $join->on('events.category_id', '=', 'categories.id');
-        });
-
-        // if column subcategories
-        $query->join('subcategories', function ($join) {
-            $join->on('events.subcategory_id', '=', 'subcategories.id');
-        });
-
-        // if column detectedBy
-        $query->join('entities as detectedBy', function ($join) {
-            $join->on('events.detected_by_id', '=', 'detectedBy.id');
-        });
-
-        // if column contributes
-        $query->join('contributes', function ($join) {
-            $join->on('events.contribute_id', '=', 'contributes.id');
-        });
-
-
-        return $query->select(
-            'events.id',
-            'date',
-            'number',
-            'categories.name as category_name',
-            'subcategories.name as subcategory_name',
-            'observations',
-            DB::raw('CASE events.national_as_source = 1 WHEN true THEN "Origen" ELSE "Destino" END as `is_national_source`'),
-            'detectedBy.name as detected_by_name',
-            'contributes.name as contribute_name',
-        )
-            ->orderBy($sortBy, $sortDir)
-            ->get();
-    }
-
     public function getTotalsBySubcategories($params)
     {
         $starDate = date('Y-m-d', strtotime($params['startDate']));
@@ -352,32 +432,6 @@ class EventRepository extends SharedRepositoryEloquent
         })->whereBetween('date',
             [$starDate, $endDate])->selectRaw('COUNT(ministries.id) as count')->selectRaw('ministries.name')
             ->groupBy('ministries.name')->orderBy('count', 'desc')->get();
-
-        foreach ($results as $data) {
-            $totals[] = $data->count;
-            $labels[] = $data->name;
-        }
-
-        return [$totals, $labels];
-    }
-
-    public function getTotalsBySourceDestiny($params)
-    {
-        $starDate = date('Y-m-d', strtotime($params['startDate']));
-        $endDate = date('Y-m-d', strtotime($params['endDate']));
-
-        $labels = [];
-        $totals = [];
-
-        $results = $this->entity->query()->join('event_node', function ($join) {
-            $join->on('event_node.event_id', '=', 'events.id');
-            $join->on('events.national_as_source', '=', true);
-        })->join('nodes', function ($join) {
-            $join->on('event_node.node_id', '=', 'nodes.id');
-        })->join('ips', function ($join) {
-            $join->on('nodes.ip_id', '=', 'ips.id');
-        })->whereBetween('date', [$starDate, $endDate])->selectRaw('COUNT(ips.id) as count')->selectRaw('ips.address')
-            ->groupBy('ips.address')->orderBy('count', 'desc')->get();
 
         foreach ($results as $data) {
             $totals[] = $data->count;
@@ -500,7 +554,10 @@ class EventRepository extends SharedRepositoryEloquent
         $totals = [];
 
         $results = $this->entity->query()->whereBetween('date',
-            [$starDate, $endDate])->selectRaw('COUNT(CASE WHEN events.national_as_source = 1 THEN 1 end) as source')->selectRaw('COUNT(CASE WHEN events.national_as_source = 0 THEN 1 end) as target')->get();
+            [
+                $starDate,
+                $endDate,
+            ])->selectRaw('COUNT(CASE WHEN events.national_as_source = 1 THEN 1 end) as source')->selectRaw('COUNT(CASE WHEN events.national_as_source = 0 THEN 1 end) as target')->get();
 
         foreach ($results as $data) {
             $totals = [$data->source, $data->target];

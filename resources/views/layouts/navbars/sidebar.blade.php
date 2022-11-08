@@ -92,12 +92,12 @@
                         </a>
                     </li>
                 @endif
-                @if(auth()->user()->hasPermissionGroup('settings'))
+                @if(auth()->user()->hasPermissionGroup('news'))
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::url() == route('settings') ? 'active' : '' }}"
-                           href="{{ route('settings') }}">
-                            <i class="ni ni-ui-04 {{ Request::url() == route('settings') ? 'text-secondary' : 'text-primary' }}"></i>
-                            <span class="nav-link-text">{{ __('Nomencladores') }}</span>
+                        <a class="nav-link {{ Request::url() == route('reports') ? 'active' : '' }}"
+                           href="{{ route('reports') }}">
+                            <i class="ni ni-single-copy-04 {{ Request::url() == route('reports') ? 'text-secondary' : 'text-primary' }}"></i>
+                            <span class="nav-link-text">{{ __('Salidas Informativas') }}</span>
                         </a>
                     </li>
                 @endif
@@ -107,6 +107,33 @@
                            href="{{ route('events') }}">
                             <i class="ni ni-compass-04 {{ Request::url() == route('events') ? 'text-secondary' : 'text-primary' }}"></i>
                             <span class="nav-link-text">{{ __('Eventos') }}</span>
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()->hasPermissionGroup('availabilities'))
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::url() == route('availabilities') ? 'active' : '' }}"
+                           href="{{ route('availabilities') }}">
+                            <i class="ni ni-chart-bar-32 {{ Request::url() == route('availabilities') ? 'text-secondary' : 'text-primary' }}"></i>
+                            <span class="nav-link-text">{{ __('Disponibilidad') }}</span>
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()->hasPermissionGroup('news'))
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::url() == route('news') ? 'active' : '' }}"
+                           href="{{ route('news') }}">
+                            <i class="ni ni-world {{ Request::url() == route('news') ? 'text-secondary' : 'text-primary' }}"></i>
+                            <span class="nav-link-text">{{ __('Noticias') }}</span>
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()->hasPermissionGroup('settings'))
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::url() == route('settings') ? 'active' : '' }}"
+                           href="{{ route('settings') }}">
+                            <i class="ni ni-ui-04 {{ Request::url() == route('settings') ? 'text-secondary' : 'text-primary' }}"></i>
+                            <span class="nav-link-text">{{ __('Nomencladores') }}</span>
                         </a>
                     </li>
                 @endif

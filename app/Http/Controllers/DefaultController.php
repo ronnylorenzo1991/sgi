@@ -11,6 +11,7 @@ use App\Models\Countries\Entity\country;
 use App\Models\Entities\Entity\Entity;
 use App\Models\InternetLinks\Entity\InternetLink;
 use App\Models\Ministries\Entity\Ministry;
+use App\Models\Sites\Entity\Site;
 use App\Models\Sources\Entity\Source;
 use App\Models\Subcategories\Entity\Subcategory;
 use App\Models\Users\Entity\User;
@@ -55,6 +56,9 @@ class DefaultController extends Controller
                     break;
                 case 'sources':
                     $results[$item] = Source::all()->toArray();
+                    break;
+                case 'sites':
+                    $results[$item] = Site::all()->toArray();
                     break;
                 case 'roles':
                     $results[$item] = Role::all()->toArray();

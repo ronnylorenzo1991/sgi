@@ -12,18 +12,21 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class EventsExport implements FromCollection, WithHeadings, WithStyles
 {
-    private EventRepository $eventRepository;
+    private $eventRepository;
+    private $filters;
 
-    public function __construct(EventRepository $eventRepository)
+    public function __construct(EventRepository $eventRepository, $filters)
     {
         $this->eventRepository = $eventRepository;
+        $this->filters = $filters;
     }
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        $events = $this->eventRepository->getExportQuery();
+        $events = $this->eventRepository->getExportQuery($this->filters);
+
         foreach($events as $event) {
             $nationalIps = [];
             $nationalMinistries = [];

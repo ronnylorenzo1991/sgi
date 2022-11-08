@@ -16,6 +16,7 @@
         </div>
         <div class="table-responsive">
             <vue-table :ref="reference"
+                       :sort-order="sortOrder"
                        :api-url="apiUrl"
                        :fields="fields"
                        data-path="data"
@@ -163,6 +164,7 @@ export default {
     },
     data() {
         return {
+            sortOrder: [],
             isLoading: false
         }
     },
