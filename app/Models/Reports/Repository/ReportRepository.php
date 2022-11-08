@@ -213,8 +213,8 @@ class ReportRepository extends SharedRepositoryEloquent
                     if (count($event->foreignNodes)) {
                         $entitiesByCountry = [];
                         foreach ($event->foreignNodes as $key => $node) {
-                            if (in_array($node->ministry->name, $entitiesByCountry)) {
-                                $entitiesByCountry[$node->country->name][] = $node->entity->name;
+                            if (in_array($node->ministry->name ?? null, $entitiesByCountry)) {
+                                $entitiesByCountry[$node->country->name][] = $node->entity->name ?? null;
                             } else {
                                 $entitiesByCountry[] = [
                                     $node->country->name ?? null => [$node->entity->name ?? null],
