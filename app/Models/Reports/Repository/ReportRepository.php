@@ -139,7 +139,7 @@ class ReportRepository extends SharedRepositoryEloquent
                     if ($event->foreignNodes->count()) {
                         $entitiesByCountry = [];
                         foreach ($event->foreignNodes as $key => $node) {
-                            if (in_array($node->ministry->name, $entitiesByCountry)) {
+                            if (in_array($node->ministry->name ?? null, $entitiesByCountry)) {
                                 $entitiesByCountry[$node->country->name][] = $node->entity->name;
                             } else {
                                 $entitiesByCountry[] = [
@@ -189,11 +189,11 @@ class ReportRepository extends SharedRepositoryEloquent
                     if ($event->nationalNodes->count()) {
                         $entitiesByMinistry = [];
                         foreach ($event->nationalNodes as $key => $node) {
-                            if (in_array($node->ministry->name, $entitiesByMinistry)) {
+                            if (in_array($node->ministry->name ?? null, $entitiesByMinistry)) {
                                 $entitiesByMinistry[$node->ministry->name][] = $node->entity->name;
                             } else {
                                 $entitiesByMinistry[] = [
-                                    $node->ministry->name => [$node->entity->name],
+                                    $node->ministry->name ?? null => [$node->entity->name ?? null],
                                 ];
                             }
                         }
@@ -217,7 +217,7 @@ class ReportRepository extends SharedRepositoryEloquent
                                 $entitiesByCountry[$node->country->name][] = $node->entity->name;
                             } else {
                                 $entitiesByCountry[] = [
-                                    $node->country->name => [$node->entity->name],
+                                    $node->country->name ?? null => [$node->entity->name ?? null],
                                 ];
                             }
                         }
@@ -240,7 +240,6 @@ class ReportRepository extends SharedRepositoryEloquent
                         'entities_by_ministries' => $nationalsEntitiesData,
                         'entities_by_countries'  => $foreignEntitiesData,
                     ];
-
 
                     $commonEvent['national_preposition'] = count($event->nationalNodes) > 1 ? 'direcciones asignadas' : 'una direccion asignada';
                     $commonEvent['foreign_preposition'] = count($event->foreignNodes) > 1 ? 'direcciones asignadas' : 'una direccion asignada';
