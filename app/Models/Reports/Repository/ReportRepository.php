@@ -4,6 +4,7 @@ namespace App\Models\Reports\Repository;
 
 use App\Models\Reports\Entity\Report;
 use App\Models\Shared\Repository\SharedRepositoryEloquent;
+use Illuminate\Support\Facades\DB;
 
 class ReportRepository extends SharedRepositoryEloquent
 {
@@ -57,5 +58,254 @@ class ReportRepository extends SharedRepositoryEloquent
             $availabilities[] = $availability['id'];
         }
         $report->availabilities()->sync($availabilities);
+    }
+
+    public function getWithTotalText($id, $model)
+    {
+        $text = '';
+        $query = $this->entity->where('reports.id', $id)
+            ->join('event_report', 'report_id', 'reports.id')
+            ->join('events', 'events.id', 'event_report.event_id');
+
+        if ($model == 'category') {
+            $query = $query->join('categories', 'categories.id', 'events.category_id')
+                ->select(
+                    'categories.name',
+                    DB::Raw('COUNT(categories.id) as count'),
+                )->groupBy('categories.name')->get();
+        }
+
+        if ($model == 'entity') {
+            $query = $query->join('entities', 'entities.id', 'events.detected_by_id')
+                ->select(
+                    'entities.name',
+                    DB::Raw('COUNT(entities.id) as count'),
+                )->groupBy('entities.name')->get();
+        }
+
+        foreach ($query as $key => $item) {
+            $text = $text.' '.$item->name.' '.$item->count;
+
+            if (!$key == count($query) - 1) {
+                $text = $text.',';
+            }
+        }
+
+        return $text;
+    }
+
+    public function getNewsFormatted($id)
+    {
+        $query = $this->entity->where('reports.id', $id)
+            ->join('news_report', 'report_id', 'reports.id')
+            ->join('news', 'news.id', 'news_report.news_id')
+            ->select('title as news_title', 'body as news_body', 'url as news_url')->get();
+
+        return $query->toArray();
+    }
+
+    public function getTrojanEvents($id, $type)
+    {
+        $events = [];
+        Report::where('id', $id)->with('events')->each(function ($item) use (&$events, $type) {
+            foreach ($item->events as $event) {
+                if ($event->category_id === get_trojan_category_id() && ($type == 'source' ? $event->national_as_source : !$event->national_as_source)) {
+                    $nationalsEntitiesData = '';
+                    $foreignEntitiesData = '';
+                    if ($event->nationalNodes->count()) {
+                        $entitiesByMinistry = [];
+                        foreach ($event->nationalNodes as $key => $node) {
+                            if (in_array($node->ministry->name, $entitiesByMinistry)) {
+                                $entitiesByMinistry[$node->ministry->name][] = $node->entity->name;
+                            } else {
+                                $entitiesByMinistry[] = [
+                                    $node->ministry->name => [$node->entity->name],
+                                ];
+                            }
+                        }
+                        foreach ($entitiesByMinistry as $key => $item) {
+                            $nationalsEntitiesData = $nationalsEntitiesData.' '.array_keys($item)[0].' (';
+                            foreach ($item as $subKey => $subItem) {
+                                $nationalsEntitiesData = $nationalsEntitiesData.$subItem[0];
+                                if (!$subKey != count($item) - 1) {
+                                    $nationalsEntitiesData = $nationalsEntitiesData.',';
+                                } else {
+                                    $nationalsEntitiesData = $nationalsEntitiesData.')';
+                                }
+                            }
+                        }
+                    }
+
+                    if ($event->foreignNodes->count()) {
+                        $entitiesByCountry = [];
+                        foreach ($event->foreignNodes as $key => $node) {
+                            if (in_array($node->ministry->name, $entitiesByCountry)) {
+                                $entitiesByCountry[$node->country->name][] = $node->entity->name;
+                            } else {
+                                $entitiesByCountry[] = [
+                                    $node->country->name => [$node->entity->name],
+                                ];
+                            }
+                        }
+                        foreach ($entitiesByCountry as $key => $item) {
+                            $foreignEntitiesData = $foreignEntitiesData.' '.array_keys($item)[0].' (';
+                            foreach ($item as $subKey => $subItem) {
+                                $foreignEntitiesData = $foreignEntitiesData.$subItem[0];
+                                if (!$subKey != count($item) - 1) {
+                                    $foreignEntitiesData = $foreignEntitiesData.',';
+                                } else {
+                                    $foreignEntitiesData = $foreignEntitiesData.')';
+                                }
+                            }
+                        }
+                    }
+                    $trojanEvent = [
+                        'event_number'           => $event->number,
+                        'event_category'         => $event->category->name,
+                        'event_observations'     => $event->observations,
+                        'entities_by_ministries' => $nationalsEntitiesData,
+                        'entities_by_countries'  => $foreignEntitiesData,
+                    ];
+
+
+                    $trojanEvent['national_preposition'] = count($event->nationalNodes) > 1 ? 'direcciones asignadas' : 'una direccion asignada';
+                    $trojanEvent['foreign_preposition'] = count($event->foreignNodes) > 1 ? 'direcciones asignadas' : 'una direccion asignada';
+                    $events[] = $trojanEvent;
+                }
+            }
+        });
+
+        return $events;
+    }
+
+    public function getEvents($id, $type)
+    {
+        $events = [];
+        Report::where('id', $id)->with('events')->each(function ($item) use (&$events, $type) {
+            foreach ($item->events as $event) {
+                if ($event->category_id !== get_trojan_category_id() && ($type == 'source' ? $event->national_as_source : !$event->national_as_source)) {
+                    $nationalsEntitiesData = '';
+                    $foreignEntitiesData = '';
+                    if ($event->nationalNodes->count()) {
+                        $entitiesByMinistry = [];
+                        foreach ($event->nationalNodes as $key => $node) {
+                            if (in_array($node->ministry->name, $entitiesByMinistry)) {
+                                $entitiesByMinistry[$node->ministry->name][] = $node->entity->name;
+                            } else {
+                                $entitiesByMinistry[] = [
+                                    $node->ministry->name => [$node->entity->name],
+                                ];
+                            }
+                        }
+                        foreach ($entitiesByMinistry as $key => $item) {
+                            $nationalsEntitiesData = $nationalsEntitiesData.' '.array_keys($item)[0].' (';
+                            foreach ($item as $subKey => $subItem) {
+                                $nationalsEntitiesData = $nationalsEntitiesData.$subItem[0];
+                                if (!$subKey != count($item) - 1) {
+                                    $nationalsEntitiesData = $nationalsEntitiesData.',';
+                                } else {
+                                    $nationalsEntitiesData = $nationalsEntitiesData.')';
+                                }
+                            }
+                        }
+                    }
+
+                    if (count($event->foreignNodes)) {
+                        $entitiesByCountry = [];
+                        foreach ($event->foreignNodes as $key => $node) {
+                            if (in_array($node->ministry->name, $entitiesByCountry)) {
+                                $entitiesByCountry[$node->country->name][] = $node->entity->name;
+                            } else {
+                                $entitiesByCountry[] = [
+                                    $node->country->name => [$node->entity->name],
+                                ];
+                            }
+                        }
+                        foreach ($entitiesByCountry as $key => $item) {
+                            $foreignEntitiesData = $foreignEntitiesData.' '.array_keys($item)[0].' (';
+                            foreach ($item as $subKey => $subItem) {
+                                $foreignEntitiesData = $foreignEntitiesData.$subItem[0];
+                                if (!$subKey != count($item) - 1) {
+                                    $foreignEntitiesData = $foreignEntitiesData.',';
+                                } else {
+                                    $foreignEntitiesData = $foreignEntitiesData.')';
+                                }
+                            }
+                        }
+                    }
+                    $commonEvent = [
+                        'event_number'           => $event->number,
+                        'event_category'         => $event->category->name,
+                        'event_subcategory'      => $event->subcategory->name,
+                        'entities_by_ministries' => $nationalsEntitiesData,
+                        'entities_by_countries'  => $foreignEntitiesData,
+                    ];
+
+
+                    $commonEvent['national_preposition'] = count($event->nationalNodes) > 1 ? 'direcciones asignadas' : 'una direccion asignada';
+                    $commonEvent['foreign_preposition'] = count($event->foreignNodes) > 1 ? 'direcciones asignadas' : 'una direccion asignada';
+
+                    $events[] = $commonEvent;
+                }
+            }
+        });
+
+        return $events;
+    }
+
+    public function getAvailabilitiesChartData($id) {
+        $report = $this->findOrFail($id);
+        $labels = [];
+        $series = [];
+        foreach ($report->availabilities as $availability) {
+            $labels[] = $availability->site->name;
+            $series[] = $availability->availability;
+        }
+
+        return ['labels' => $labels, 'series' => $series];
+    }
+
+    public function getCategoriesChartData($id) {
+        $report = $this->findOrFail($id);
+        $labels = [];
+        $series = [];
+        foreach ($report->availabilities as $availability) {
+            $labels[] = $availability->site->name;
+            $series[] = $availability->availability;
+        }
+
+        return ['labels' => $labels, 'series' => $series];
+    }
+
+    public function getChartData($id, $model) {
+        $labels = [];
+        $series = [];
+
+        $query = $this->entity->where('reports.id', $id)
+            ->join('event_report', 'report_id', 'reports.id')
+            ->join('events', 'events.id', 'event_report.event_id');
+
+        if ($model == 'category') {
+            $query = $query->join('categories', 'categories.id', 'events.category_id')
+                ->select(
+                    'categories.name',
+                    DB::Raw('COUNT(categories.id) as count'),
+                )->groupBy('categories.name')->get();
+        }
+
+        if ($model == 'entity') {
+            $query = $query->join('entities', 'entities.id', 'events.detected_by_id')
+                ->select(
+                    'entities.name',
+                    DB::Raw('COUNT(entities.id) as count'),
+                )->groupBy('entities.name')->get();
+        }
+
+        $query->each(function($item) use (&$labels, &$series) {
+           $labels[] = $item->name;
+           $series[] = $item->count;
+        });
+
+        return ['labels' => $labels, 'series' => $series];
     }
 }

@@ -78,4 +78,14 @@ class Event extends Model implements Auditable
 
         return $hasAdminPermissions->count() > 0;
     }
+
+    public function getNationalNodesAttribute()
+    {
+        return $this->nodes->where('country.id', get_national_id());
+    }
+
+    public function getForeignNodesAttribute()
+    {
+        return $this->nodes->where('country.id', '!=', get_national_id());
+    }
 }

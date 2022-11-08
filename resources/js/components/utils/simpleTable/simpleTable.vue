@@ -34,6 +34,11 @@
                     </div>
                     <div class="custom-actions" v-else>
                         <button type="button" class="btn btn-secondary btn-icon-only rounded-circle"
+                                @click="onAction('export', props.rowData, props.rowIndex)"
+                                v-if="actionDefaultOptions.includes('export')">
+                            <span class="btn-inner--icon"><i class="fa fa-file-export"></i></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-icon-only rounded-circle"
                                 @click="onAction('show', props.rowData, props.rowIndex)"
                                 v-if="actionDefaultOptions.includes('show')">
                             <span class="btn-inner--icon"><i class="fa fa-eye"></i></span>

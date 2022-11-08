@@ -28,12 +28,12 @@ class Report extends Model implements Auditable
 
     public function events()
     {
-        return $this->belongsToMany(Event::class)->with('nodes');
+        return $this->belongsToMany(Event::class)->with(['nodes', 'category', 'subcategory']);
     }
 
     public function availabilities()
     {
-        return $this->belongsToMany(Availability::class)->with('sites');
+        return $this->belongsToMany(Availability::class)->with('site');
     }
 
     public function news()
