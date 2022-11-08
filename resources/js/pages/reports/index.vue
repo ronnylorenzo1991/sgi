@@ -38,9 +38,10 @@
                                           :fields="reportsFields"
                                           :per-page="5"
                                           paginationFontSize="small"
-                                          :action-default-options="['edit', 'delete']"
+                                          :action-default-options="['export','edit', 'delete']"
                                           @edit="openCreateEditReportModal(...arguments)"
-                                          @delete="deleteReport(...arguments)">
+                                          @delete="deleteReport(...arguments)"
+                                          @export="exportWord(...arguments)">
                             </simple-table>
                         </div>
                     </div>
@@ -500,6 +501,10 @@ export default {
                     })
                 }
             })
+        },
+
+        exportWord(report) {
+            window.open(route('reports.export_word', report.id), '_blank')
         },
     },
 

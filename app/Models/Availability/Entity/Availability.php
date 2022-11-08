@@ -19,7 +19,7 @@ class Availability extends Model implements Auditable
         'availability',
     ];
 
-    public function sites()
+    public function site()
     {
         return $this->belongsTo(Site::class);
     }

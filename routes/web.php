@@ -207,6 +207,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'reports'], function () {
         ->name('reports.edit');
     Route::delete('{id}/remove', [ReportController::class, 'delete'])
         ->name('reports.remove');
+    Route::get('{id}/export_word', [ReportController::class, 'exportWord'])
+        ->name('reports.export_word');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'report_types'], function () {
