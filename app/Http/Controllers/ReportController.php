@@ -164,6 +164,8 @@ class ReportController extends Controller
             $template->setValue('categories_with_total', $this->reportsRepository->getWithTotalText($id, 'category'));
             $template->setValue('entities_total', count($entities));
             $template->setValue('entities_with_total', $this->reportsRepository->getWithTotalText($id, 'entity'));
+            $template->setValue('page_break', '</w:t></w:r>'.'<w:r><w:br w:type="page"/></w:r>'
+                . '<w:r><w:t>');
             $template->cloneBlock('block_news', 0, true, false, $news);
             $availabilityChart = new \PhpOffice\PhpWord\Element\Chart('column', $availabilitiesChart['labels'], $availabilitiesChart['series']);
             $availabilityChart->getStyle()->setWidth(Converter::inchToEmu(6.5))->setHeight(Converter::inchToEmu(2.5));
