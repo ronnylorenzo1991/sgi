@@ -27,7 +27,7 @@ class EventRepository extends SharedRepositoryEloquent
 
     public function getAllFiltered($filters)
     {
-        $query = $this->entity->query()->with('nodes');
+        $query = $this->entity->query()->with('nodes', 'reports');
         [$sortBy, $sortDir] = $this->getOrderByData($filters);
 
         $perPage = in_array('per_page', $filters) ? $filters['per_page'] : 10;

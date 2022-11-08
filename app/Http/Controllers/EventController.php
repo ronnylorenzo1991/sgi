@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exports\EventsExport;
-use App\Http\Requests\EventRequest;
-use App\Models\Events\Entity\Event;
+use App\Http\Requests\EventStoreRequest;
 use App\Models\Events\Repository\EventRepository;
-use App\Models\Subcategories\Entity\Subcategory;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -31,7 +29,7 @@ class EventController extends Controller
         return json_encode($events);
     }
 
-    public function store(EventRequest $request)
+    public function store(EventStoreRequest $request)
     {
         try {
             $this->eventRepository->store($request->all());
@@ -49,7 +47,7 @@ class EventController extends Controller
         }
     }
 
-    public function update(EventRequest $request, $id)
+    public function update(EventStoreRequest $request, $id)
     {
         try {
             $this->eventRepository->update($request->all(), $id);

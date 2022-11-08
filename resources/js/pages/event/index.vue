@@ -594,6 +594,20 @@ export default {
                     }
                 },
                 {
+                    name: 'reports',
+                    title: 'Traslados',
+                    titleClass: 'text-left',
+                    dataClass: 'text-left',
+                    formatter: (value) => {
+                        let span = ''
+                        value.forEach(item => {
+                            span += '<span class="badge badge-default badge-md ml-1 mr-1 text-white">No.' + item.id + '</span>'
+                        })
+
+                        return span
+                    }
+                },
+                {
                     name: 'actions-slot',
                     title: 'Actions',
                     titleClass: 'text-center',
