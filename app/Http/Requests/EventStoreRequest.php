@@ -25,7 +25,7 @@ class EventStoreRequest extends FormRequest
     {
         $rules = [
             'date'           => 'required|date',
-            'number'         => 'required|unique:events,number',
+            'number'         => 'required|unique:events,number,'.request()->id,
             'category_id'    => 'required',
             'observations'   => 'required',
             'detected_by_id' => 'required',
