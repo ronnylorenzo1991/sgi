@@ -47,8 +47,8 @@ class EventStoreRequest extends FormRequest
             'detected_by_id' => 'Detectado Por',
             'subcategory_id' => 'Subcategoría',
             'contribute_id'  => 'Tributa',
-            'foreign_nodes'  => 'Direcciones Extranjeras',
-            'national_nodes' => 'Direcciones Nacionales',
+            'foreign_nodes'  => 'Direcciónes Extranjeras',
+            'national_nodes' => 'Direcciónes Nacionales',
         ];
     }
 

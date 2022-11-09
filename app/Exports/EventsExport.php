@@ -77,11 +77,11 @@ class EventsExport implements FromCollection, WithHeadings, WithStyles
             'is_national_source'  => 'Origen/Destino',
             'detected_by_name'    => 'Detectado Por',
             'contribute_name'     => 'Tributa',
-            'national_ips'        => 'Direcciones Nacionales',
+            'national_ips'        => 'Direcciónes Nacionales',
             'national_ministries' => 'Ministerios',
             'national_entities'   => 'Entidades Involucradas',
             'national_links'      => 'Nombre del Enlace',
-            'foreign_ips'         => 'Direcciones Extranjeras',
+            'foreign_ips'         => 'Direcciónes Extranjeras',
             'foreign_countries'   => 'Pais Involucrado',
             'foreign_entities'    => 'Entidades Extranjeras',
         ];
