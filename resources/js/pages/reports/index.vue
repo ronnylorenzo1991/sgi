@@ -77,11 +77,11 @@
                 <hr>
                 <div class="row pt-3">
                     <div class="col">
-                        <h3 class="pt-3"> Eventos </h3>
+                        <h3 class="pt-3"> Incidentes </h3>
                     </div>
                     <div class="col" v-show="false">
                         <button class="btn btn-info  float-right">
-                            <span class="d-none d-md-block">+ Agregar Evento</span>
+                            <span class="d-none d-md-block">+ Agregar Incidente</span>
                         </button>
                     </div>
                 </div>

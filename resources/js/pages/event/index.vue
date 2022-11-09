@@ -14,7 +14,7 @@
                         <div class="card-header bg-transparent">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h2 class="mb-0">Eventos</h2>
+                                    <h2 class="mb-0">Incidentes</h2>
                                 </div>
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
@@ -27,7 +27,7 @@
                                         <li class="nav-item mr-2 mr-md-0">
                                             <a @click.prevent="openCreateEditEventModal" href="#"
                                                class="nav-link py-2 px-3 active">
-                                                <span class="d-none d-md-block">+ Nuevo Evento</span>
+                                                <span class="d-none d-md-block">+ Nuevo Incidente </span>
                                             </a>
                                         </li>
                                         <li class="nav-item mr-2 mr-md-0">
