@@ -14,6 +14,7 @@ use \App\Http\Controllers\SiteController;
 use \App\Http\Controllers\NewsController;
 use \App\Http\Controllers\ReportController;
 use \App\Http\Controllers\ReportTypeController;
+use \App\Http\Controllers\MinistryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -150,6 +151,17 @@ Route::group(['middleware' => 'auth', 'prefix' => 'categories'], function () {
         ->name('categories.edit');
     Route::delete('{id}/remove', [CategoryController::class, 'delete'])
         ->name('categories.remove');
+});
+
+Route::group(['middleware' => 'auth', 'prefix' => 'ministries'], function () {
+    Route::get('/all', [MinistryController::class, 'getAll'])
+        ->name('ministries.all');
+    Route::post('/create', [MinistryController::class, 'store'])
+        ->name('ministries.create');
+    Route::post('{id}/edit', [MinistryController::class, 'update'])
+        ->name('ministries.edit');
+    Route::delete('{id}/remove', [MinistryController::class, 'delete'])
+        ->name('ministries.remove');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'subcategories'], function () {

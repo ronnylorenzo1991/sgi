@@ -119,10 +119,47 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-6">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="mb-0">Ministerios</h2>
+                                </div>
+                                <div class="col">
+                                    <ul class="nav nav-pills justify-content-end">
+                                        <li class="nav-item mr-2 mr-md-0">
+                                            <a @click.prevent="openCreateEditModal('ministry')" href="#"
+                                               class="nav-link py-2 px-3 active">
+                                                <span class="d-none d-md-block">+ Nuevo Ministerio</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <simple-table reference="siteVueTable"
+                                          :actionDefaultOptions="['edit', 'delete']"
+                                          ref="siteTable"
+                                          :api-url="ministriesUrl"
+                                          :has-settings="false"
+                                          :has-header="false"
+                                          :fields="ministriesFields"
+                                          :per-page="5"
+                                          paginationFontSize="small"
+                                          :hasCustomActions="false"
+                                          @edit="openCreateEditModal('ministry', ...arguments)"
+                                          @delete="removeElement('ministry','ministries.remove', ...arguments)">
+                            </simple-table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Modals -->
         <modal-sites ref="siteModal" :item="newEditingItem" @savedComplete="savedElement('site')"/>
+        <modal-ministries ref="ministryModal" :item="newEditingItem" @savedComplete="savedElement('ministry')"/>
         <modal-categories ref="categoryModal" :item="newEditingItem" @savedComplete="savedElement('category')"/>
         <modal-subcategories ref="subcategoryModal" :item="newEditingItem" @savedComplete="savedElement('subcategory')"
                              :lists="lists"/>
@@ -139,10 +176,12 @@ import Multi_select from '../../components/utils/multiselect'
 import ModalCategories from './partials/modalCategories'
 import ModalSubcategories from './partials/modalSubcategories'
 import ModalSites from './partials/modalSites'
+import ModalMinistries from './partials/modalMinistries'
 
 export default {
     name: 'Settings',
     components: {
+        ModalMinistries,
         ModalSites,
         ModalSubcategories,
         ModalCategories,
@@ -161,6 +200,31 @@ export default {
                 subcategories: [],
             },
             categoriesFields: [
+                {
+                    name: 'name',
+                    title: 'Nombre',
+                    sortField: 'name',
+                    titleClass: 'text-left',
+                    dataClass: 'text-left',
+                    width: '40%',
+                },
+                {
+                    name: 'description',
+                    title: 'Descripción',
+                    sortField: 'description',
+                    titleClass: 'text-left',
+                    dataClass: 'text-left',
+                    width: '40%',
+                },
+                {
+                    name: 'actions-slot',
+                    title: 'Actions',
+                    titleClass: 'text-center',
+                    dataClass: 'text-center',
+                    width: '20%',
+                },
+            ],
+            ministriesFields: [
                 {
                     name: 'name',
                     title: 'Nombre',
@@ -259,6 +323,10 @@ export default {
 
         sitesUrl() {
             return route('sites.all')
+        },
+
+        ministriesUrl() {
+            return route('ministries.all')
         },
     },
 
