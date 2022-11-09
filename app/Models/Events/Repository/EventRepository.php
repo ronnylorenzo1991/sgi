@@ -31,7 +31,7 @@ class EventRepository extends SharedRepositoryEloquent
         [$sortBy, $sortDir] = $this->getOrderByData($filters);
 
         $perPage = in_array('per_page', $filters) ? $filters['per_page'] : 10;
-        $page = in_array('page', $filters) ? $filters['page'] : 1;
+        $page = array_key_exists('page', $filters) ? $filters['page'] : 1;
 
         $startDate = date('Y-m-d', strtotime($filters['dateRange']['startDate'] ?? null));
         $endDate = date('Y-m-d', strtotime($filters['dateRange']['endDate'] ?? null));
