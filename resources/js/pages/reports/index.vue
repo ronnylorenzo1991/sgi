@@ -204,7 +204,7 @@
                 <hr>
                 <div class="row pt-3">
                     <div class="col">
-                        <h3 class="pt-3"> Fuentes Publicas Informativas </h3>
+                        <h3 class="pt-3"> Fuentes Públicas Informativas </h3>
                     </div>
                     <div class="col" v-show="false">
                         <button class="btn btn-info  float-right">
