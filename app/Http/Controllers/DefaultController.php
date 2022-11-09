@@ -22,12 +22,17 @@ use Spatie\Permission\Models\Role;
 
 class DefaultController extends Controller
 {
+    public function getSubcategoriesByCategory($id) {
+        $subcategories = Subcategory::where('category_id', $id)->get()->toArray();
+
+        return json_encode(['subcategories' => $subcategories]);
+    }
+
     public function getLists(Request $request)
     {
         $request->validate([
             'lists' => 'required',
         ]);
-
 
         $results = [];
 

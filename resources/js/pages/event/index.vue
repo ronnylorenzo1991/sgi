@@ -78,7 +78,7 @@
                                                     <label class="label-form" for="date">Subcategoria</label>
                                                     <div class="input-group input-group-merge input-group-alternative">
                                                         <multi_select v-model="filters.subcategory_id"
-                                                                      :options="lists.subcategories"
+                                                                      :options="subcategoriesBycategory"
                                                                       label="name" track-by="id"
                                                                       placeholder="Buscar la subcategoria"></multi_select>
                                                     </div>
@@ -187,7 +187,7 @@
                         <div class="form-group">
                             <label class="label-form" for="date">Subcategoria</label>
                             <div class="input-group input-group-merge input-group-alternative">
-                                <multi_select v-model="newEvent.subcategory_id" :options="lists.subcategories"
+                                <multi_select v-model="newEvent.subcategory_id" :options="subcategoriesBycategory"
                                               label="name" track-by="id"
                                               placeholder="Seleccione la subcategoria"></multi_select>
                             </div>
@@ -468,6 +468,7 @@ export default {
 
     data() {
         return {
+            subcategoriesBycategory: [],
             filters: {
                 dateRange: {
                     startDate: new Date(new Date().getFullYear(), 0, 1),
@@ -624,6 +625,11 @@ export default {
         },
     },
 
+    watch: {
+        'newEvent.category_id'() {
+            this.getSubcategoriesByCategory()
+        },
+    },
 
     methods: {
         getTableSortData() {
@@ -778,6 +784,28 @@ export default {
                 .then(response => {
                     if (response.status === 200) {
                         this.lists = response.data.lists
+                    } else {
+                        dialog.error(response.data.message)
+                    }
+                }).catch(error => {
+                this.isLoading = false
+                if (!error.response) {
+                    // network error
+                    this.errorStatus = 'Error: Problemas de Conexión'
+                    dialog.error(this.errorStatus)
+                } else {
+                    this.errorStatus = error.response.data.message
+                    dialog.error(this.errorStatus)
+                }
+            })
+        },
+
+        getSubcategoriesByCategory() {
+            let url = route('defaults.subcategoriesByCategory', this.newEvent.category_id)
+            axios.get(url)
+                .then(response => {
+                    if (response.status === 200) {
+                        this.subcategoriesBycategory = response.data.subcategories
                     } else {
                         dialog.error(response.data.message)
                     }

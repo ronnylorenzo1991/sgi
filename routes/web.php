@@ -137,6 +137,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'events'], function () {
 Route::group(['middleware' => 'auth', 'prefix' => 'defaults'], function () {
         Route::get('/lists', [DefaultController::class, 'getLists'])
             ->name('defaults.lists');
+        Route::get('{id}/subcategories', [DefaultController::class, 'getSubcategoriesByCategory'])
+            ->name('defaults.subcategoriesByCategory');
     });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'categories'], function () {
