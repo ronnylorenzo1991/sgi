@@ -14,14 +14,14 @@
                         <div class="card-header bg-transparent">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h2 class="mb-0">Categorias</h2>
+                                    <h2 class="mb-0">Categorías</h2>
                                 </div>
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
                                         <li class="nav-item mr-2 mr-md-0">
                                             <a @click.prevent="openCreateEditModal('category')" href="#"
                                                class="nav-link py-2 px-3 active">
-                                                <span class="d-none d-md-block">+ Nueva Categoria</span>
+                                                <span class="d-none d-md-block">+ Nueva Categoría</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -50,14 +50,14 @@
                         <div class="card-header bg-transparent">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h2 class="mb-0">Subcategorias</h2>
+                                    <h2 class="mb-0">Subcategorías</h2>
                                 </div>
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
                                         <li class="nav-item mr-2 mr-md-0">
                                             <a @click.prevent="openCreateEditModal('subcategory')" href="#"
                                                class="nav-link py-2 px-3 active">
-                                                <span class="d-none d-md-block">+ Nueva Subcategoria</span>
+                                                <span class="d-none d-md-block">+ Nueva Subcategoría</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -171,7 +171,7 @@ export default {
                 },
                 {
                     name: 'description',
-                    title: 'Descripcion',
+                    title: 'Descripción',
                     sortField: 'description',
                     titleClass: 'text-left',
                     dataClass: 'text-left',
@@ -196,7 +196,7 @@ export default {
                 },
                 {
                     name: 'category_id',
-                    title: 'Categoria',
+                    title: 'Categoría',
                     sortField: 'category_id',
                     titleClass: 'text-left',
                     dataClass: 'text-left',
@@ -209,7 +209,7 @@ export default {
                 },
                 {
                     name: 'description',
-                    title: 'Descripcion',
+                    title: 'Descripción',
                     sortField: 'description',
                     titleClass: 'text-left',
                     dataClass: 'text-left',
@@ -232,7 +232,7 @@ export default {
                 },
                 {
                     name: 'description',
-                    title: 'Descripcion',
+                    title: 'Descripción',
                     sortField: 'description',
                     titleClass: 'text-left',
                     dataClass: 'text-left',

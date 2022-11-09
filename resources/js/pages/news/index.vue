@@ -57,7 +57,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                         </div>
-                        <input v-model="newNews.title" class="form-control" placeholder="Inserte Titulo"
+                        <input v-model="newNews.title" class="form-control" placeholder="Inserte Título"
                                type="text">
                     </div>
                 </div>
@@ -108,14 +108,14 @@ export default {
             newsFields: [
                 {
                     name: 'title',
-                    title: 'Titulo',
+                    title: 'Título',
                     sortField: 'title',
                     titleClass: "text-left",
                     dataClass: "text-left",
                 },
                 {
                     name: 'body',
-                    title: 'Descripcion',
+                    title: 'Descripción',
                     sortField: 'body',
                     titleClass: "text-left",
                     dataClass: "text-left",

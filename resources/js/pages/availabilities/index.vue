@@ -65,7 +65,7 @@
                             <span class="input-group-text"><i class="fa fa-bars"></i></span>
                         </div>
                         <input v-model="newAvailability.description" class="form-control"
-                               placeholder="Inserte Descripcion"
+                               placeholder="Inserte Descripción"
                                type="text">
                     </div>
                 </div>
@@ -141,7 +141,7 @@ export default {
                 },
                 {
                     name: 'description',
-                    title: 'Descripcion',
+                    title: 'Descripción',
                     sortField: 'description',
                     titleClass: 'text-left',
                     dataClass: 'text-left',

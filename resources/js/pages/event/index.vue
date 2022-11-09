@@ -57,30 +57,30 @@
                                                     <label for="number">Número</label>
                                                     <div class="input-group input-group-merge input-group-alternative">
                                                         <input v-model="filters.number" class="form-control"
-                                                               placeholder="Buscar Numero"
+                                                               placeholder="Buscar Número"
                                                                type="text">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-3">
                                                 <div class="form-group">
-                                                    <label class="label-form" for="date">Categoria</label>
+                                                    <label class="label-form" for="date">Categoría</label>
                                                     <div class="input-group input-group-merge input-group-alternative">
                                                         <multi_select v-model="filters.category_id"
                                                                       :options="lists.categories"
                                                                       label="name" track-by="id"
-                                                                      placeholder="Buscar la Categoria"></multi_select>
+                                                                      placeholder="Buscar la Categoría"></multi_select>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-3">
                                                 <div class="form-group">
-                                                    <label class="label-form" for="date">Subcategoria</label>
+                                                    <label class="label-form" for="date">Subcategoría</label>
                                                     <div class="input-group input-group-merge input-group-alternative">
                                                         <multi_select v-model="filters.subcategory_id"
                                                                       :options="subcategoriesBycategory"
                                                                       label="name" track-by="id"
-                                                                      placeholder="Buscar la subcategoria"></multi_select>
+                                                                      placeholder="Buscar la subcategoría"></multi_select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -175,21 +175,21 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label class="label-form" for="date">Categoria</label>
+                            <label class="label-form" for="date">Categoría</label>
                             <div class="input-group input-group-merge input-group-alternative">
                                 <multi_select v-model="newEvent.category_id" :options="lists.categories"
                                               label="name" track-by="id"
-                                              placeholder="Seleccione la Categoria"></multi_select>
+                                              placeholder="Seleccione la Categoría"></multi_select>
                             </div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label class="label-form" for="date">Subcategoria</label>
+                            <label class="label-form" for="date">Subcategoría</label>
                             <div class="input-group input-group-merge input-group-alternative">
                                 <multi_select v-model="newEvent.subcategory_id" :options="subcategoriesBycategory"
                                               label="name" track-by="id"
-                                              placeholder="Seleccione la subcategoria"></multi_select>
+                                              placeholder="Seleccione la subcategoría"></multi_select>
                             </div>
                         </div>
                     </div>
@@ -530,7 +530,7 @@ export default {
                 },
                 {
                     name: 'number',
-                    title: 'Numero',
+                    title: 'Número',
                     sortField: 'number',
                     titleClass: 'text-left',
                     dataClass: 'text-left',
@@ -550,7 +550,7 @@ export default {
                 },
                 {
                     name: 'subcategory_id',
-                    title: 'Subcategoria',
+                    title: 'Subcategoría',
                     sortField: 'subcategory_id',
                     titleClass: 'text-left',
                     dataClass: 'text-left',

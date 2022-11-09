@@ -20,14 +20,15 @@ class EventsExport implements FromCollection, WithHeadings, WithStyles
         $this->eventRepository = $eventRepository;
         $this->filters = $filters;
     }
+
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         $events = $this->eventRepository->getExportQuery($this->filters);
 
-        foreach($events as $event) {
+        foreach ($events as $event) {
             $nationalIps = [];
             $nationalMinistries = [];
             $nationalEntities = [];
@@ -60,28 +61,29 @@ class EventsExport implements FromCollection, WithHeadings, WithStyles
             $event['foreign_entities'] = implode(', ', $foreignEntities);
 
         }
+
         return $events;
     }
 
-    Public function headings(): array
+    public function headings(): array
     {
         return [
-            'id' => 'Id',
-            'date' => 'Fecha',
-            'number' => 'Numero',
-            'category_name' => 'Categoria',
-            'subcategory_name' => 'Subcategoria',
-            'observations' => 'Observaciones',
-            'is_national_source' => 'Origen/Destino',
-            'detected_by_name' => 'Detectado Por',
-            'contribute_name' => 'Tributa',
-            'national_ips' => 'Direcciones Nacionales',
+            'id'                  => 'Id',
+            'date'                => 'Fecha',
+            'number'              => 'Numero',
+            'category_name'       => 'Categoría',
+            'subcategory_name'    => 'Subcategoría',
+            'observations'        => 'Observaciones',
+            'is_national_source'  => 'Origen/Destino',
+            'detected_by_name'    => 'Detectado Por',
+            'contribute_name'     => 'Tributa',
+            'national_ips'        => 'Direcciones Nacionales',
             'national_ministries' => 'Ministerios',
-            'national_entities' => 'Entidades Involucradas',
-            'national_links' => 'Nombre del Enlace',
-            'foreign_ips' => 'Direcciones Extranjeras',
-            'foreign_countries' => 'Pais Involucrado',
-            'foreign_entities' => 'Entidades Extranjeras',
+            'national_entities'   => 'Entidades Involucradas',
+            'national_links'      => 'Nombre del Enlace',
+            'foreign_ips'         => 'Direcciones Extranjeras',
+            'foreign_countries'   => 'Pais Involucrado',
+            'foreign_entities'    => 'Entidades Extranjeras',
         ];
     }
 
@@ -89,7 +91,7 @@ class EventsExport implements FromCollection, WithHeadings, WithStyles
     {
         return [
             // Style the first row as bold text.
-            1    => ['font' => ['bold' => true]],
+            1 => ['font' => ['bold' => true]],
         ];
     }
 }

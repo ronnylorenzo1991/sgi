@@ -77,7 +77,7 @@ class AvailabilityController extends Controller
             $this->availabilityRepository->delete($id);
 
             return json_encode([
-                'message' => 'Categoria eliminada satisfactoriamente'
+                'message' => 'Categoría eliminada satisfactoriamente'
             ]);
 
         } catch (\Exception $e) {

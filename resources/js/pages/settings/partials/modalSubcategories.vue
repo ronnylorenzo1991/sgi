@@ -1,6 +1,6 @@
 <template>
     <div>
-        <modal title="Añadir Subcategoria"
+        <modal title="Añadir Subcategoría"
                :show="showModal"
                @accept="save"
                @cancel="closeModal">
@@ -19,14 +19,14 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                         </div>
-                        <textarea v-model="newItem.description" class="form-control" placeholder="Inserte Descripcion"/>
+                        <textarea v-model="newItem.description" class="form-control" placeholder="Inserte Descripción"/>
                     </div>
                 </div>
                 <div class="form-group mb-3">
                     <div class="input-group input-group-merge input-group-alternative">
                         <multi_select v-model="newItem.category_id" :options="lists.categories"
                                       label="name" track-by="id"
-                                      placeholder="Seleccione la Categoria"></multi_select>
+                                      placeholder="Seleccione la Categoría"></multi_select>
                     </div>
                 </div>
             </div>
