@@ -112,20 +112,24 @@ class ReportRepository extends SharedRepositoryEloquent
         $events = [];
         Report::where('id', $id)->with('events')->each(function ($item) use (&$events, $type) {
             foreach ($item->events as $event) {
-                if ($event->category_id === get_trojan_category_id() && ($type == 'source' ? $event->national_as_source : !$event->national_as_source)) {
+                $condition = $type == 'source' ? $event->national_as_source : !$event->national_as_source;
+                if ($event->category_id === get_trojan_category_id() && $condition) {
                     $nationalsEntitiesData = '';
                     $foreignEntitiesData = '';
                     if ($event->nationalNodes->count()) {
                         $entitiesByMinistry = [];
                         foreach ($event->nationalNodes as $key => $node) {
-                            if (in_array($node->ministry->name, $entitiesByMinistry)) {
-                                $entitiesByMinistry[$node->ministry->name][] = $node->entity->name;
-                            } else {
-                                $entitiesByMinistry[] = [
-                                    $node->ministry->name => [$node->entity->name],
-                                ];
+                            if($node->ministry->name ?? null) {
+                                if (in_array($node->ministry->name , $entitiesByMinistry)) {
+                                    $entitiesByMinistry[$node->ministry->name][] = $node->entity->name;
+                                } else {
+                                    $entitiesByMinistry[] = [
+                                        $node->ministry->name => [$node->entity->name],
+                                    ];
+                                }
                             }
                         }
+
                         foreach ($entitiesByMinistry as $key => $item) {
                             $nationalsEntitiesData = $nationalsEntitiesData.' '.array_keys($item)[0].' (';
                             foreach ($item as $subKey => $subItem) {
@@ -142,12 +146,14 @@ class ReportRepository extends SharedRepositoryEloquent
                     if ($event->foreignNodes->count()) {
                         $entitiesByCountry = [];
                         foreach ($event->foreignNodes as $key => $node) {
-                            if (in_array($node->ministry->name ?? null, $entitiesByCountry)) {
-                                $entitiesByCountry[$node->country->name][] = $node->entity->name;
-                            } else {
-                                $entitiesByCountry[] = [
-                                    $node->country->name => [$node->entity->name],
-                                ];
+                            if($node->country->name ?? null) {
+                                if (in_array($node->country->name ?? null, $entitiesByCountry)) {
+                                    $entitiesByCountry[$node->country->name][] = $node->entity->name;
+                                } else {
+                                    $entitiesByCountry[] = [
+                                        $node->country->name => [$node->entity->name],
+                                    ];
+                                }
                             }
                         }
                         foreach ($entitiesByCountry as $key => $item) {

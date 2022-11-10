@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryUpdateRequest extends FormRequest
+class AvailabilityStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,27 @@ class CategoryUpdateRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name' => 'required|unique:categories,name,'.request()->id,
-            'description' => 'required',
+            'site_id'      => 'required',
+            'description'  => 'required',
+            'availability' => 'required|numeric|between:0,100',
         ];
+
         return $rules;
     }
 
     public function attributes()
     {
         return [
-            'name'=> 'Nombre',
-            'description'=> 'Descripción',
+            'site_id'      => 'Sitio Web',
+            'description'  => 'Descripción',
+            'availability' => 'Dispnibilidad',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'between' => 'El campo :attributedebe ser un valor entre :min - :max.',
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SubCategoryUpdateRequest extends FormRequest
+class ReportStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class SubCategoryUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,17 +24,27 @@ class SubCategoryUpdateRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name' => 'required|unique:subcategories,name,'.request()->id,
-            'description' => 'required',
+            'number'     => 'required',
+            'start_date' => 'required',
+            'end_date'   => 'required',
         ];
+
         return $rules;
     }
 
     public function attributes()
     {
         return [
-            'name'=> 'Nombre',
-            'description'=> 'Descripción',
+            'site_id'    => 'Número',
+            'start_date' => 'Fecha Inicio',
+            'end_date'   => 'Fecha Fin',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'between' => 'El campo :attributedebe ser un valor entre :min - :max.',
         ];
     }
 }

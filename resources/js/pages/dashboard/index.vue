@@ -45,7 +45,7 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
-                                <canvas :height="350" :id="salesChartID" :key="eventsChartKey"></canvas>
+                                <canvas :height="350" :id="salesChartID" :key="salesChartKey"></canvas>
                             </div>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
-                                <canvas :height="350" :id="entitiesChartId"></canvas>
+                                <canvas :height="350" :id="entitiesChartId" :key="entitiesChartKey"></canvas>
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
-                                <canvas :height="350" :id="categoriesChartId"></canvas>
+                                <canvas :height="350" :id="categoriesChartId" :key="categoriesChartKey"></canvas>
                             </div>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
-                                <canvas :height="350" :id="subcategoriesChartId"></canvas>
+                                <canvas :height="350" :id="subcategoriesChartId" :key="subcategoriesChartKey"></canvas>
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
-                                <canvas :height="350" :id="detectedByChartId"></canvas>
+                                <canvas :height="350" :id="detectedByChartId" :key="detectedByChartKey"></canvas>
                             </div>
                         </div>
                     </div>
@@ -146,7 +146,7 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
-                                <canvas :height="350" :id="ministriesChartId"></canvas>
+                                <canvas :height="350" :id="ministriesChartId" :key="ministriesChartKey"></canvas>
                             </div>
                         </div>
                     </div>
@@ -169,7 +169,7 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
-                                <canvas :height="350" :id="entitiesNationalsChartId"></canvas>
+                                <canvas :height="350" :id="entitiesNationalsChartId" :key="ministriesChartKey"></canvas>
                             </div>
                         </div>
                     </div>
@@ -190,7 +190,7 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
-                                <canvas :height="350" :id="foreignEntitiesInvolvedChartId"></canvas>
+                                <canvas :height="350" :id="foreignEntitiesInvolvedChartId" :key="ministriesChartKey"></canvas>
                             </div>
                         </div>
                     </div>
@@ -213,7 +213,7 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
-                                <canvas :height="350" :id="countriesInvolvedChartId"></canvas>
+                                <canvas :height="350" :id="countriesInvolvedChartId" :key="countriesInvolvedChartKey"></canvas>
                             </div>
                         </div>
                     </div>
@@ -233,7 +233,7 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
-                                <canvas :height="350" :id="sourceTargetChartId"></canvas>
+                                <canvas :height="350" :id="sourceTargetChartId" :key="sourceTargetChartKey"></canvas>
                             </div>
                         </div>
                     </div>
@@ -255,7 +255,7 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
-                                <canvas :height="350" :id="contributeChartId"></canvas>
+                                <canvas :height="350" :id="contributeChartId" :key="contributeChartKey"></canvas>
                             </div>
                         </div>
                     </div>
@@ -298,7 +298,6 @@ export default {
     data() {
         return {
             eventsByEntities: null,
-            eventsChartKey: 0,
             generalFilters: {
                 pickerDates: {
                     startDate: new Date(new Date().getFullYear(), 0, 1),
@@ -307,16 +306,27 @@ export default {
             },
             percentStatsId: 'percentStatsChart',
             entitiesChartId: 'barChartStackedId',
+            entitiesChartKey: 0,
             categoriesChartId: 'barCategoryTotalsId',
+            categoriesChartKey: 0,
             subcategoriesChartId: 'barSubCategoryTotalsId',
+            subcategoriesChartKey: 0,
             detectedByChartId: 'barDetectedByTotalsId',
+            detectedByChartKey: 0,
             ministriesChartId: 'barMinistriesTotalsId',
+            ministriesChartKey: 0,
             sourceTargetChartId: 'barSourceTargetTotalsId',
+            sourceTargetChartKey: 0,
             entitiesNationalsChartId: 'barEntitiesNationalsTotalsId',
+            entitiesNationalsChartKey: 0,
             countriesInvolvedChartId: 'barCountriesInvolvedTotalsId',
+            countriesInvolvedChartKey: 0,
             foreignEntitiesInvolvedChartId: 'barForeignEntitiesInvolvedTotalsId',
+            foreignEntitiesInvolvedChartKey: 0,
             contributeChartId: 'barContributeTotalsId',
+            contributeChartKey: 0,
             salesChartID: 'lineChart',
+            salesChartKey: 0,
             eventsByMonthData: [],
             lists: {},
         }
@@ -357,7 +367,7 @@ export default {
 
         getEventsByMonth() {
             this.isLoading = true
-            this.eventsChartKey++
+            this.salesChartKey++
             axios.get(route('events.total_by_month') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {
@@ -388,6 +398,7 @@ export default {
 
         getTrendByEntity() {
             this.isLoading = true
+            this.entitiesChartKey++
             axios.get(route('events.totals_by_entities') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {
@@ -418,6 +429,7 @@ export default {
 
         getCategoriesByEvents() {
             this.isLoading = true
+            this.categoriesChartKey++
             axios.get(route('events.totals_by_categories') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {
@@ -449,6 +461,7 @@ export default {
 
         getDetectedByEvents() {
             this.isLoading = true
+            this.detectedByChartKey++
             axios.get(route('events.totals_by_detected_by') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {
@@ -480,6 +493,7 @@ export default {
 
         getMinistriesEvents() {
             this.isLoading = true
+            this.ministriesChartKey++
             axios.get(route('events.totals_by_ministries') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {
@@ -511,6 +525,7 @@ export default {
 
         getSubCategoriesByEvents() {
             this.isLoading = true
+            this.subcategoriesChartKey++
             axios.get(route('events.totals_by_subcategories') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {
@@ -542,6 +557,7 @@ export default {
 
         getSourceTargetByEvents() {
             this.isLoading = true
+            this.sourceTargetChartKey++
             axios.get(route('events.totals_by_source_target') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {
@@ -574,7 +590,8 @@ export default {
 
         getEntitiesNationalsEvents() {
             this.isLoading = true
-            axios.get(route('events.totals_by_entities_nationals') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
+            this.entitiesNationalsChartKey++
+                axios.get(route('events.totals_by_entities_nationals') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {
                         barChart.createChart(
@@ -605,6 +622,7 @@ export default {
 
         getCountriesInvolvedEvents() {
             this.isLoading = true
+            this.countriesInvolvedChartKey++
             axios.get(route('events.totals_by_countries_involved') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {
@@ -636,6 +654,7 @@ export default {
 
         getForeignEntitiesInvolvedEvents() {
             this.isLoading = true
+            this.foreignEntitiesInvolvedChartKey++
             axios.get(route('events.totals_by_foreign_entities_involved') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {
@@ -667,6 +686,7 @@ export default {
 
         getContributeEvents() {
             this.isLoading = true
+            this.contributeChartKey++
             axios.get(route('events.totals_by_contribute') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {

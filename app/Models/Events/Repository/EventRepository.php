@@ -74,8 +74,10 @@ class EventRepository extends SharedRepositoryEloquent
             return [$sortBy, $sortDir];
         }
 
-        $sortBy = array_key_exists('order_by', $filters) && $filters['order_by'] != null && $filters['order_by'] != 'undefined' ? $filters['order_by'] : 'id';
-        $sortDir = array_key_exists('sort_by', $filters) && $filters['sort_by'] != null && $filters['sort_by'] != 'undefined' ? $filters['sort_by'] : 'desc';
+        $sortBy = array_key_exists('order_by',
+            $filters) && $filters['order_by'] != null && $filters['order_by'] != 'undefined' ? $filters['order_by'] : 'id';
+        $sortDir = array_key_exists('sort_by',
+            $filters) && $filters['sort_by'] != null && $filters['sort_by'] != 'undefined' ? $filters['sort_by'] : 'desc';
 
         return [$sortBy, $sortDir];
     }
@@ -245,7 +247,8 @@ class EventRepository extends SharedRepositoryEloquent
         return $query->orderBy($sortBy, $sortDir)->get();
     }
 
-    public function getTodayEvents() {
+    public function getTodayEvents()
+    {
         return $this->entity->whereDate('date', Carbon::today())->get();
     }
 
@@ -254,11 +257,25 @@ class EventRepository extends SharedRepositoryEloquent
     {
         $monthLabels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
 
+        $labels = [];
+        $totals = [];
+
+        if ($params['startDate'] === $params['endDate']) {
+            $currentMonth = (int) date('n', strtotime($params['startDate']));
+            $labels[] = $monthLabels[$currentMonth - 1];
+
+            $query = $this->entity->whereBetween('date', [
+                Carbon::parse($params['startDate'])->format('Y-m-d').' 00:00',
+                Carbon::parse($params['endDate'])->format('Y-m-d').' 23:59',
+            ]);
+            $totals[] = $query->get()->count();
+
+            return [$totals, $labels];
+        }
+
         $startYear = date('Y', strtotime($params['startDate']));
         $endYear = date('Y', strtotime($params['endDate']));
 
-        $labels = [];
-        $totals = [];
         if ($startYear === $endYear) {
             $startMonth = (int) date('n', strtotime($params['startDate']));
             $endMonth = (int) date('n', strtotime($params['endDate']));
@@ -297,16 +314,33 @@ class EventRepository extends SharedRepositoryEloquent
 
     public function getTotalsByEntities($params)
     {
-        $monthLabels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
-        $startYear = date('Y', strtotime($params['startDate']));
-        $endYear = date('Y', strtotime($params['endDate']));
-
         $entities = DB::table('entities')
             ->select('name', 'id')
             ->groupBy('name')->get();
 
+        $monthLabels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+
         $labels = [];
         $totals = [];
+
+        if ($params['startDate'] === $params['endDate']) {
+            $currentMonth = (int) date('n', strtotime($params['startDate']));
+            $labels[] = $monthLabels[$currentMonth - 1];
+
+            foreach ($entities as $entity) {
+                $query = $this->entity->where('detected_by_id', 'like', $entity->id);
+
+                $totals[$entity->name][] = $query->whereBetween('date', [
+                    Carbon::parse($params['startDate'])->format('Y-m-d').' 00:00',
+                    Carbon::parse($params['endDate'])->format('Y-m-d').' 23:59',
+                ])->get()->count();
+            }
+
+            return [$totals, $labels];
+        }
+
+        $startYear = date('Y', strtotime($params['startDate']));
+        $endYear = date('Y', strtotime($params['endDate']));
 
         if ($startYear === $endYear) {
             $startMonth = (int) date('n', strtotime($params['startDate']));
@@ -355,8 +389,8 @@ class EventRepository extends SharedRepositoryEloquent
 
     public function getTotalsByCategories($params)
     {
-        $starDate = date('Y-m-d', strtotime($params['startDate']));
-        $endDate = date('Y-m-d', strtotime($params['endDate']));
+        $starDate = Carbon::parse($params['startDate'])->format('Y-m-d').' 00:00';
+        $endDate = Carbon::parse($params['endDate'])->format('Y-m-d').' 23:59';
 
         $labels = [];
         $totals = [];
@@ -377,8 +411,8 @@ class EventRepository extends SharedRepositoryEloquent
 
     public function getTotalsBySubcategories($params)
     {
-        $starDate = date('Y-m-d', strtotime($params['startDate']));
-        $endDate = date('Y-m-d', strtotime($params['endDate']));
+        $starDate = Carbon::parse($params['startDate'])->format('Y-m-d').' 00:00';
+        $endDate = Carbon::parse($params['endDate'])->format('Y-m-d').' 23:59';
 
         $labels = [];
         $totals = [];
@@ -399,8 +433,8 @@ class EventRepository extends SharedRepositoryEloquent
 
     public function getTotalsBySource($params)
     {
-        $starDate = date('Y-m-d', strtotime($params['startDate']));
-        $endDate = date('Y-m-d', strtotime($params['endDate']));
+        $starDate = Carbon::parse($params['startDate'])->format('Y-m-d').' 00:00';
+        $endDate = Carbon::parse($params['endDate'])->format('Y-m-d').' 23:59';
 
         $labels = [];
         $totals = [];
@@ -421,8 +455,8 @@ class EventRepository extends SharedRepositoryEloquent
 
     public function getTotalsByMinistries($params)
     {
-        $starDate = date('Y-m-d', strtotime($params['startDate']));
-        $endDate = date('Y-m-d', strtotime($params['endDate']));
+        $starDate = Carbon::parse($params['startDate'])->format('Y-m-d').' 00:00';
+        $endDate = Carbon::parse($params['endDate'])->format('Y-m-d').' 23:59';
 
         $labels = [];
         $totals = [];
@@ -447,8 +481,8 @@ class EventRepository extends SharedRepositoryEloquent
 
     public function getTotalsByNationalEntities($params)
     {
-        $starDate = date('Y-m-d', strtotime($params['startDate']));
-        $endDate = date('Y-m-d', strtotime($params['endDate']));
+        $starDate = Carbon::parse($params['startDate'])->format('Y-m-d').' 00:00';
+        $endDate = Carbon::parse($params['endDate'])->format('Y-m-d').' 23:59';
 
         $labels = [];
         $totals = [];
@@ -475,8 +509,8 @@ class EventRepository extends SharedRepositoryEloquent
 
     public function getTotalsByForeignEntities($params)
     {
-        $starDate = date('Y-m-d', strtotime($params['startDate']));
-        $endDate = date('Y-m-d', strtotime($params['endDate']));
+        $starDate = Carbon::parse($params['startDate'])->format('Y-m-d').' 00:00';
+        $endDate = Carbon::parse($params['endDate'])->format('Y-m-d').' 23:59';
 
         $labels = [];
         $totals = [];
@@ -503,8 +537,8 @@ class EventRepository extends SharedRepositoryEloquent
 
     public function getTotalsByContributes($params)
     {
-        $starDate = date('Y-m-d', strtotime($params['startDate']));
-        $endDate = date('Y-m-d', strtotime($params['endDate']));
+       $starDate = Carbon::parse($params['startDate'])->format('Y-m-d').' 00:00';
+        $endDate = Carbon::parse($params['endDate'])->format('Y-m-d').' 23:59';
 
         $labels = [];
         $totals = [];
@@ -525,8 +559,8 @@ class EventRepository extends SharedRepositoryEloquent
 
     public function getTotalsByCountry($params)
     {
-        $starDate = date('Y-m-d', strtotime($params['startDate']));
-        $endDate = date('Y-m-d', strtotime($params['endDate']));
+        $starDate = Carbon::parse($params['startDate'])->format('Y-m-d').' 00:00';
+        $endDate = Carbon::parse($params['endDate'])->format('Y-m-d').' 23:59';
 
         $labels = [];
         $totals = [];
@@ -551,8 +585,8 @@ class EventRepository extends SharedRepositoryEloquent
 
     public function getTotalsSourceTarget($params)
     {
-        $starDate = date('Y-m-d', strtotime($params['startDate']));
-        $endDate = date('Y-m-d', strtotime($params['endDate']));
+        $starDate = Carbon::parse($params['startDate'])->format('Y-m-d').' 00:00';
+        $endDate = Carbon::parse($params['endDate'])->format('Y-m-d').' 23:59';
 
         $labels = [];
         $totals = [];

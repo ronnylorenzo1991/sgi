@@ -2,8 +2,6 @@
 
 namespace App\Exports;
 
-use App\Models\Countries\Entity\country;
-use \App\Models\Events\Entity\Event;
 use App\Models\Events\Repository\EventRepository;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;

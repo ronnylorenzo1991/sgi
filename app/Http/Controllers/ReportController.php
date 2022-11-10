@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReportStoreRequest;
 use App\Models\Reports\Entity\Report;
 use App\Models\Reports\Repository\ReportRepository;
 use Illuminate\Http\Request;
@@ -54,7 +55,7 @@ class ReportController extends Controller
         return json_encode($reports);
     }
 
-    public function store(Request $request)
+    public function store(ReportStoreRequest $request)
     {
         try {
             $this->reportsRepository->store($request->all());
@@ -72,7 +73,7 @@ class ReportController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(ReportStoreRequest $request, $id)
     {
         try {
             $this->reportsRepository->update($request->all(), $id);

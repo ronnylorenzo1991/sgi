@@ -129,7 +129,9 @@ export const barChart = {
                                 fontColor: "#8898aa",
                                 fontFamily: "Open Sans",
                                 callback: function (value) {
+                                    if (!(value % 1)) {
                                         return value;
+                                    }
                                 },
                             },
                         },

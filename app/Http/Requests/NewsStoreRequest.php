@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SubCategoryUpdateRequest extends FormRequest
+class NewsStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class SubCategoryUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,17 +24,20 @@ class SubCategoryUpdateRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name' => 'required|unique:subcategories,name,'.request()->id,
-            'description' => 'required',
+            'title' => 'required',
+            'body'  => 'required',
+            'url'   => 'required',
         ];
+
         return $rules;
     }
 
     public function attributes()
     {
         return [
-            'name'=> 'Nombre',
-            'description'=> 'Descripción',
+            'title' => 'Título',
+            'body'  => 'Descripción',
+            'url'   => 'Url',
         ];
     }
 }

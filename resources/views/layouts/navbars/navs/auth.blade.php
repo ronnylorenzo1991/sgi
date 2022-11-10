@@ -20,12 +20,12 @@
                     </div>
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
                         <i class="ni ni-single-02"></i>
-                        <span>{{ __('Mi perfil') }}</span>
+                        <span>{{ __('Cambiar Contraseña') }}</span>
                     </a>
-                    <a class="dropdown-item" href="">
-                        <i class="ni ni-settings-gear-65"></i>
-                        <span>{{ __('Configuración') }}</span>
-                    </a>
+{{--                    <a class="dropdown-item" href="">--}}
+{{--                        <i class="ni ni-settings-gear-65"></i>--}}
+{{--                        <span>{{ __('Configuración') }}</span>--}}
+{{--                    </a>--}}
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">

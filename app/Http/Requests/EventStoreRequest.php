@@ -55,7 +55,6 @@ class EventStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => 'El atributo :attribute es requerido',
             'integer'  => 'El atributo :attribute debe ser un Número valido',
         ];
     }

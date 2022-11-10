@@ -329,12 +329,17 @@
                                             </div>
                                             <div>
                                                 <small class="text-muted text-white mb-0">
-                                                    Pais: {{ getAddedCountryLabel(item) }}
+                                                    Ministerio: {{ getAddedMinistryLabel(item) }}
                                                 </small>
                                             </div>
                                             <div>
                                                 <small class="text-muted text-white mb-0">
                                                     Entidad: {{ getAddedEntityLabel(item) }}
+                                                </small>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted text-white mb-0">
+                                                    Enlace: {{ getAddedInternetLinkLabel(item) }}
                                                 </small>
                                             </div>
                                         </div>
@@ -603,7 +608,7 @@ export default {
                     formatter: (value) => {
                         let span = ''
                         value.forEach(item => {
-                            span += '<span class="badge badge-default badge-md ml-1 mr-1 text-white">No.' + item.id + '</span>'
+                            span += '<span class="badge badge-default badge-md ml-1 mr-1 text-white">No.' + item.number + '</span>'
                         })
 
                         return span
@@ -919,6 +924,10 @@ export default {
 
         getAddedCountryLabel(item) {
             return this.lists.countries[item.country_id]?.name ? this.lists.countries[item.country_id]?.name : ''
+        },
+
+        getAddedInternetLinkLabel(item) {
+            return this.lists.internet_links[item.internet_link_id]?.name ? this.lists.internet_links[item.internet_link_id]?.name : ''
         },
 
         addForeignIps() {
