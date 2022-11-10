@@ -14,11 +14,9 @@ class EntityFactory extends Factory
      */
     public function definition()
     {
-        $country = country::inRandomOrder()->first();
         return [
             'name'        => $this->faker->company(),
             'description' => $this->faker->text(191),
-            'country_id'  => $country->id,
         ];
     }
 }

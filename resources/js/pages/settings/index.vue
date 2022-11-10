@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="container-fluid mt--6">
-            <div class="row">
+            <div class="row pb-5">
                 <div class="col-6">
                     <div class="card shadow">
                         <div class="card-header bg-transparent">
@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row pb-5">
                 <div class="col-6">
                     <div class="card shadow">
                         <div class="card-header bg-transparent">
@@ -139,9 +139,9 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <simple-table reference="siteVueTable"
+                            <simple-table reference="ministryVueTable"
                                           :actionDefaultOptions="['edit', 'delete']"
-                                          ref="siteTable"
+                                          ref="ministryTable"
                                           :api-url="ministriesUrl"
                                           :has-settings="false"
                                           :has-header="false"
@@ -156,10 +156,86 @@
                     </div>
                 </div>
             </div>
+            <div class="row pb-5">
+                <div class="col-6">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="mb-0">Entidades</h2>
+                                </div>
+                                <div class="col">
+                                    <ul class="nav nav-pills justify-content-end">
+                                        <li class="nav-item mr-2 mr-md-0">
+                                            <a @click.prevent="openCreateEditModal('entity')" href="#"
+                                               class="nav-link py-2 px-3 active">
+                                                <span class="d-none d-md-block">+ Nueva Entidad</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <simple-table reference="entityVueTable"
+                                          :actionDefaultOptions="['edit', 'delete']"
+                                          ref="entityTable"
+                                          :api-url="entitiesUrl"
+                                          :has-settings="false"
+                                          :has-header="false"
+                                          :fields="entitiesFields"
+                                          :per-page="5"
+                                          paginationFontSize="small"
+                                          :hasCustomActions="false"
+                                          @edit="openCreateEditModal('entity', ...arguments)"
+                                          @delete="removeElement('entity','entities.remove', ...arguments)">
+                            </simple-table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="mb-0">Enlaces de Internet</h2>
+                                </div>
+                                <div class="col">
+                                    <ul class="nav nav-pills justify-content-end">
+                                        <li class="nav-item mr-2 mr-md-0">
+                                            <a @click.prevent="openCreateEditModal('internetLink')" href="#"
+                                               class="nav-link py-2 px-3 active">
+                                                <span class="d-none d-md-block">+ Nuevo Enlace</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <simple-table reference="internetLinkVueTable"
+                                          :actionDefaultOptions="['edit', 'delete']"
+                                          ref="internetLinkTable"
+                                          :api-url="internetLinksUrl"
+                                          :has-settings="false"
+                                          :has-header="false"
+                                          :fields="internetLinksFields"
+                                          :per-page="5"
+                                          paginationFontSize="small"
+                                          :hasCustomActions="false"
+                                          @edit="openCreateEditModal('internetLink', ...arguments)"
+                                          @delete="removeElement('internetLink','internet_links.remove', ...arguments)">
+                            </simple-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Modals -->
         <modal-sites ref="siteModal" :item="newEditingItem" @savedComplete="savedElement('site')"/>
+        <modal-internet-link ref="internetLinkModal" :item="newEditingItem" @savedComplete="savedElement('internetLink')"/>
         <modal-ministries ref="ministryModal" :item="newEditingItem" @savedComplete="savedElement('ministry')"/>
+        <modal-entities ref="entityModal" :item="newEditingItem" @savedComplete="savedElement('entity')"/>
         <modal-categories ref="categoryModal" :item="newEditingItem" @savedComplete="savedElement('category')"/>
         <modal-subcategories ref="subcategoryModal" :item="newEditingItem" @savedComplete="savedElement('subcategory')"
                              :lists="lists"/>
@@ -177,10 +253,14 @@ import ModalCategories from './partials/modalCategories'
 import ModalSubcategories from './partials/modalSubcategories'
 import ModalSites from './partials/modalSites'
 import ModalMinistries from './partials/modalMinistries'
+import ModalEntities from './partials/modalEntities'
+import ModalInternetLink from './partials/modalInternetLinks'
 
 export default {
     name: 'Settings',
     components: {
+        ModalInternetLink,
+        ModalEntities,
         ModalMinistries,
         ModalSites,
         ModalSubcategories,
@@ -200,6 +280,56 @@ export default {
                 subcategories: [],
             },
             categoriesFields: [
+                {
+                    name: 'name',
+                    title: 'Nombre',
+                    sortField: 'name',
+                    titleClass: 'text-left',
+                    dataClass: 'text-left',
+                    width: '40%',
+                },
+                {
+                    name: 'description',
+                    title: 'Descripción',
+                    sortField: 'description',
+                    titleClass: 'text-left',
+                    dataClass: 'text-left',
+                    width: '40%',
+                },
+                {
+                    name: 'actions-slot',
+                    title: 'Actions',
+                    titleClass: 'text-center',
+                    dataClass: 'text-center',
+                    width: '20%',
+                },
+            ],
+            internetLinksFields: [
+                {
+                    name: 'name',
+                    title: 'Nombre',
+                    sortField: 'name',
+                    titleClass: 'text-left',
+                    dataClass: 'text-left',
+                    width: '40%',
+                },
+                {
+                    name: 'description',
+                    title: 'Descripción',
+                    sortField: 'description',
+                    titleClass: 'text-left',
+                    dataClass: 'text-left',
+                    width: '40%',
+                },
+                {
+                    name: 'actions-slot',
+                    title: 'Actions',
+                    titleClass: 'text-center',
+                    dataClass: 'text-center',
+                    width: '20%',
+                },
+            ],
+            entitiesFields: [
                 {
                     name: 'name',
                     title: 'Nombre',
@@ -327,6 +457,14 @@ export default {
 
         ministriesUrl() {
             return route('ministries.all')
+        },
+
+        entitiesUrl() {
+            return route('entities.all')
+        },
+
+        internetLinksUrl() {
+            return route('internet_links.all')
         },
     },
 

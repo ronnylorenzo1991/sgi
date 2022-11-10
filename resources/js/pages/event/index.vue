@@ -78,7 +78,7 @@
                                                     <label class="label-form" for="date">Subcategoría</label>
                                                     <div class="input-group input-group-merge input-group-alternative">
                                                         <multi_select v-model="filters.subcategory_id"
-                                                                      :options="subcategoriesBycategory"
+                                                                      :options="filters.subcategoriesBycategory"
                                                                       label="name" track-by="id"
                                                                       placeholder="Buscar la subcategoría"></multi_select>
                                                     </div>
@@ -470,6 +470,7 @@ export default {
         return {
             subcategoriesBycategory: [],
             filters: {
+                subcategoriesBycategory: [],
                 dateRange: {
                     startDate: new Date(new Date().getFullYear(), 0, 1),
                     endDate: new Date(new Date().getFullYear(), 11, 31),
@@ -629,6 +630,9 @@ export default {
         'newEvent.category_id'() {
             this.getSubcategoriesByCategory()
         },
+        'filters.category_id'() {
+            this.getSubcategoriesByCategory(true)
+        }
     },
 
     methods: {
@@ -800,11 +804,16 @@ export default {
             })
         },
 
-        getSubcategoriesByCategory() {
-            let url = route('defaults.subcategoriesByCategory', this.newEvent.category_id)
+        getSubcategoriesByCategory(forFilter = false) {
+            let url = route('defaults.subcategoriesByCategory',forFilter ? this.filters.category_id : this.newEvent.category_id)
             axios.get(url)
                 .then(response => {
                     if (response.status === 200) {
+                        if (forFilter) {
+                            this.filters.subcategoriesBycategory = response.data.subcategories
+
+                            return
+                        }
                         this.subcategoriesBycategory = response.data.subcategories
                     } else {
                         dialog.error(response.data.message)
