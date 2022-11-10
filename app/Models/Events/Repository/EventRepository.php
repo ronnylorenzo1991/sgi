@@ -84,8 +84,8 @@ class EventRepository extends SharedRepositoryEloquent
     {
         $event = $this->entity->create(array_diff_key($data, array_flip(['national_nodes', 'foreign_nodes'])));
 
-        $foreignNodes = $data['national_nodes'];
-        $nationalNodes = $data['foreign_nodes'];
+        $foreignNodes = $data['foreign_nodes'];
+        $nationalNodes = $data['national_nodes'];
 
         foreach ($foreignNodes as $node) {
             $ips = explode(',', $node['ips']);
