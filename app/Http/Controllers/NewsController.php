@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewStoreRequest;
+use App\Http\Requests\NewUpdateRequest;
 use App\Models\News\Entity\News;
 use App\Models\News\Repository\NewsRepository;
 use Illuminate\Http\Request;
@@ -52,7 +54,7 @@ class NewsController extends Controller
         return json_encode($news);
     }
 
-    public function store(Request $request)
+    public function store(NewStoreRequest $request)
     {
         try {
             $this->newsRepository->store($request->all());
@@ -68,7 +70,7 @@ class NewsController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(NewUpdateRequest $request, $id)
     {
         try {
             $this->newsRepository->update($request->all(), $id);

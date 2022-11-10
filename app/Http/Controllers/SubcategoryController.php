@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryStoreRequest;
+use App\Http\Requests\SubCategoryStoreRequest;
+use App\Http\Requests\SubCategoryUpdateRequest;
 use App\Models\Subcategories\Entity\Subcategory;
 use App\Models\Subcategories\Repository\SubcategoryRepository;
 use Illuminate\Http\Request;
@@ -52,7 +55,7 @@ class SubcategoryController extends Controller
         return json_encode($categories);
     }
 
-    public function store(Request $request)
+    public function store(SubCategoryStoreRequest $request)
     {
         try {
             $this->subcategoryRepository->store($request->all());
@@ -68,7 +71,7 @@ class SubcategoryController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(SubCategoryUpdateRequest $request, $id)
     {
         try {
             $this->subcategoryRepository->update($request->all(), $id);

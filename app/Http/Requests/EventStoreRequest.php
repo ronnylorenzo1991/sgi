@@ -51,12 +51,4 @@ class EventStoreRequest extends FormRequest
             'national_nodes' => 'Direcciónes Nacionales',
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'required' => 'El atributo :attribute es requerido',
-            'integer'  => 'El atributo :attribute debe ser un Número valido',
-        ];
-    }
 }

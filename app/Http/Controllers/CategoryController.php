@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryStoreRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Categories\Entity\Category;
 use App\Models\Categories\Repository\CategoryRepository;
 use Illuminate\Http\Request;
@@ -53,7 +55,7 @@ class CategoryController extends Controller
         return json_encode($categories);
     }
 
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
         try {
             $this->categoryRepository->store($request->all());
@@ -69,7 +71,7 @@ class CategoryController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(CategoryUpdateRequest $request, $id)
     {
         try {
             $this->categoryRepository->update($request->all(), $id);

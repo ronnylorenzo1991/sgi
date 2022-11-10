@@ -117,7 +117,7 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="text-uppercase ls-1 mb-1">Total de incidencias por Fuente</h6>
-                                    <h2 class="mb-0">Fuentes de Informacion</h2>
+                                    <h2 class="mb-0">Fuentes de Información</h2>
                                 </div>
                                 <div class="col">
                                     <a class="mb-0 btn btn-secondary float-right" href="#" @click="exportChartToImage(detectedByChartId)"><i class="fa fa-arrow-down pr-1"></i>Exportar</a>
@@ -426,7 +426,7 @@ export default {
                             response.data.labels,
                             response.data.totals,
                             'Incidentes',
-                            '#3291ef'
+                            '#11cdef'
                         )
                         this.isLoading = false
                     } else {
@@ -488,7 +488,7 @@ export default {
                             response.data.labels,
                             response.data.totals,
                             'Incidentes',
-                            '#3291ef'
+                            '#5e72e4'
                         )
                         this.isLoading = false
                     } else {
@@ -519,7 +519,7 @@ export default {
                             response.data.labels,
                             response.data.totals,
                             'Incidentes',
-                            '#3291ef'
+                            '#5e72e4'
                         )
                         this.isLoading = false
                     } else {
@@ -550,7 +550,7 @@ export default {
                             response.data.labels,
                             response.data.totals,
                             'Incidentes',
-                            '#3291ef'
+                            '#fb6340'
                         )
 
                         this.isLoading = false
@@ -582,7 +582,7 @@ export default {
                             response.data.labels,
                             response.data.totals,
                             'Incidentes',
-                            '#3291ef'
+                            '#8898aa'
                         )
                         this.isLoading = false
                     } else {
@@ -613,7 +613,7 @@ export default {
                             response.data.labels,
                             response.data.totals,
                             'Incidentes',
-                            '#3291ef'
+                            '#2dce89'
                         )
                         this.isLoading = false
                     } else {
@@ -644,7 +644,7 @@ export default {
                             response.data.labels,
                             response.data.totals,
                             'Incidentes',
-                            '#3291ef'
+                            '#fb6340'
                         )
                         this.isLoading = false
                     } else {
@@ -675,7 +675,7 @@ export default {
                             response.data.labels,
                             response.data.totals,
                             'Incidentes',
-                            '#3291ef'
+                            '#f5365c'
                         )
                         this.isLoading = false
                     } else {

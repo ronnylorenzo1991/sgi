@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AvailabilityStoreRequest;
+use App\Http\Requests\AvailabilityUpdateRequest;
 use App\Models\Availability\Repository\AvailabilityRepository;
 use Illuminate\Http\Request;
 
@@ -38,7 +40,7 @@ class AvailabilityController extends Controller
         return json_encode($availabilities);
     }
 
-    public function store(Request $request)
+    public function store(AvailabilityStoreRequest $request)
     {
         try {
             $this->availabilityRepository->store($request->all());
@@ -55,7 +57,7 @@ class AvailabilityController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(AvailabilityUpdateRequest $request, $id)
     {
         try {
             $this->availabilityRepository->update($request->all(), $id);
