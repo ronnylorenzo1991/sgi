@@ -48,6 +48,10 @@ class EventRepository extends SharedRepositoryEloquent
             $query->where('category_id', $filters['category_id']);
         }
 
+        if ($filters['subcategory_id'] ?? null) {
+            $query->where('subcategory_id', $filters['subcategory_id']);
+        }
+
         if ($filters['detected_by_id'] ?? null) {
             $query->where('detected_by_id', $filters['detected_by_id']);
         }

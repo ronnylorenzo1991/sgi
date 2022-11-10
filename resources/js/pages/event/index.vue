@@ -630,8 +630,10 @@ export default {
         'newEvent.category_id'() {
             this.getSubcategoriesByCategory()
         },
-        'filters.category_id'() {
-            this.getSubcategoriesByCategory(true)
+        'filters.category_id'(newValue) {
+            if (newValue) {
+                this.getSubcategoriesByCategory(true)
+            }
         }
     },
 
