@@ -90,4 +90,8 @@ class AvailabilityController extends Controller
     public function getTodayAvailabilities() {
         return json_encode($this->availabilityRepository->getTodayAvailabilities());
     }
+
+    public function getDataByDateRange(Request $request) {
+        return json_encode($this->availabilityRepository->getDataByDateRange($request->all()));
+    }
 }

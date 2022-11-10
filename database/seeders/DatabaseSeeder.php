@@ -7,6 +7,7 @@ use App\Models\Contributes\Entity\Contribute;
 use App\Models\Events\Entity\Event;
 use App\Models\Ips\Entity\Ip;
 use App\Models\Nodes\Entity\Node;
+use App\Models\ReportTypes\Entity\ReportType;
 use App\Models\Sites\Entity\Site;
 use App\Models\Sources\Entity\Source;
 use App\Models\Subcategories\Entity\Subcategory;
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
 
         Node::factory(10)->create();
+        ReportType::factory(1)->create();
         Source::factory(10)->create();
         Contribute::factory(10)->create();
         Site::factory(10)->create();

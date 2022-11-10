@@ -4,6 +4,7 @@ namespace App\Models\Reports\Repository;
 
 use App\Models\Reports\Entity\Report;
 use App\Models\Shared\Repository\SharedRepositoryEloquent;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ReportRepository extends SharedRepositoryEloquent
@@ -16,6 +17,8 @@ class ReportRepository extends SharedRepositoryEloquent
 
     public function store($data)
     {
+        $data['start_date'] = Carbon::parse($data['startDate'] ?? null);
+        $data['end_date'] = Carbon::parse($data['endDate'] ?? null);
         $report = $this->entity->create(array_diff_key($data, array_flip(['todayData'])));
 
         $events = $data['todayData']['events'];

@@ -16,7 +16,8 @@ class Report extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
-        'date',
+        'start_date',
+        'end_date',
         'number',
         'report_type_id',
     ];

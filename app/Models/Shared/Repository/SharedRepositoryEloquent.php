@@ -2,6 +2,7 @@
 
 namespace App\Models\Shared\Repository;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class SharedRepositoryEloquent implements SharedRepositoryInterface
@@ -62,5 +63,12 @@ abstract class SharedRepositoryEloquent implements SharedRepositoryInterface
     public function count(): int
     {
         return $this->entity->count();
+    }
+
+    public function getDataByDateRange($dateRange, $dateField = 'created_at') {
+        $startDate = Carbon::parse($dateRange['startDate'] ?? null)->startOfDay();
+        $endDate = Carbon::parse($dateRange['endDate'] ?? null)->endOfDay();
+        dd($startDate, $endDate);
+        return $this->entity->whereBetween($dateField, [$startDate, $endDate])->get();
     }
 }

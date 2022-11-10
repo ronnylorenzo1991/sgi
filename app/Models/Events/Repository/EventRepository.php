@@ -33,8 +33,8 @@ class EventRepository extends SharedRepositoryEloquent
         $perPage = in_array('per_page', $filters) ? $filters['per_page'] : 10;
         $page = array_key_exists('page', $filters) ? $filters['page'] : 1;
 
-        $startDate = date('Y-m-d', strtotime($filters['dateRange']['startDate'] ?? null));
-        $endDate = date('Y-m-d', strtotime($filters['dateRange']['endDate'] ?? null));
+        $startDate = Carbon::parse($filters['dateRange']['startDate'] ?? null)->startOfDay();
+        $endDate = Carbon::parse($filters['dateRange']['endDate'] ?? null)->endOfDay();
 
         if ($filters['dateRange'] ?? null) {
             $query->whereBetween('date', [$startDate, $endDate]);

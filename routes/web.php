@@ -110,6 +110,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'events'], function () {
         ->name('events.add_permission');
     Route::get('/today-events', [EventController::class, 'getTodayEvents'])
         ->name('events.today_data');
+    Route::get('/events-by-date-range', [EventController::class, 'getDataByDateRange'])
+        ->name('events.get_data_by_date_range');
 
     // Chart routes TODO: Pasar al controller del dashboard
     Route::get('/total-by-month', [EventController::class, 'totalByMonth'])
@@ -210,6 +212,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'availabilities'], function ()
         ->name('availabilities.remove');
     Route::get('/today-availabilities', [AvailabilityController::class, 'getTodayAvailabilities'])
         ->name('availabilities.today_data');
+    Route::get('/availabilities-by-date-range', [AvailabilityController::class, 'getDataByDateRange'])
+        ->name('availabilities.get_data_by_date_range');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'sites'], function () {
@@ -234,6 +238,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'news'], function () {
         ->name('news.remove');
     Route::get('/today-news', [NewsController::class, 'getTodayNews'])
         ->name('news.today_data');
+    Route::get('/news-by-date-range', [NewsController::class, 'getDataByDateRange'])
+        ->name('news.get_data_by_date_range');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'reports'], function () {

@@ -67,10 +67,8 @@
                     <div class="col-4">
                         <div class="form-group mb-3">
                             <label class="label-form" for="date">Fecha</label>
-                            <div class="input-group input-group-merge input-group-alternative">
-                                <input v-model="newReport.date" class="form-control" placeholder="Inserte Fecha"
-                                       type="datetime-local" name="date">
-                            </div>
+                            <date-range-picker @update="getDataByDataRange(['events', 'availabilities', 'news'])" v-model="dateRange">
+                            </date-range-picker>
                         </div>
                     </div>
                 </div>
@@ -266,6 +264,8 @@ import simpleTableSwitchField from '../../components/utils/simpleTable/simpleTab
 import dialog from '../../libs/custom/dialog'
 import Multi_select from '../../components/utils/multiselect'
 import Vue from 'vue'
+import DateRangePicker from 'vue2-daterange-picker'
+import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 
 export default {
     name: 'Reports',
@@ -274,15 +274,18 @@ export default {
         simpleTable,
         simpleTableSwitchField,
         Multi_select,
+        DateRangePicker,
     },
 
     data() {
         return {
+            dateRange: {},
             isLoading: false,
             reportTableKey: 0,
             newReport: {
                 number: null,
-                date: null,
+                startDate: null,
+                endDate: null,
                 todayData: {
                     events: [],
                     news: [],
@@ -325,7 +328,18 @@ export default {
         },
     },
 
-    watch: {},
+    watch: {
+        dateRange(newValue) {
+            if (newValue) {
+                this.newReport.startDate = newValue.startDate
+                this.newReport.endDate = newValue.endDate
+            }
+        },
+
+        'newReport.dateRange'(newValue) {
+            this.getDataByDataRange(['events', 'availabilities', 'news'])
+        }
+    },
 
     methods: {
         removeElement(key, type) {
@@ -362,7 +376,8 @@ export default {
         resetReportData() {
             this.newReport = {
                 number: null,
-                date: null,
+                startDate: null,
+                endDate: null,
                 todayData: {
                     events: [],
                     news: [],
@@ -382,14 +397,46 @@ export default {
             if (reportData.id) {
                 this.newReport.id = reportData.id
                 this.newReport.number = reportData.number
-                this.newReport.date = Vue.moment(reportData.date).format('YYYY-MM-DDThh:mm:ss')
+                this.newReport.startDate = reportData.startDate
+                this.newReport.endDate = reportData.endDate
                 this.newReport.todayData.availabilities = reportData.availabilities
                 this.newReport.todayData.events = reportData.events
                 this.newReport.todayData.news = reportData.news
 
                 return
             }
+            this.dateRange = {
+                startDate: new Date(),
+                endDate: new Date(),
+            }
+
             this.getTodayData(['events', 'availabilities', 'news'])
+        },
+
+        getDataByDataRange(models) {
+            this.isLoading = true
+            models.forEach(item => {
+                let url = route(`${item}.get_data_by_date_range`) + `?startDate=${this.getFormatDate(this.newReport.startDate)}&endDate=${this.getFormatDate(this.newReport.endDate)}`
+                axios.get(url)
+                    .then(response => {
+                        this.newReport.todayData[item] = response.data
+                        this.isLoading = false
+                    }).catch(error => {
+                    this.isLoading = false
+                    if (!error.response) {
+                        // network error
+                        this.errorStatus = 'Error: Problemas de Conexión'
+                        dialog.error(this.errorStatus)
+                    } else {
+                        this.errorStatus = error.response.data.message
+                        dialog.error(this.errorStatus, error.response.data.errors)
+                    }
+                })
+            })
+        },
+
+        getFormatDate(stringDate) {
+            return new Intl.DateTimeFormat('en-US').format(stringDate)
         },
 
         getTodayData(models) {

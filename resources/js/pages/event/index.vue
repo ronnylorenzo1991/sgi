@@ -627,8 +627,10 @@ export default {
     },
 
     watch: {
-        'newEvent.category_id'() {
-            this.getSubcategoriesByCategory()
+        'newEvent.category_id'(newValue) {
+            if (newValue) {
+                this.getSubcategoriesByCategory()
+            }
         },
         'filters.category_id'(newValue) {
             if (newValue) {
@@ -807,7 +809,7 @@ export default {
         },
 
         getSubcategoriesByCategory(forFilter = false) {
-            let url = route('defaults.subcategoriesByCategory',forFilter ? this.filters.category_id : this.newEvent.category_id)
+            let url = route('defaults.subcategoriesByCategory', forFilter ? this.filters.category_id : this.newEvent.category_id)
             axios.get(url)
                 .then(response => {
                     if (response.status === 200) {

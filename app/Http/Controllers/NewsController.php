@@ -103,4 +103,8 @@ class NewsController extends Controller
     public function getTodayNews() {
         return json_encode($this->newsRepository->getTodayNews());
     }
+
+    public function getDataByDateRange(Request $request) {
+        return json_encode($this->newsRepository->getDataByDateRange($request->all()));
+    }
 }

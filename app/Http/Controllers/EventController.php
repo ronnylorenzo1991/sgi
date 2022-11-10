@@ -138,6 +138,10 @@ class EventController extends Controller
         return json_encode($this->eventRepository->getTodayEvents());
     }
 
+    public function getDataByDateRange(Request $request) {
+        return json_encode($this->eventRepository->getDataByDateRange($request->all(), 'date'));
+    }
+
     public function totalBySubcategories(Request $request)
     {
         $filterParams = [
