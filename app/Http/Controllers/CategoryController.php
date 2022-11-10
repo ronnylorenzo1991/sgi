@@ -91,7 +91,7 @@ class CategoryController extends Controller
             $this->categoryRepository->delete($id);
 
             return json_encode([
-                'message' => 'Categoria eliminada satisfactoriamente'
+                'message' => 'Categoría eliminada satisfactoriamente'
             ]);
 
         } catch (\Exception $e) {

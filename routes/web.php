@@ -14,6 +14,9 @@ use \App\Http\Controllers\SiteController;
 use \App\Http\Controllers\NewsController;
 use \App\Http\Controllers\ReportController;
 use \App\Http\Controllers\ReportTypeController;
+use \App\Http\Controllers\MinistryController;
+use \App\Http\Controllers\EntityController;
+use \App\Http\Controllers\InternetLinkController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -137,6 +140,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'events'], function () {
 Route::group(['middleware' => 'auth', 'prefix' => 'defaults'], function () {
         Route::get('/lists', [DefaultController::class, 'getLists'])
             ->name('defaults.lists');
+        Route::get('{id}/subcategories', [DefaultController::class, 'getSubcategoriesByCategory'])
+            ->name('defaults.subcategoriesByCategory');
     });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'categories'], function () {
@@ -148,6 +153,39 @@ Route::group(['middleware' => 'auth', 'prefix' => 'categories'], function () {
         ->name('categories.edit');
     Route::delete('{id}/remove', [CategoryController::class, 'delete'])
         ->name('categories.remove');
+});
+
+Route::group(['middleware' => 'auth', 'prefix' => 'ministries'], function () {
+    Route::get('/all', [MinistryController::class, 'getAll'])
+        ->name('ministries.all');
+    Route::post('/create', [MinistryController::class, 'store'])
+        ->name('ministries.create');
+    Route::post('{id}/edit', [MinistryController::class, 'update'])
+        ->name('ministries.edit');
+    Route::delete('{id}/remove', [MinistryController::class, 'delete'])
+        ->name('ministries.remove');
+});
+
+Route::group(['middleware' => 'auth', 'prefix' => 'entities'], function () {
+    Route::get('/all', [EntityController::class, 'getAll'])
+        ->name('entities.all');
+    Route::post('/create', [EntityController::class, 'store'])
+        ->name('entities.create');
+    Route::post('{id}/edit', [EntityController::class, 'update'])
+        ->name('entities.edit');
+    Route::delete('{id}/remove', [EntityController::class, 'delete'])
+        ->name('entities.remove');
+});
+
+Route::group(['middleware' => 'auth', 'prefix' => 'internet_links'], function () {
+    Route::get('/all', [InternetLinkController::class, 'getAll'])
+        ->name('internet_links.all');
+    Route::post('/create', [InternetLinkController::class, 'store'])
+        ->name('internet_links.create');
+    Route::post('{id}/edit', [InternetLinkController::class, 'update'])
+        ->name('internet_links.edit');
+    Route::delete('{id}/remove', [InternetLinkController::class, 'delete'])
+        ->name('internet_links.remove');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'subcategories'], function () {

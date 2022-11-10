@@ -57,9 +57,9 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group mb-3">
-                            <label class="label-form" for="date">Numero</label>
+                            <label class="label-form" for="date">Número</label>
                             <div class="input-group input-group-merge input-group-alternative">
-                                <input v-model="newReport.number" class="form-control" placeholder="Inserte Numero"
+                                <input v-model="newReport.number" class="form-control" placeholder="Inserte Número"
                                        type="text">
                             </div>
                         </div>
@@ -77,11 +77,11 @@
                 <hr>
                 <div class="row pt-3">
                     <div class="col">
-                        <h3 class="pt-3"> Eventos </h3>
+                        <h3 class="pt-3"> Incidentes </h3>
                     </div>
                     <div class="col" v-show="false">
                         <button class="btn btn-info  float-right">
-                            <span class="d-none d-md-block">+ Agregar Evento</span>
+                            <span class="d-none d-md-block">+ Agregar Incidente</span>
                         </button>
                     </div>
                 </div>
@@ -113,12 +113,12 @@
                                     <div class="card-body bg-info">
                                         <div>
                                             <small class="text-muted text-white mb-0">
-                                                Numero: {{ item.number }}
+                                                Número: {{ item.number }}
                                             </small>
                                         </div>
                                         <div>
                                             <small class="text-muted text-white mb-0">
-                                                Categoria:
+                                                Categoría:
                                                 {{ getListsValueById(item.category_id, 'categories').name || null }}
                                             </small>
                                         </div>
@@ -192,7 +192,7 @@
                                         </div>
                                         <div>
                                             <small class="text-muted text-white mb-0">
-                                                Descripcion: {{ item.description }}
+                                                Descripción: {{ item.description }}
                                             </small>
                                         </div>
                                     </div>
@@ -204,7 +204,7 @@
                 <hr>
                 <div class="row pt-3">
                     <div class="col">
-                        <h3 class="pt-3"> Fuentes Publicas Informativas </h3>
+                        <h3 class="pt-3"> Fuentes Públicas Informativas </h3>
                     </div>
                     <div class="col" v-show="false">
                         <button class="btn btn-info  float-right">
@@ -303,7 +303,7 @@ export default {
                 },
                 {
                     name: 'number',
-                    title: 'Numero',
+                    title: 'Número',
                     sortField: 'number',
                     titleClass: 'text-left',
                     dataClass: 'text-left',

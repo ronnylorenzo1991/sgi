@@ -14,11 +14,5 @@ class Entity extends Model implements Auditable
     protected $fillable = [
         'name',
         'description',
-        'country_id',
     ];
-
-    public function country()
-    {
-        return $this->belongsTo(country::class);
-    }
 }

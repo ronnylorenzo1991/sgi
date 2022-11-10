@@ -1,6 +1,6 @@
 <template>
     <div>
-        <modal title="Añadir Subcategoría"
+        <modal title="Añadir Ministerio"
                :show="showModal"
                @accept="save"
                @cancel="closeModal">
@@ -22,13 +22,6 @@
                         <textarea v-model="newItem.description" class="form-control" placeholder="Inserte Descripción"/>
                     </div>
                 </div>
-                <div class="form-group mb-3">
-                    <div class="input-group input-group-merge input-group-alternative">
-                        <multi_select v-model="newItem.category_id" :options="lists.categories"
-                                      label="name" track-by="id"
-                                      placeholder="Seleccione la Categoría"></multi_select>
-                    </div>
-                </div>
             </div>
         </modal>
     </div>
@@ -39,7 +32,7 @@ import Modal from '../../../components/utils/modal'
 import dialog from '../../../libs/custom/dialog'
 
 export default {
-    name: 'modalSubcategories',
+    name: 'modalMinistries',
     components: {Modal},
 
     props: {
@@ -52,8 +45,8 @@ export default {
         return {
             newItem: {},
             showModal: false,
-            editUrl: 'subcategories.edit',
-            createUrl: 'subcategories.create',
+            editUrl: 'ministries.edit',
+            createUrl: 'ministries.create',
         }
     },
 

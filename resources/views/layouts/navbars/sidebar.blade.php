@@ -106,7 +106,7 @@
                         <a class="nav-link {{ Request::url() == route('events') ? 'active' : '' }}"
                            href="{{ route('events') }}">
                             <i class="ni ni-compass-04 {{ Request::url() == route('events') ? 'text-secondary' : 'text-primary' }}"></i>
-                            <span class="nav-link-text">{{ __('Eventos') }}</span>
+                            <span class="nav-link-text">{{ __('Incidentes') }}</span>
                         </a>
                     </li>
                 @endif

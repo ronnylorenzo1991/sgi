@@ -168,8 +168,8 @@ class ReportRepository extends SharedRepositoryEloquent
                     ];
 
 
-                    $trojanEvent['national_preposition'] = count($event->nationalNodes) > 1 ? 'direcciones asignadas' : 'una direccion asignada';
-                    $trojanEvent['foreign_preposition'] = count($event->foreignNodes) > 1 ? 'direcciones asignadas' : 'una direccion asignada';
+                    $trojanEvent['national_preposition'] = count($event->nationalNodes) > 1 ? 'direcciónes asignadas' : 'una dirección asignada';
+                    $trojanEvent['foreign_preposition'] = count($event->foreignNodes) > 1 ? 'direcciónes asignadas' : 'una dirección asignada';
                     $events[] = $trojanEvent;
                 }
             }
@@ -241,8 +241,8 @@ class ReportRepository extends SharedRepositoryEloquent
                         'entities_by_countries'  => $foreignEntitiesData,
                     ];
 
-                    $commonEvent['national_preposition'] = count($event->nationalNodes) > 1 ? 'direcciones asignadas' : 'una direccion asignada';
-                    $commonEvent['foreign_preposition'] = count($event->foreignNodes) > 1 ? 'direcciones asignadas' : 'una direccion asignada';
+                    $commonEvent['national_preposition'] = count($event->nationalNodes) > 1 ? 'direcciónes asignadas' : 'una dirección asignada';
+                    $commonEvent['foreign_preposition'] = count($event->foreignNodes) > 1 ? 'direcciónes asignadas' : 'una dirección asignada';
 
                     $events[] = $commonEvent;
                 }

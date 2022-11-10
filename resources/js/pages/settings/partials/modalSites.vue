@@ -19,7 +19,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                         </div>
-                        <textarea v-model="newItem.description" class="form-control" placeholder="Inserte Descripcion"/>
+                        <textarea v-model="newItem.description" class="form-control" placeholder="Inserte Descripción"/>
                     </div>
                 </div>
             </div>

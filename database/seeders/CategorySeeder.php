@@ -21,7 +21,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Eco mediático de noticias falsas',
                 'description' => 'Eco mediático de noticias falsas',
@@ -40,7 +40,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Desastres naturales',
@@ -63,7 +63,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Ciberterrorismo',
                 'description' => 'Ciberterrorismo',
@@ -82,7 +82,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Contenido dañino',
@@ -105,7 +105,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Pornografía',
                 'description' => 'Pornografía',
@@ -124,7 +124,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Daños físicos',
@@ -132,7 +132,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Afectaciones en el sistema de comunicaciones por fuego, escapes de gas o agua, polución, corrosión, roturas de cables, accidentes automovilísticos o aéreos y otras causas',
                 'description' => 'Afectaciones en el sistema de comunicaciones por fuego, escapes de gas o agua, polución, corrosión, roturas de cables, accidentes automovilísticos o aéreos y otras causas',
@@ -145,7 +145,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Acción no autorizada',
@@ -153,7 +153,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Uso no autorizado de recursos',
                 'description' => 'Uso no autorizado de recursos',
@@ -178,7 +178,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Fallas de la infraestructura',
@@ -186,7 +186,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Fallo de climatización',
                 'description' => 'Fallo de climatización',
@@ -199,7 +199,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Fallas técnicas',
@@ -207,7 +207,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Fallo del equipamiento',
                 'description' => 'Fallo del equipamiento',
@@ -226,7 +226,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Interferencias',
@@ -234,7 +234,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Radiaciones, pulsos electromagnéticos y otras interferencias',
                 'description' => 'Radiaciones, pulsos electromagnéticos y otras interferencias',
@@ -247,7 +247,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Compromiso de la información',
@@ -255,7 +255,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Borrado o modificación de información',
                 'description' => 'Borrado o modificación de información',
@@ -298,7 +298,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Escaneo (Puertos y Vulnerabilidades)',
@@ -306,19 +306,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
-            [
-                'name'        => 'Protocolo SSH',
-                'description' => 'Protocolo SSH',
-                'status'      => 1,
-                'category_id' => $category->id,
-            ],
-            [
-                'name'        => 'Servicio SQL',
-                'description' => 'Servicio SQL',
-                'status'      => 1,
-                'category_id' => $category->id,
-            ],
+        Subcategory::insert([
             [
                 'name'        => 'Protocolo FTP',
                 'description' => 'Protocolo FTP',
@@ -343,7 +331,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Correos no deseados',
@@ -351,7 +339,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Cadenas',
                 'description' => 'Cadenas',
@@ -376,7 +364,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Desfiguración de Sitios Web',
@@ -384,7 +372,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Inclusión local o remota de ficheros',
                 'description' => 'Inclusión local o remota de ficheros',
@@ -397,7 +385,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Compromiso de las funciones',
@@ -405,7 +393,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Derecho de autor',
                 'description' => 'Derecho de autor',
@@ -424,7 +412,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Programas malignos',
@@ -432,7 +420,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Amenaza persistente avanzada (APT)',
                 'description' => 'Amenaza persistente avanzada (APT)',
@@ -511,7 +499,7 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
 
         $category = Category::create([
             'name'        => 'Ataques técnicos o intrusión',
@@ -519,7 +507,7 @@ class CategorySeeder extends Seeder
             'status'      => 1,
         ]);
 
-        Subcategory::create(
+        Subcategory::insert([
             [
                 'name'        => 'Denegación de servicio',
                 'description' => 'Denegación de servicio',
@@ -535,12 +523,6 @@ class CategorySeeder extends Seeder
             [
                 'name'        => 'Ataque por fuerza bruta',
                 'description' => 'Ataque por fuerza bruta',
-                'status'      => 1,
-                'category_id' => $category->id,
-            ],
-            [
-                'name'        => 'Secuestro de la información (Ransomware)',
-                'description' => 'Secuestro de la información (Ransomware)',
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
@@ -568,6 +550,6 @@ class CategorySeeder extends Seeder
                 'status'      => 1,
                 'category_id' => $category->id,
             ],
-        );
+        ]);
     }
 }

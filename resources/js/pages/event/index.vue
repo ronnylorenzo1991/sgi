@@ -14,7 +14,7 @@
                         <div class="card-header bg-transparent">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h2 class="mb-0">Eventos</h2>
+                                    <h2 class="mb-0">Incidentes</h2>
                                 </div>
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
@@ -27,7 +27,7 @@
                                         <li class="nav-item mr-2 mr-md-0">
                                             <a @click.prevent="openCreateEditEventModal" href="#"
                                                class="nav-link py-2 px-3 active">
-                                                <span class="d-none d-md-block">+ Nuevo Evento</span>
+                                                <span class="d-none d-md-block">+ Nuevo Incidente </span>
                                             </a>
                                         </li>
                                         <li class="nav-item mr-2 mr-md-0">
@@ -57,30 +57,30 @@
                                                     <label for="number">Número</label>
                                                     <div class="input-group input-group-merge input-group-alternative">
                                                         <input v-model="filters.number" class="form-control"
-                                                               placeholder="Buscar Numero"
+                                                               placeholder="Buscar Número"
                                                                type="text">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-3">
                                                 <div class="form-group">
-                                                    <label class="label-form" for="date">Categoria</label>
+                                                    <label class="label-form" for="date">Categoría</label>
                                                     <div class="input-group input-group-merge input-group-alternative">
                                                         <multi_select v-model="filters.category_id"
                                                                       :options="lists.categories"
                                                                       label="name" track-by="id"
-                                                                      placeholder="Buscar la Categoria"></multi_select>
+                                                                      placeholder="Buscar la Categoría"></multi_select>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-3">
                                                 <div class="form-group">
-                                                    <label class="label-form" for="date">Subcategoria</label>
+                                                    <label class="label-form" for="date">Subcategoría</label>
                                                     <div class="input-group input-group-merge input-group-alternative">
                                                         <multi_select v-model="filters.subcategory_id"
-                                                                      :options="lists.subcategories"
+                                                                      :options="filters.subcategoriesBycategory"
                                                                       label="name" track-by="id"
-                                                                      placeholder="Buscar la subcategoria"></multi_select>
+                                                                      placeholder="Buscar la subcategoría"></multi_select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -175,21 +175,21 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label class="label-form" for="date">Categoria</label>
+                            <label class="label-form" for="date">Categoría</label>
                             <div class="input-group input-group-merge input-group-alternative">
                                 <multi_select v-model="newEvent.category_id" :options="lists.categories"
                                               label="name" track-by="id"
-                                              placeholder="Seleccione la Categoria"></multi_select>
+                                              placeholder="Seleccione la Categoría"></multi_select>
                             </div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label class="label-form" for="date">Subcategoria</label>
+                            <label class="label-form" for="date">Subcategoría</label>
                             <div class="input-group input-group-merge input-group-alternative">
-                                <multi_select v-model="newEvent.subcategory_id" :options="lists.subcategories"
+                                <multi_select v-model="newEvent.subcategory_id" :options="subcategoriesBycategory"
                                               label="name" track-by="id"
-                                              placeholder="Seleccione la subcategoria"></multi_select>
+                                              placeholder="Seleccione la subcategoría"></multi_select>
                             </div>
                         </div>
                     </div>
@@ -468,7 +468,9 @@ export default {
 
     data() {
         return {
+            subcategoriesBycategory: [],
             filters: {
+                subcategoriesBycategory: [],
                 dateRange: {
                     startDate: new Date(new Date().getFullYear(), 0, 1),
                     endDate: new Date(new Date().getFullYear(), 11, 31),
@@ -529,7 +531,7 @@ export default {
                 },
                 {
                     name: 'number',
-                    title: 'Numero',
+                    title: 'Número',
                     sortField: 'number',
                     titleClass: 'text-left',
                     dataClass: 'text-left',
@@ -549,7 +551,7 @@ export default {
                 },
                 {
                     name: 'subcategory_id',
-                    title: 'Subcategoria',
+                    title: 'Subcategoría',
                     sortField: 'subcategory_id',
                     titleClass: 'text-left',
                     dataClass: 'text-left',
@@ -624,6 +626,16 @@ export default {
         },
     },
 
+    watch: {
+        'newEvent.category_id'() {
+            this.getSubcategoriesByCategory()
+        },
+        'filters.category_id'(newValue) {
+            if (newValue) {
+                this.getSubcategoriesByCategory(true)
+            }
+        }
+    },
 
     methods: {
         getTableSortData() {
@@ -778,6 +790,33 @@ export default {
                 .then(response => {
                     if (response.status === 200) {
                         this.lists = response.data.lists
+                    } else {
+                        dialog.error(response.data.message)
+                    }
+                }).catch(error => {
+                this.isLoading = false
+                if (!error.response) {
+                    // network error
+                    this.errorStatus = 'Error: Problemas de Conexión'
+                    dialog.error(this.errorStatus)
+                } else {
+                    this.errorStatus = error.response.data.message
+                    dialog.error(this.errorStatus)
+                }
+            })
+        },
+
+        getSubcategoriesByCategory(forFilter = false) {
+            let url = route('defaults.subcategoriesByCategory',forFilter ? this.filters.category_id : this.newEvent.category_id)
+            axios.get(url)
+                .then(response => {
+                    if (response.status === 200) {
+                        if (forFilter) {
+                            this.filters.subcategoriesBycategory = response.data.subcategories
+
+                            return
+                        }
+                        this.subcategoriesBycategory = response.data.subcategories
                     } else {
                         dialog.error(response.data.message)
                     }

@@ -90,7 +90,7 @@ class ReportTypeController extends Controller
             $this->reportRepository->delete($id);
 
             return json_encode([
-                'message' => 'Categoria eliminada satisfactoriamente'
+                'message' => 'Categoría eliminada satisfactoriamente'
             ]);
 
         } catch (\Exception $e) {

@@ -39,7 +39,7 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="text-uppercase text-light ls-1 mb-1">Total</h6>
-                                    <h2 class="text-white mb-0">Eventos</h2>
+                                    <h2 class="text-white mb-0">Incidentes</h2>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                         <div class="card-header bg-transparent">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h6 class="text-uppercase ls-1 mb-1">Total de Eventos</h6>
+                                    <h6 class="text-uppercase ls-1 mb-1">Total de Incidentes</h6>
                                     <h2 class="mb-0">Entidades</h2>
                                 </div>
                             </div>
@@ -425,7 +425,7 @@ export default {
                             this.categoriesChartId,
                             response.data.labels,
                             response.data.totals,
-                            'eventos',
+                            'Incidentes',
                             '#3291ef'
                         )
                         this.isLoading = false
@@ -456,7 +456,7 @@ export default {
                             this.detectedByChartId,
                             response.data.labels,
                             response.data.totals,
-                            'eventos',
+                            'Incidentes',
                             '#3291ef'
                         )
                         this.isLoading = false
@@ -487,7 +487,7 @@ export default {
                             this.ministriesChartId,
                             response.data.labels,
                             response.data.totals,
-                            'eventos',
+                            'Incidentes',
                             '#3291ef'
                         )
                         this.isLoading = false
@@ -518,7 +518,7 @@ export default {
                             this.subcategoriesChartId,
                             response.data.labels,
                             response.data.totals,
-                            'eventos',
+                            'Incidentes',
                             '#3291ef'
                         )
                         this.isLoading = false
@@ -549,7 +549,7 @@ export default {
                             this.sourceTargetChartId,
                             response.data.labels,
                             response.data.totals,
-                            'eventos',
+                            'Incidentes',
                             '#3291ef'
                         )
 
@@ -581,7 +581,7 @@ export default {
                             this.entitiesNationalsChartId,
                             response.data.labels,
                             response.data.totals,
-                            'eventos',
+                            'Incidentes',
                             '#3291ef'
                         )
                         this.isLoading = false
@@ -612,7 +612,7 @@ export default {
                             this.countriesInvolvedChartId,
                             response.data.labels,
                             response.data.totals,
-                            'eventos',
+                            'Incidentes',
                             '#3291ef'
                         )
                         this.isLoading = false
@@ -643,7 +643,7 @@ export default {
                             this.foreignEntitiesInvolvedChartId,
                             response.data.labels,
                             response.data.totals,
-                            'eventos',
+                            'Incidentes',
                             '#3291ef'
                         )
                         this.isLoading = false
@@ -674,7 +674,7 @@ export default {
                             this.contributeChartId,
                             response.data.labels,
                             response.data.totals,
-                            'eventos',
+                            'Incidentes',
                             '#3291ef'
                         )
                         this.isLoading = false
