@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
-                                        <li class="nav-item mr-2 mr-md-0">
+                                        <li class="nav-item mr-2 mr-md-0" v-if="can('news.news.create')">
                                             <a @click.prevent="openCreateEditNewsModal" href="#"
                                                class="nav-link py-2 px-3 active">
                                                 <span class="d-none d-md-block">+ Nuevo Noticia</span>
@@ -39,6 +39,8 @@
                                           :per-page="5"
                                           paginationFontSize="small"
                                           :action-default-options="['edit', 'delete']"
+                                          :can-edit="can('news.news.edit')"
+                                          :can-delete="can('news.news.delete')"
                                           @edit="openCreateEditNewsModal(...arguments)"
                                           @delete="deleteNews(...arguments)">
                             </simple-table>

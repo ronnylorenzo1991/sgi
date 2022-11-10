@@ -24,7 +24,7 @@
                                                 <span class="d-none d-md-block"><i class="fa fa-file-excel pr-2"></i>exportar excel</span>
                                             </a>
                                         </li>
-                                        <li class="nav-item mr-2 mr-md-0">
+                                        <li class="nav-item mr-2 mr-md-0" v-if="can('events.events.create')">
                                             <a @click.prevent="openCreateEditEventModal" href="#"
                                                class="nav-link py-2 px-3 active">
                                                 <span class="d-none d-md-block">+ Nuevo Incidente </span>
@@ -131,10 +131,10 @@
                                           :hasCustomActions="true">
                                 <template slot="custom-actions" slot-scope="props">
                                     <button type="button" class="btn btn-secondary btn-icon-only rounded-circle"
-                                            @click="openCreateEditEventModal(props.props.rowData)">
+                                            @click="openCreateEditEventModal(props.props.rowData)" v-if="can('events.events.edit')">
                                         <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
                                     </button>
-                                    <button type="button" class="btn btn-primary btn-icon-only rounded-circle"
+                                    <button type="button" class="btn btn-primary btn-icon-only rounded-circle" v-if="can('events.events.delete')"
                                             @click="deleteEvent(props.props.rowData.id)">
                                         <span class="btn-inner--icon"><i class="fa fa-trash"></i></span>
                                     </button>

@@ -34,6 +34,30 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'settings.subcategories.show'])->syncRoles([$admin, $client, $analist]);
         Permission::create(['name' => 'settings.subcategories.delete'])->syncRoles([$admin, $client]);
 
+        Permission::create(['name' => 'settings.internet_links.list'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'settings.internet_links.create'])->syncRoles([$admin, $client]);
+        Permission::create(['name' => 'settings.internet_links.edit'])->syncRoles([$admin, $client]);
+        Permission::create(['name' => 'settings.internet_links.show'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'settings.internet_links.delete'])->syncRoles([$admin, $client]);
+
+        Permission::create(['name' => 'settings.entities.list'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'settings.entities.create'])->syncRoles([$admin, $client]);
+        Permission::create(['name' => 'settings.entities.edit'])->syncRoles([$admin, $client]);
+        Permission::create(['name' => 'settings.entities.show'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'settings.entities.delete'])->syncRoles([$admin]);
+
+        Permission::create(['name' => 'settings.ministries.list'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'settings.ministries.create'])->syncRoles([$admin, $client]);
+        Permission::create(['name' => 'settings.ministries.edit'])->syncRoles([$admin, $client]);
+        Permission::create(['name' => 'settings.ministries.show'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'settings.ministries.delete'])->syncRoles([$admin]);
+
+        Permission::create(['name' => 'settings.sites.list'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'settings.sites.create'])->syncRoles([$admin, $client]);
+        Permission::create(['name' => 'settings.sites.edit'])->syncRoles([$admin, $client]);
+        Permission::create(['name' => 'settings.sites.show'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'settings.sites.delete'])->syncRoles([$admin]);
+
         Permission::create(['name' => 'security.users.list'])->syncRoles([$admin]);
         Permission::create(['name' => 'security.users.create'])->syncRoles([$admin]);
         Permission::create(['name' => 'security.users.edit'])->syncRoles([$admin]);
@@ -64,12 +88,13 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'news.news.show'])->syncRoles([$admin, $client, $analist]);
         Permission::create(['name' => 'news.news.delete'])->syncRoles([$admin]);
 
+        Permission::create(['name' => 'reports.reports.list'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'reports.reports.create'])->syncRoles([$admin, $client]);
+        Permission::create(['name' => 'reports.reports.edit'])->syncRoles([$admin, $client]);
+        Permission::create(['name' => 'reports.reports.show'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'reports.reports.delete'])->syncRoles([$admin]);
+        Permission::create(['name' => 'reports.reports.export'])->syncRoles([$admin]);
 
-        Permission::create(['name' => 'settings.entities.list'])->syncRoles([$admin, $client, $analist]);
-        Permission::create(['name' => 'settings.entities.create'])->syncRoles([$admin, $client]);
-        Permission::create(['name' => 'settings.entities.edit'])->syncRoles([$admin, $client]);
-        Permission::create(['name' => 'settings.entities.show'])->syncRoles([$admin, $client, $analist]);
-        Permission::create(['name' => 'settings.entities.delete'])->syncRoles([$admin]);
 
 //        Permission::create(['name' => 'settings.teams.list'])->syncRoles([$admin]);
 //        Permission::create(['name' => 'settings.teams.create'])->syncRoles([$admin]);

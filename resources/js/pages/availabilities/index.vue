@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
-                                        <li class="nav-item mr-2 mr-md-0">
+                                        <li class="nav-item mr-2 mr-md-0" v-if="can('availabilities.availabilities.create')">
                                             <a @click.prevent="openCreateEditAvailabilityModal" href="#"
                                                class="nav-link py-2 px-3 active">
                                                 <span class="d-none d-md-block">+ Nueva Disponibilidad</span>
@@ -40,6 +40,8 @@
                                           paginationFontSize="small"
                                           :hasCustomActions="false"
                                           :action-default-options="['edit', 'delete']"
+                                          :can-edit="can('availabilities.availabilities.edit')"
+                                          :can-delete="can('availabilities.availabilities.delete')"
                                           @edit="openCreateEditAvailabilityModal(...arguments)"
                                           @delete="deleteAvailability(...arguments)">
                             </simple-table>

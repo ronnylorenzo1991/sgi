@@ -40,12 +40,12 @@
                                           paginationFontSize="small"
                                           :hasCustomActions="true">
                                 <template slot="custom-actions" slot-scope="props" v-if="isNotAdminRol(props.props.rowData)">
-                                    <button type="button" class="btn btn-secondary btn-icon-only rounded-circle"
+                                    <button type="button" class="btn btn-secondary btn-icon-only rounded-circle" v-if="can('security.roles.edit')"
                                             @click="openCreateEditRoleModal(props.props.rowData)">
                                         <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
                                     </button>
-                                    <button type="button" class="btn btn-primary btn-icon-only rounded-circle"
-                                            @click="deleteRole(props.props.rowData.id)">
+                                    <button type="button" class="btn btn-primary btn-icon-only rounded-circle" v-if="can('security.roles.delete')"
+                                            @click="deleteRole(props.props.rowData.id) && can('security.roles.delete')">
                                         <span class="btn-inner--icon"><i class="fa fa-trash"></i></span>
                                     </button>
                                 </template>

@@ -40,11 +40,11 @@
                                           paginationFontSize="small"
                                           :hasCustomActions="true">
                                 <template slot="custom-actions" slot-scope="props" v-if="isNotAdminUser(props.props.rowData)">
-                                    <button type="button" class="btn btn-secondary btn-icon-only rounded-circle"
+                                    <button type="button" class="btn btn-secondary btn-icon-only rounded-circle" v-if="can('security.users.edit')"
                                             @click="openCreateEditUserModal(props.props.rowData)">
                                         <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
                                     </button>
-                                    <button type="button" class="btn btn-primary btn-icon-only rounded-circle"
+                                    <button type="button" class="btn btn-primary btn-icon-only rounded-circle" v-if="can('security.users.delete')"
                                             @click="deleteUser(props.props.rowData.id)">
                                         <span class="btn-inner--icon"><i class="fa fa-trash"></i></span>
                                     </button>

@@ -39,6 +39,10 @@
                                           :per-page="5"
                                           paginationFontSize="small"
                                           :hasCustomActions="false"
+                                          :can-export="can('settings.categories.export')"
+                                          :can-edit="can('settings.categories.edit')"
+                                          :can-delete="can('settings.categories.delete')"
+                                          :can-show="can('settings.categories.show')"
                                           @edit="openCreateEditModal('category', ...arguments)"
                                           @delete="removeElement('category','categories.remove', ...arguments)">
                             </simple-table>
@@ -75,6 +79,10 @@
                                           :per-page="5"
                                           paginationFontSize="small"
                                           :hasCustomActions="false"
+                                          :can-export="can('settings.subcategories.export')"
+                                          :can-edit="can('settings.subcategories.edit')"
+                                          :can-delete="can('settings.subcategories.delete')"
+                                          :can-show="can('settings.subcategories.show')"
                                           @edit="openCreateEditModal('subcategory', ...arguments)"
                                           @delete="removeElement('subcategory','subcategories.remove', ...arguments)">
                             </simple-table>
@@ -113,6 +121,10 @@
                                           :per-page="5"
                                           paginationFontSize="small"
                                           :hasCustomActions="false"
+                                          :can-export="can('settings.sites.export')"
+                                          :can-edit="can('settings.sites.edit')"
+                                          :can-delete="can('settings.sites.delete')"
+                                          :can-show="can('settings.sites.show')"
                                           @edit="openCreateEditModal('site', ...arguments)"
                                           @delete="removeElement('site','sites.remove', ...arguments)">
                             </simple-table>
@@ -148,6 +160,10 @@
                                           :fields="ministriesFields"
                                           :per-page="5"
                                           paginationFontSize="small"
+                                          :can-export="can('settings.ministries.export')"
+                                          :can-edit="can('settings.ministries.edit')"
+                                          :can-delete="can('settings.ministries.delete')"
+                                          :can-show="can('settings.ministries.show')"
                                           :hasCustomActions="false"
                                           @edit="openCreateEditModal('ministry', ...arguments)"
                                           @delete="removeElement('ministry','ministries.remove', ...arguments)">
@@ -187,6 +203,10 @@
                                           :per-page="5"
                                           paginationFontSize="small"
                                           :hasCustomActions="false"
+                                          :can-export="can('settings.entities.export')"
+                                          :can-edit="can('settings.entities.edit')"
+                                          :can-delete="can('settings.entities.delete')"
+                                          :can-show="can('settings.entities.show')"
                                           @edit="openCreateEditModal('entity', ...arguments)"
                                           @delete="removeElement('entity','entities.remove', ...arguments)">
                             </simple-table>
@@ -223,6 +243,10 @@
                                           :per-page="5"
                                           paginationFontSize="small"
                                           :hasCustomActions="false"
+                                          :can-export="can('settings.internet_links.export')"
+                                          :can-edit="can('settings.internet_links.edit')"
+                                          :can-delete="can('settings.internet_links.delete')"
+                                          :can-show="can('settings.internet_links.show')"
                                           @edit="openCreateEditModal('internetLink', ...arguments)"
                                           @delete="removeElement('internetLink','internet_links.remove', ...arguments)">
                             </simple-table>

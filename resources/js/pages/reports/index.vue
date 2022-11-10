@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
-                                        <li class="nav-item mr-2 mr-md-0">
+                                        <li class="nav-item mr-2 mr-md-0" v-if="can('reports.reports.create')">
                                             <a @click.prevent="openCreateEditReportModal" href="#"
                                                class="nav-link py-2 px-3 active">
                                                 <span class="d-none d-md-block">+ Nueva Salida</span>
@@ -38,6 +38,10 @@
                                           :fields="reportsFields"
                                           :per-page="5"
                                           paginationFontSize="small"
+                                          :can-export="can('reports.reports.export')"
+                                          :can-edit="can('reports.reports.edit')"
+                                          :can-delete="can('reports.reports.delete')"
+                                          :can-show="can('reports.reports.show')"
                                           :action-default-options="['export','edit', 'delete']"
                                           @edit="openCreateEditReportModal(...arguments)"
                                           @delete="deleteReport(...arguments)"

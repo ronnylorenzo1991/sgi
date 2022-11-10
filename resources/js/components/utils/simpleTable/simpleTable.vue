@@ -35,22 +35,22 @@
                     <div class="custom-actions" v-else>
                         <button type="button" class="btn btn-secondary btn-icon-only rounded-circle"
                                 @click="onAction('export', props.rowData, props.rowIndex)"
-                                v-if="actionDefaultOptions.includes('export')">
+                                v-if="actionDefaultOptions.includes('export') && canExport">
                             <span class="btn-inner--icon"><i class="fa fa-file-export"></i></span>
                         </button>
                         <button type="button" class="btn btn-secondary btn-icon-only rounded-circle"
                                 @click="onAction('show', props.rowData, props.rowIndex)"
-                                v-if="actionDefaultOptions.includes('show')">
+                                v-if="actionDefaultOptions.includes('show') && canShow">
                             <span class="btn-inner--icon"><i class="fa fa-eye"></i></span>
                         </button>
                         <button type="button" class="btn btn-secondary btn-icon-only rounded-circle"
                                 @click="onAction('edit', props.rowData, props.rowIndex)"
-                                v-if="actionDefaultOptions.includes('edit')">
+                                v-if="actionDefaultOptions.includes('edit') && canEdit">
                             <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
                         </button>
                         <button type="button" class="btn btn-primary btn-icon-only rounded-circle"
                                 @click="onAction('delete', props.rowData, props.rowIndex)"
-                                v-if="actionDefaultOptions.includes('delete')">
+                                v-if="actionDefaultOptions.includes('delete') && canDelete">
                             <span class="btn-inner--icon"><i class="fa fa-trash"></i></span>
                         </button>
                     </div>
@@ -132,6 +132,22 @@ export default {
         },
         reference: {
             required: true,
+        },
+        canEdit: {
+            type: Boolean,
+            default: true
+        },
+        canDelete: {
+            type: Boolean,
+            default: true
+        },
+        canShow: {
+            type: Boolean,
+            default: true
+        },
+        canExport: {
+            type: Boolean,
+            default: true
         },
         css: {
             type: Object,
