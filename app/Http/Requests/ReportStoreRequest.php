@@ -25,8 +25,8 @@ class ReportStoreRequest extends FormRequest
     {
         $rules = [
             'number'     => 'required',
-            'start_date' => 'required',
-            'end_date'   => 'required',
+            'startDate' => 'required',
+            'endDate'   => 'required',
         ];
 
         return $rules;

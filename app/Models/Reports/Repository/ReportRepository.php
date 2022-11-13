@@ -38,8 +38,87 @@ class ReportRepository extends SharedRepositoryEloquent
         }
     }
 
+    public function getAllFiltered($filters)
+    {
+        $query = $this->entity->query()->with('events');
+
+        [$sortBy, $sortDir] = $this->getOrderByData($filters);
+
+        $perPage = in_array('per_page', $filters) ? $filters['per_page'] : 10;
+        $page = array_key_exists('page', $filters) ? $filters['page'] : 1;
+
+        $startDate = Carbon::parse($filters['dateRange']['startDate'] ?? null)->startOfDay();
+        $endDate = Carbon::parse($filters['dateRange']['endDate'] ?? null)->endOfDay();
+
+        if ($filters['dateRange'] ?? null) {
+            $query->whereBetween('reports.created_at', [$startDate, $endDate]);
+        }
+
+        if ($filters['number'] ?? null) {
+            $query->where('reports.number', 'like', $filters['number']);
+        }
+
+        if (($filters['category_id'] ?? null) || ($filters['subcategory_id'] ?? null) || ($filters['node_entity_id'] ?? null) || ($filters['node_ministry_id'] ?? null)) {
+            $query->join('event_report', function($query) {
+                $query->on('event_report.report_id', 'reports.id')
+                    ->join('events', 'event_report.event_id', 'events.id')
+                    ->join('event_node', 'event_node.event_id', 'events.id')
+                    ->join('nodes', 'nodes.id', 'event_node.node_id');
+            });
+        }
+
+        if ($filters['category_id'] ?? null) {
+            $query->where('category_id', $filters['category_id']);
+        }
+
+        if ($filters['subcategory_id'] ?? null) {
+            $query->where('subcategory_id', $filters['subcategory_id']);
+        }
+
+        if ($filters['node_entity_id'] ?? null) {
+            $query->where('nodes.entity_id', $filters['node_entity_id']);
+        }
+
+        if ($filters['node_ministry_id'] ?? null) {
+            $query->where('nodes.ministry_id', $filters['node_ministry_id']);
+        }
+
+
+        $query->select(
+            'reports.id',
+            'reports.created_at',
+            'reports.number',
+            'reports.start_date',
+            'reports.end_date',
+        );
+
+        return $query->orderBy($sortBy, $sortDir)->groupBy('reports.id')->paginate($perPage, ['*'], 'page', $page)->toArray();
+    }
+
+    private function getOrderByData($filters)
+    {
+        $sortData = $filters['sort'] ?? null ? preg_split("/[\s|]+/", $filters['sort']) : [];
+
+        if (!empty($sortData)) {
+            $sortBy = $sortData[0];
+            $sortDir = $sortData[1];
+
+            return [$sortBy, $sortDir];
+        }
+
+        $sortBy = array_key_exists('order_by',
+            $filters) && $filters['order_by'] != null && $filters['order_by'] != 'undefined' ? $filters['order_by'] : 'id';
+        $sortDir = array_key_exists('sort_by',
+            $filters) && $filters['sort_by'] != null && $filters['sort_by'] != 'undefined' ? $filters['sort_by'] : 'desc';
+
+        return [$sortBy, $sortDir];
+    }
+
     public function update($data, $id)
     {
+        $data['start_date'] = Carbon::parse($data['startDate'] ?? null);
+        $data['end_date'] = Carbon::parse($data['endDate'] ?? null);
+
         $report = $this->entity->findOrFail($id);
         $report->update(array_diff_key($data, array_flip(['todayData'])));;
 

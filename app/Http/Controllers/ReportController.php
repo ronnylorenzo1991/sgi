@@ -36,21 +36,7 @@ class ReportController extends Controller
      */
     public function getAll(Request $request)
     {
-        $sortData = $request->get('sort') ? preg_split("/[\s|]+/", $request->get('sort')) : [];
-
-        $sortBy = 'id';
-        $sortDir = 'desc';
-
-        if (!empty($sortData)) {
-            $sortBy = $sortData[0];
-            $sortDir = $sortData[1];
-        }
-
-        $perPage = (int) $request->get('per_page');
-        $page = (int) $request->get('page');
-
-        $reports = $this->reportsRepository->getAll($sortBy, $sortDir, $perPage, $page,
-            ['events', 'availabilities', 'news']);
+        $reports = $this->reportsRepository->getAllFiltered($request->all());
 
         return json_encode($reports);
     }
@@ -166,13 +152,16 @@ class ReportController extends Controller
             $template->setValue('entities_total', count($entities));
             $template->setValue('entities_with_total', $this->reportsRepository->getWithTotalText($id, 'entity'));
             $template->setValue('page_break', '</w:t></w:r>'.'<w:r><w:br w:type="page"/></w:r>'
-                . '<w:r><w:t>');
+                .'<w:r><w:t>');
             $template->cloneBlock('block_news', 0, true, false, $news);
-            $availabilityChart = new \PhpOffice\PhpWord\Element\Chart('column', $availabilitiesChart['labels'], $availabilitiesChart['series']);
+            $availabilityChart = new \PhpOffice\PhpWord\Element\Chart('column', $availabilitiesChart['labels'],
+                $availabilitiesChart['series']);
             $availabilityChart->getStyle()->setWidth(Converter::inchToEmu(6.5))->setHeight(Converter::inchToEmu(2.5));
-            $categoryChart = new \PhpOffice\PhpWord\Element\Chart('column', $categoriesChart['labels'], $categoriesChart['series']);
+            $categoryChart = new \PhpOffice\PhpWord\Element\Chart('column', $categoriesChart['labels'],
+                $categoriesChart['series']);
             $categoryChart->getStyle()->setWidth(Converter::inchToEmu(6.5))->setHeight(Converter::inchToEmu(2.5));
-            $entityChart = new \PhpOffice\PhpWord\Element\Chart('column', $entitiesChart['labels'], $entitiesChart['series']);
+            $entityChart = new \PhpOffice\PhpWord\Element\Chart('column', $entitiesChart['labels'],
+                $entitiesChart['series']);
             $entityChart->getStyle()->setWidth(Converter::inchToEmu(6.5))->setHeight(Converter::inchToEmu(2.5));
             $template->setChart('chart_availability', $availabilityChart);
             $template->setChart('chart_category', $categoryChart);

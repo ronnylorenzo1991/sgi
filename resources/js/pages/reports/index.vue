@@ -24,7 +24,91 @@
                                                 <span class="d-none d-md-block">+ Nueva Salida</span>
                                             </a>
                                         </li>
+                                        <li class="nav-item mr-2 mr-md-0">
+                                            <button class="btn small btn-primary" type="button" data-toggle="collapse"
+                                                    data-target="#filtersRow" aria-expanded="false"
+                                                    aria-controls="filtersRow">
+                                                <i class="fa fa-filter"></i>
+                                            </button>
+                                        </li>
                                     </ul>
+                                </div>
+                            </div>
+                            <!-- filters -->
+                            <div class="collapse" id="filtersRow">
+                                <div class="row">
+                                    <div class="col-12 pt-5">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group mb-3">
+                                                    <label class="label-form" for="date">Fecha</label>
+                                                    <date-range-picker v-model="filters.dateRange">
+                                                    </date-range-picker>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="number">Número</label>
+                                                    <div class="input-group input-group-merge input-group-alternative">
+                                                        <input v-model="filters.number" class="form-control"
+                                                               placeholder="Buscar Número"
+                                                               type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label class="label-form" for="date">Categoría de Incidentes</label>
+                                                    <div class="input-group input-group-merge input-group-alternative">
+                                                        <multi_select v-model="filters.category_id"
+                                                                      :options="lists.categories"
+                                                                      label="name" track-by="id"
+                                                                      placeholder="Buscar la Categoría"></multi_select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label class="label-form" for="date">Subcategoría de Incidentes</label>
+                                                    <div class="input-group input-group-merge input-group-alternative">
+                                                        <multi_select v-model="filters.subcategory_id"
+                                                                      :options="filters.subcategoriesBycategory"
+                                                                      label="name" track-by="id"
+                                                                      placeholder="Buscar la subcategoría"></multi_select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label class="label-form" for="date">Entidad Involucrada</label>
+                                                    <div class="input-group input-group-merge input-group-alternative">
+                                                        <multi_select v-model="filters.node_entity_id"
+                                                                      :options="lists.entities"
+                                                                      label="name" track-by="id"
+                                                                      placeholder="Buscar Entidad Involucrada"></multi_select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label class="label-form" for="date">Ministerio Involucrado</label>
+                                                    <div class="input-group input-group-merge input-group-alternative">
+                                                        <multi_select v-model="filters.node_ministry_id"
+                                                                      :options="lists.ministries"
+                                                                      label="name" track-by="id"
+                                                                      placeholder="Buscar Ministerio Involucrado"></multi_select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-center pt-3 pb-2">
+                                        <button class="btn btn-primary" @click="applyFiltersAndFetchData">Aplicar
+                                        </button>
+                                        <button class="btn btn-secondary" @click="clearFilters">Limpiar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +155,8 @@
                     <div class="col-4">
                         <div class="form-group mb-3">
                             <label class="label-form" for="date">Fecha</label>
-                            <date-range-picker @update="getDataByDataRange(['events', 'availabilities', 'news'])" v-model="dateRange">
+                            <date-range-picker @update="getDataByDataRange(['events', 'availabilities', 'news'])"
+                                               v-model="dateRange">
                             </date-range-picker>
                         </div>
                     </div>
@@ -283,6 +368,13 @@ export default {
 
     data() {
         return {
+            filters: {
+                dateRange: {
+                    startDate: new Date(new Date().getFullYear(), 0, 1),
+                    endDate: new Date(new Date().getFullYear(), 11, 31),
+                }
+            },
+            reportsUrl: route('reports.all'),
             dateRange: {},
             isLoading: false,
             reportTableKey: 0,
@@ -298,15 +390,21 @@ export default {
             },
             lists: {
                 sites: [],
-                categories: []
+                categories: [],
+                ministries: [],
+                entities: [],
             },
             reportsFields: [
                 {
-                    name: 'date',
+                    name: 'created_at',
                     title: 'Fecha',
                     sortField: 'date',
                     titleClass: 'text-left',
                     dataClass: 'text-left',
+                    formatter: (value) => {
+                       return Vue.moment(value).format('YYYY-MM-DDThh:mm:ss')
+                    }
+
                 },
                 {
                     name: 'number',
@@ -323,11 +421,17 @@ export default {
                 },
             ],
             showNewReportModal: false,
+            defaultFilters: {
+                dateRange: {
+                    startDate: new Date(new Date().getFullYear(), 0, 1),
+                    endDate: new Date(new Date().getFullYear(), 11, 31),
+                }
+            },
         }
     },
 
     computed: {
-        reportsUrl() {
+        defaultReportsUrl() {
             return route('reports.all')
         },
     },
@@ -340,7 +444,7 @@ export default {
             }
         },
 
-        'newReport.dateRange'(newValue) {
+        'newReport.startDate'(newValue) {
             this.getDataByDataRange(['events', 'availabilities', 'news'])
         }
     },
@@ -401,8 +505,12 @@ export default {
             if (reportData.id) {
                 this.newReport.id = reportData.id
                 this.newReport.number = reportData.number
-                this.newReport.startDate = reportData.startDate
-                this.newReport.endDate = reportData.endDate
+                this.dateRange = {
+                    startDate: Vue.moment(reportData.start_date)._d,
+                    endDate: Vue.moment(reportData.end_date)._d,
+                }
+                this.newReport.startDate = reportData.start_date
+                this.newReport.endDate = reportData.end_date
                 this.newReport.todayData.availabilities = reportData.availabilities
                 this.newReport.todayData.events = reportData.events
                 this.newReport.todayData.news = reportData.news
@@ -501,7 +609,7 @@ export default {
                         dialog.success(response.data.message)
                         this.closeCreateReportModal()
                         this.reloadTable('reportTable', 'reportVueTable')
-                        this.getLists(['sites', 'categories', 'subcategories', 'entities'])
+                        this.getLists(['sites', 'categories', 'subcategories', 'entities', 'ministries'])
                     } else {
                         console.log(response.data)
                         dialog.error()
@@ -517,6 +625,59 @@ export default {
                     dialog.error(this.errorStatus, error.response.data.errors)
                 }
             })
+        },
+
+        clearFilters() {
+            this.filters = this.cloneDeep(this.defaultFilters)
+            this.$refs['reportTable'].sortOrder = []
+            this.$nextTick(() => {
+                this.reportsUrl = this.defaultReportsUrl
+                this.$refs['reportTable'].$refs['reportVueTable'].reload()
+            })
+        },
+
+        applyFiltersAndFetchData() {
+            this.reportsUrl = this.defaultReportsUrl
+            this.reportsUrl = this.getRouteFilters(this.reportsUrl)
+        },
+
+
+        getTableSortData() {
+            return this.$refs['reportTable'].$refs['reportVueTable'].sortOrder[0]
+        },
+
+        getTableCurrentPage() {
+            return this.$refs['reportTable'].$refs['reportVueTable'].currentPage
+        },
+
+        getTablePerPage() {
+            return this.$refs['reportTable'].$refs['reportVueTable'].perPage
+        },
+
+        getRouteFilters(route) {
+            const queryString = null
+            let sortData = this.getTableSortData()
+            let currentPage = this.getTableCurrentPage()
+            let perPage = this.getTablePerPage()
+
+            let url
+            let separation = '?'
+
+            const orderByQuery = `&order_by=${sortData?.field}&sort_by=${sortData?.direction}`
+            url = `${route}${separation}page=${currentPage}&per_page=${perPage}${orderByQuery}${queryString ? '&' + queryString : ''}`
+
+            separation = '&'
+
+            let extraQueryString = ''
+            if (Object.keys(this.filters).length > 0) {
+                extraQueryString = separation + this.stringify(this.filters)
+            }
+
+            return url + extraQueryString
+        },
+
+        cloneDeep(value) {
+            return JSON.parse(JSON.stringify(value))
         },
 
         deleteReport(id) {
@@ -557,13 +718,39 @@ export default {
         exportWord(report) {
             window.open(route('reports.export_word', report.id), '_blank')
         },
+
+        stringify(allParams) {
+            const params = JSON.parse(JSON.stringify(allParams))
+            const stringify = Object.keys(params)
+                .filter(key => params[key] !== null && params[key] !== '' && params[key] !== undefined)
+                .map((key) => {
+                    if (typeof params[key] === 'object' && params[key]) {
+                        return this.objectToArray(key, params[key])
+                    }
+
+                    return encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+                })
+                .filter(item => item !== null && item !== '' && item !== undefined)
+
+            return (
+                stringify.length > 1 ? stringify.join('&') : stringify.join('')
+            ).replace(/^\&/, '').trim()
+        },
+
+        objectToArray(param, object) {
+            return Object.keys(object)
+                .filter(key => object[key] !== null & object[key] !== '')
+                .map(key => {
+                    return encodeURIComponent(`${param}[${key}]`) + '=' + encodeURIComponent(object[key])
+                }).join('&')
+        },
     },
 
     created() {
     },
 
     mounted() {
-        this.getLists(['sites', 'categories', 'subcategories', 'entities'])
+        this.getLists(['sites', 'categories', 'subcategories', 'entities', 'ministries'])
     }
 }
 </script>

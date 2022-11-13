@@ -17,7 +17,6 @@ class CreateEventNodeTable extends Migration
             $table->id();
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('node_id');
-            $table->boolean('is_source');
 
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->foreign('node_id')->references('id')->on('nodes')->onDelete('cascade');

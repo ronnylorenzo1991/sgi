@@ -366,13 +366,6 @@
                                                   label="name" track-by="id"
                                                   placeholder="Seleccione"></multi_select>
                                 </div>
-                                <div class="col-3">
-                                    <p class="label-form" style="font-size: 14px; color: #525f7f !important">Enlace</p>
-                                    <multi_select v-model="newForeignNode.internet_link_id"
-                                                  :options="lists.internet_links"
-                                                  label="name" track-by="id"
-                                                  placeholder="Seleccione"></multi_select>
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 input-group pt-4">
@@ -653,7 +646,7 @@ export default {
             return this.$refs['eventTable'].$refs['eventVueTable'].currentPage
         },
 
-        getTableperPage() {
+        getTablePerPage() {
             return this.$refs['eventTable'].$refs['eventVueTable'].perPage
         },
 
@@ -915,19 +908,19 @@ export default {
         },
 
         getAddedMinistryLabel(item) {
-            return this.lists.ministries[item.ministry_id]?.name ? this.lists.ministries[item.ministry_id]?.name : ''
+            return this.getListsValueById(item.ministry_id, 'ministries')?.name
         },
 
         getAddedEntityLabel(item) {
-            return this.lists.entities[item.entity_id]?.name ? this.lists.entities[item.entity_id]?.name : ''
+            return this.getListsValueById(item.entity_id, 'entities')?.name
         },
 
         getAddedCountryLabel(item) {
-            return this.lists.countries[item.country_id]?.name ? this.lists.countries[item.country_id]?.name : ''
+            return this.getListsValueById(item.country_id, 'countries')?.name
         },
 
         getAddedInternetLinkLabel(item) {
-            return this.lists.internet_links[item.internet_link_id]?.name ? this.lists.internet_links[item.internet_link_id]?.name : ''
+            return this.getListsValueById(item.internet_link_id, 'internet_links')?.name
         },
 
         addForeignIps() {
@@ -968,7 +961,7 @@ export default {
             const queryString = null
             let sortData = this.getTableSortData()
             let currentPage = this.getTableCurrentPage()
-            let perPage = this.getTableperPage()
+            let perPage = this.getTablePerPage()
 
             let url
             let separation = '?'

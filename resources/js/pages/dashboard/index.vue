@@ -117,7 +117,7 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="text-uppercase ls-1 mb-1">Total de incidencias por Fuente</h6>
-                                    <h2 class="mb-0">Fuentes de Informacion</h2>
+                                    <h2 class="mb-0">Detectado Por</h2>
                                 </div>
                                 <div class="col">
                                     <a class="mb-0 btn btn-secondary float-right" href="#" @click="exportChartToImage(detectedByChartId)"><i class="fa fa-arrow-down pr-1"></i>Exportar</a>

@@ -53,19 +53,9 @@ class Event extends Model implements Auditable
         return $this->belongsToMany(Node::class)->with('ip');
     }
 
-    public function sourceNodes()
-    {
-        return $this->nodes()->where('is_source', true);
-    }
-
     public function reports()
     {
         return $this->belongsToMany(Report::class);
-    }
-
-    public function destinationNodes()
-    {
-        return $this->nodes()->where('is_source', false);
     }
 
     public function hasPermissionGroup($permission = "")

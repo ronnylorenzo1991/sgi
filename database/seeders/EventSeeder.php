@@ -23,9 +23,9 @@ class EventSeeder extends Seeder
         $events = Event::factory(50)->create();
 
         foreach ($events as $event) {
-            $event->nodes()->attach(Node::inRandomOrder()->first()->id, array('is_source' => 1));
-            $event->nodes()->attach(Node::inRandomOrder()->where('country_id', 57)->first()->id ?? Node::inRandomOrder()->first()->id, array('is_source' => 1));
-            $event->nodes()->attach(Node::inRandomOrder()->first()->id, array('is_source' => false));
+            $event->nodes()->attach(Node::inRandomOrder()->first()->id);
+            $event->nodes()->attach(Node::inRandomOrder()->where('country_id', 57)->first()->id ?? Node::inRandomOrder()->first()->id);
+            $event->nodes()->attach(Node::inRandomOrder()->first()->id);
         }
     }
 }

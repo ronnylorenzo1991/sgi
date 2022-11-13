@@ -102,7 +102,7 @@ class EventRepository extends SharedRepositoryEloquent
                     'ministry_id'      => $node['ministry_id'],
                     'internet_link_id' => $node['internet_link_id'],
                 ]);
-                $event->nodes()->attach($createdNode->id, ['is_source' => !$data['national_as_source']]);
+                $event->nodes()->attach($createdNode->id);
             }
         }
 
@@ -119,7 +119,7 @@ class EventRepository extends SharedRepositoryEloquent
                     'ministry_id'      => $node['ministry_id'],
                     'internet_link_id' => $node['internet_link_id'],
                 ]);
-                $event->nodes()->attach($createdNode->id, ['is_source' => $data['national_as_source']]);
+                $event->nodes()->attach($createdNode->id);
             }
         }
     }
@@ -155,7 +155,7 @@ class EventRepository extends SharedRepositoryEloquent
                         'ministry_id'      => $node['ministry_id'],
                         'internet_link_id' => $node['internet_link_id'],
                     ]);
-                    $event->nodes()->attach($createdNode->id, ['is_source' => !$data['national_as_source']]);
+                    $event->nodes()->attach($createdNode->id);
                 }
             }
         }
@@ -177,7 +177,7 @@ class EventRepository extends SharedRepositoryEloquent
                         'ministry_id'      => $node['ministry_id'],
                         'internet_link_id' => $node['internet_link_id'],
                     ]);
-                    $event->nodes()->attach($createdNode->id, ['is_source' => $data['national_as_source']]);
+                    $event->nodes()->attach($createdNode->id);
                 }
             }
         }
