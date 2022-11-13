@@ -17,6 +17,7 @@ use \App\Http\Controllers\ReportTypeController;
 use \App\Http\Controllers\MinistryController;
 use \App\Http\Controllers\EntityController;
 use \App\Http\Controllers\InternetLinkController;
+use \App\Http\Controllers\SourceController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -213,6 +214,17 @@ Route::group(['middleware' => 'auth', 'prefix' => 'sites'], function () {
         ->name('sites.edit');
     Route::delete('{id}/remove', [SiteController::class, 'delete'])
         ->name('sites.remove');
+});
+
+Route::group(['middleware' => 'auth', 'prefix' => 'sources'], function () {
+    Route::get('/all', [SourceController::class, 'getAll'])
+        ->name('sources.all');
+    Route::post('/create', [SourceController::class, 'store'])
+        ->name('sources.create');
+    Route::post('{id}/edit', [SourceController::class, 'update'])
+        ->name('sources.edit');
+    Route::delete('{id}/remove', [SourceController::class, 'delete'])
+        ->name('sources.remove');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'news'], function () {

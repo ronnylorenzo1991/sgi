@@ -96,6 +96,13 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'reports.reports.export'])->syncRoles([$admin]);
 
 
+//        Permission::create(['name' => 'reports.reports.list'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'settings.sources.create'])->syncRoles([$admin, $client]);
+        Permission::create(['name' => 'settings.sources.edit'])->syncRoles([$admin, $client]);
+//        Permission::create(['name' => 'reports.reports.show'])->syncRoles([$admin, $client, $analist]);
+        Permission::create(['name' => 'settings.sources.delete'])->syncRoles([$admin]);
+        Permission::create(['name' => 'settings.sources.export'])->syncRoles([$admin]);
+
 //        Permission::create(['name' => 'settings.teams.list'])->syncRoles([$admin]);
 //        Permission::create(['name' => 'settings.teams.create'])->syncRoles([$admin]);
 //        Permission::create(['name' => 'settings.teams.edit'])->syncRoles([$admin]);

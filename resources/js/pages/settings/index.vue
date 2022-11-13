@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
-                                        <li class="nav-item mr-2 mr-md-0">
+                                        <li class="nav-item mr-2 mr-md-0" v-if="can('settings.categories.create')">
                                             <a @click.prevent="openCreateEditModal('category')" href="#"
                                                class="nav-link py-2 px-3 active">
                                                 <span class="d-none d-md-block">+ Nueva Categoría</span>
@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
-                                        <li class="nav-item mr-2 mr-md-0">
+                                        <li class="nav-item mr-2 mr-md-0" v-if="can('settings.subcategories.edit')">
                                             <a @click.prevent="openCreateEditModal('subcategory')" href="#"
                                                class="nav-link py-2 px-3 active">
                                                 <span class="d-none d-md-block">+ Nueva Subcategoría</span>
@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
-                                        <li class="nav-item mr-2 mr-md-0">
+                                        <li class="nav-item mr-2 mr-md-0" v-if="can('settings.sites.edit')">
                                             <a @click.prevent="openCreateEditModal('site')" href="#"
                                                class="nav-link py-2 px-3 active">
                                                 <span class="d-none d-md-block">+ Nuevo Sitio Web</span>
@@ -140,7 +140,7 @@
                                 </div>
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
-                                        <li class="nav-item mr-2 mr-md-0">
+                                        <li class="nav-item mr-2 mr-md-0" v-if="can('settings.ministries.edit')">
                                             <a @click.prevent="openCreateEditModal('ministry')" href="#"
                                                class="nav-link py-2 px-3 active">
                                                 <span class="d-none d-md-block">+ Nuevo Ministerio</span>
@@ -182,7 +182,7 @@
                                 </div>
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
-                                        <li class="nav-item mr-2 mr-md-0">
+                                        <li class="nav-item mr-2 mr-md-0" v-if="can('settings.entities.edit')">
                                             <a @click.prevent="openCreateEditModal('entity')" href="#"
                                                class="nav-link py-2 px-3 active">
                                                 <span class="d-none d-md-block">+ Nueva Entidad</span>
@@ -222,7 +222,7 @@
                                 </div>
                                 <div class="col">
                                     <ul class="nav nav-pills justify-content-end">
-                                        <li class="nav-item mr-2 mr-md-0">
+                                        <li class="nav-item mr-2 mr-md-0" v-if="can('settings.internet_links.edit')">
                                             <a @click.prevent="openCreateEditModal('internetLink')" href="#"
                                                class="nav-link py-2 px-3 active">
                                                 <span class="d-none d-md-block">+ Nuevo Enlace</span>
@@ -254,6 +254,88 @@
                     </div>
                 </div>
             </div>
+            <div class="row pb-5">
+                <div class="col-6">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="mb-0">Fuentes de Detección</h2>
+                                </div>
+                                <div class="col">
+                                    <ul class="nav nav-pills justify-content-end">
+                                        <li class="nav-item mr-2 mr-md-0" v-if="can('settings.sources.edit')">
+                                            <a @click.prevent="openCreateEditModal('source')" href="#"
+                                               class="nav-link py-2 px-3 active">
+                                                <span class="d-none d-md-block">+ Nueva Fuente</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <simple-table reference="sourceVueTable"
+                                          :actionDefaultOptions="['edit', 'delete']"
+                                          ref="sourceTable"
+                                          :api-url="sourcesUrl"
+                                          :has-settings="false"
+                                          :has-header="false"
+                                          :fields="sourcesFields"
+                                          :per-page="5"
+                                          paginationFontSize="small"
+                                          :hasCustomActions="false"
+                                          :can-export="can('settings.sources.export')"
+                                          :can-edit="can('settings.sources.edit')"
+                                          :can-delete="can('settings.sources.delete')"
+                                          :can-show="can('settings.sources.show')"
+                                          @edit="openCreateEditModal('source', ...arguments)"
+                                          @delete="removeElement('source','sources.remove', ...arguments)">
+                            </simple-table>
+                        </div>
+                    </div>
+                </div>
+<!--                <div class="col-6">-->
+<!--                    <div class="card shadow">-->
+<!--                        <div class="card-header bg-transparent">-->
+<!--                            <div class="row align-items-center">-->
+<!--                                <div class="col">-->
+<!--                                    <h2 class="mb-0">Enlaces de Internet</h2>-->
+<!--                                </div>-->
+<!--                                <div class="col">-->
+<!--                                    <ul class="nav nav-pills justify-content-end">-->
+<!--                                        <li class="nav-item mr-2 mr-md-0">-->
+<!--                                            <a @click.prevent="openCreateEditModal('internetLink')" href="#"-->
+<!--                                               class="nav-link py-2 px-3 active">-->
+<!--                                                <span class="d-none d-md-block">+ Nuevo Enlace</span>-->
+<!--                                            </a>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="table-responsive">-->
+<!--                            <simple-table reference="internetLinkVueTable"-->
+<!--                                          :actionDefaultOptions="['edit', 'delete']"-->
+<!--                                          ref="internetLinkTable"-->
+<!--                                          :api-url="internetLinksUrl"-->
+<!--                                          :has-settings="false"-->
+<!--                                          :has-header="false"-->
+<!--                                          :fields="internetLinksFields"-->
+<!--                                          :per-page="5"-->
+<!--                                          paginationFontSize="small"-->
+<!--                                          :hasCustomActions="false"-->
+<!--                                          :can-export="can('settings.internet_links.export')"-->
+<!--                                          :can-edit="can('settings.internet_links.edit')"-->
+<!--                                          :can-delete="can('settings.internet_links.delete')"-->
+<!--                                          :can-show="can('settings.internet_links.show')"-->
+<!--                                          @edit="openCreateEditModal('internetLink', ...arguments)"-->
+<!--                                          @delete="removeElement('internetLink','internet_links.remove', ...arguments)">-->
+<!--                            </simple-table>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
         </div>
         <!-- Modals -->
         <modal-sites ref="siteModal" :item="newEditingItem" @savedComplete="savedElement('site')"/>
@@ -261,6 +343,7 @@
         <modal-ministries ref="ministryModal" :item="newEditingItem" @savedComplete="savedElement('ministry')"/>
         <modal-entities ref="entityModal" :item="newEditingItem" @savedComplete="savedElement('entity')"/>
         <modal-categories ref="categoryModal" :item="newEditingItem" @savedComplete="savedElement('category')"/>
+        <modal-sources ref="sourceModal" :item="newEditingItem" @savedComplete="savedElement('source')"/>
         <modal-subcategories ref="subcategoryModal" :item="newEditingItem" @savedComplete="savedElement('subcategory')"
                              :lists="lists"/>
     </div>
@@ -279,10 +362,12 @@ import ModalSites from './partials/modalSites'
 import ModalMinistries from './partials/modalMinistries'
 import ModalEntities from './partials/modalEntities'
 import ModalInternetLink from './partials/modalInternetLinks'
+import ModalSources from './partials/modalSources'
 
 export default {
     name: 'Settings',
     components: {
+        ModalSources,
         ModalInternetLink,
         ModalEntities,
         ModalMinistries,
@@ -462,6 +547,29 @@ export default {
                     dataClass: 'text-center',
                 },
             ],
+            sourcesFields: [
+                {
+                    name: 'name',
+                    title: 'Nombre',
+                    sortField: 'name',
+                    titleClass: 'text-left',
+                    dataClass: 'text-left',
+                    width: '700px',
+                },
+                {
+                    name: 'description',
+                    title: 'Descripción',
+                    sortField: 'description',
+                    titleClass: 'text-left',
+                    dataClass: 'text-left',
+                },
+                {
+                    name: 'actions-slot',
+                    title: 'Actions',
+                    titleClass: 'text-center',
+                    dataClass: 'text-center',
+                },
+            ],
             newEditingItem: {},
         }
     },
@@ -489,6 +597,10 @@ export default {
 
         internetLinksUrl() {
             return route('internet_links.all')
+        },
+
+        sourcesUrl() {
+            return route('sources.all')
         },
     },
 
