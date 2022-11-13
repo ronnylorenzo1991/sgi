@@ -421,7 +421,7 @@ class EventRepository extends SharedRepositoryEloquent
             $join->on('events.subcategory_id', '=', 'subcategories.id');
         })->whereBetween('date',
             [$starDate, $endDate])->selectRaw('COUNT(subcategories.id) as count')->selectRaw('subcategories.name')
-            ->groupBy('subcategories.name')->orderBy('count', 'desc')->get();
+            ->groupBy('subcategories.name')->orderBy('count', 'desc')->take(10)->get();
 
         foreach ($results as $data) {
             $totals[] = $data->count;

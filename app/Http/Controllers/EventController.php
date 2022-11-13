@@ -151,10 +151,6 @@ class EventController extends Controller
 
         [$totals, $labels] = $this->eventRepository->getTotalsBySubcategories($filterParams);
 
-        foreach ($labels as $key => $label) {
-            $labels[$key] = strlen($label) > 30 ? substr($label, 0, 30)."..." : $label;
-        }
-
         return json_encode(['totals' => $totals, 'labels' => $labels]);
     }
 

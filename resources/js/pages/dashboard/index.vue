@@ -529,9 +529,10 @@ export default {
             axios.get(route('events.totals_by_subcategories') + `?startDate=${this.getFormatDate(this.generalFilters.pickerDates.startDate)}&endDate=${this.getFormatDate(this.generalFilters.pickerDates.endDate)}`)
                 .then(response => {
                     if (response.status === 200) {
+                        let labels = this.reduceLabels(response.data.labels)
                         barChart.createChart(
                             this.subcategoriesChartId,
-                            response.data.labels,
+                            labels,
                             response.data.totals,
                             'Incidentes',
                             '#3291ef'
@@ -586,6 +587,14 @@ export default {
                     dialog.error(this.errorStatus)
                 }
             })
+        },
+
+        reduceLabels(arrayLabels) {
+            let aux = arrayLabels
+            arrayLabels.forEach((item, key) => {
+                aux[key] = item.length > 30 ? item.substring(0, 30).concat('...') : item;
+            })
+            return aux
         },
 
         getEntitiesNationalsEvents() {
