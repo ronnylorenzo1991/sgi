@@ -295,46 +295,46 @@
                         </div>
                     </div>
                 </div>
-<!--                <div class="col-6">-->
-<!--                    <div class="card shadow">-->
-<!--                        <div class="card-header bg-transparent">-->
-<!--                            <div class="row align-items-center">-->
-<!--                                <div class="col">-->
-<!--                                    <h2 class="mb-0">Enlaces de Internet</h2>-->
-<!--                                </div>-->
-<!--                                <div class="col">-->
-<!--                                    <ul class="nav nav-pills justify-content-end">-->
-<!--                                        <li class="nav-item mr-2 mr-md-0">-->
-<!--                                            <a @click.prevent="openCreateEditModal('internetLink')" href="#"-->
-<!--                                               class="nav-link py-2 px-3 active">-->
-<!--                                                <span class="d-none d-md-block">+ Nuevo Enlace</span>-->
-<!--                                            </a>-->
-<!--                                        </li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="table-responsive">-->
-<!--                            <simple-table reference="internetLinkVueTable"-->
-<!--                                          :actionDefaultOptions="['edit', 'delete']"-->
-<!--                                          ref="internetLinkTable"-->
-<!--                                          :api-url="internetLinksUrl"-->
-<!--                                          :has-settings="false"-->
-<!--                                          :has-header="false"-->
-<!--                                          :fields="internetLinksFields"-->
-<!--                                          :per-page="5"-->
-<!--                                          paginationFontSize="small"-->
-<!--                                          :hasCustomActions="false"-->
-<!--                                          :can-export="can('settings.internet_links.export')"-->
-<!--                                          :can-edit="can('settings.internet_links.edit')"-->
-<!--                                          :can-delete="can('settings.internet_links.delete')"-->
-<!--                                          :can-show="can('settings.internet_links.show')"-->
-<!--                                          @edit="openCreateEditModal('internetLink', ...arguments)"-->
-<!--                                          @delete="removeElement('internetLink','internet_links.remove', ...arguments)">-->
-<!--                            </simple-table>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div class="col-6">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="mb-0">Entidades (Tributa)</h2>
+                                </div>
+                                <div class="col">
+                                    <ul class="nav nav-pills justify-content-end">
+                                        <li class="nav-item mr-2 mr-md-0" v-if="can('settings.contributes.edit')">
+                                            <a @click.prevent="openCreateEditModal('contribute')" href="#"
+                                               class="nav-link py-2 px-3 active">
+                                                <span class="d-none d-md-block">+ Nueva Entidad</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <simple-table reference="contributeVueTable"
+                                          :actionDefaultOptions="['edit', 'delete']"
+                                          ref="contributeTable"
+                                          :api-url="contributesUrl"
+                                          :has-settings="false"
+                                          :has-header="false"
+                                          :fields="contributesFields"
+                                          :per-page="5"
+                                          paginationFontSize="small"
+                                          :hasCustomActions="false"
+                                          :can-export="can('settings.contributes.export')"
+                                          :can-edit="can('settings.contributes.edit')"
+                                          :can-delete="can('settings.contributes.delete')"
+                                          :can-show="can('settings.contributes.show')"
+                                          @edit="openCreateEditModal('contribute', ...arguments)"
+                                          @delete="removeElement('contribute','contributes.remove', ...arguments)">
+                            </simple-table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Modals -->
@@ -344,6 +344,7 @@
         <modal-entities ref="entityModal" :item="newEditingItem" @savedComplete="savedElement('entity')"/>
         <modal-categories ref="categoryModal" :item="newEditingItem" @savedComplete="savedElement('category')"/>
         <modal-sources ref="sourceModal" :item="newEditingItem" @savedComplete="savedElement('source')"/>
+        <modal-contributes ref="contributeModal" :item="newEditingItem" @savedComplete="savedElement('contribute')"/>
         <modal-subcategories ref="subcategoryModal" :item="newEditingItem" @savedComplete="savedElement('subcategory')"
                              :lists="lists"/>
     </div>
@@ -363,10 +364,12 @@ import ModalMinistries from './partials/modalMinistries'
 import ModalEntities from './partials/modalEntities'
 import ModalInternetLink from './partials/modalInternetLinks'
 import ModalSources from './partials/modalSources'
+import ModalContributes from './partials/modalContributes'
 
 export default {
     name: 'Settings',
     components: {
+        ModalContributes,
         ModalSources,
         ModalInternetLink,
         ModalEntities,
@@ -570,6 +573,29 @@ export default {
                     dataClass: 'text-center',
                 },
             ],
+            contributesFields: [
+                {
+                    name: 'name',
+                    title: 'Nombre',
+                    sortField: 'name',
+                    titleClass: 'text-left',
+                    dataClass: 'text-left',
+                    width: '700px',
+                },
+                {
+                    name: 'description',
+                    title: 'Descripción',
+                    sortField: 'description',
+                    titleClass: 'text-left',
+                    dataClass: 'text-left',
+                },
+                {
+                    name: 'actions-slot',
+                    title: 'Actions',
+                    titleClass: 'text-center',
+                    dataClass: 'text-center',
+                },
+            ],
             newEditingItem: {},
         }
     },
@@ -601,6 +627,10 @@ export default {
 
         sourcesUrl() {
             return route('sources.all')
+        },
+
+        contributesUrl() {
+            return route('contributes.all')
         },
     },
 

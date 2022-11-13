@@ -18,6 +18,7 @@ use \App\Http\Controllers\MinistryController;
 use \App\Http\Controllers\EntityController;
 use \App\Http\Controllers\InternetLinkController;
 use \App\Http\Controllers\SourceController;
+use \App\Http\Controllers\ContributeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -225,6 +226,18 @@ Route::group(['middleware' => 'auth', 'prefix' => 'sources'], function () {
         ->name('sources.edit');
     Route::delete('{id}/remove', [SourceController::class, 'delete'])
         ->name('sources.remove');
+});
+
+
+Route::group(['middleware' => 'auth', 'prefix' => 'contributes'], function () {
+    Route::get('/all', [ContributeController::class, 'getAll'])
+        ->name('contributes.all');
+    Route::post('/create', [ContributeController::class, 'store'])
+        ->name('contributes.create');
+    Route::post('{id}/edit', [ContributeController::class, 'update'])
+        ->name('contributes.edit');
+    Route::delete('{id}/remove', [ContributeController::class, 'delete'])
+        ->name('contributes.remove');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'news'], function () {
